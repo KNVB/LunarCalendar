@@ -14,8 +14,8 @@ This LunarCalendar object which extends GregorianCalendar object, user can get t
 <tr><td>lunarDay</td><td>The lunar day of the specified date in Chinese.</td></tr>
 <tr><td>lunarFestival</td><td>It return the lunar festival info</td></tr>
 <tr><td>lunarLeapMonth</td><td>It return the lunar Leap Month of the specified year</td></tr>
-<tr><td>lunarMonth</td><td>The lunar month of the specified date in Chinese.</td></tr>
-<tr><td>lunarYear</td><td>The lunar year of the specified date in Chinese.</td></tr>
+<tr><td>lunarMonth</td><td>The lunar month of the specified date.</td></tr>
+<tr><td>lunarYear</td><td>The lunar year of the specified date.</td></tr>
 <tr><td>solarTermInfo</td><td>Solar Term Info</td></tr>
 </table>
 The class is inspired by Sean Lin DHTML web page:
