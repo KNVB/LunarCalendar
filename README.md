@@ -1,18 +1,32 @@
 # LunarCalendar
 This is LunarCalendar object which extends GregorianCalendar object, user can get the following lunar information by reading related attributes:
-animalOfYear      The animal Of the year in Chinese    
+
+animalOfYear      The animal Of the year in Chinese
+
 chineseDateString The lunar date in Chinese
+
 chineseDayName    "Day Pillar" in Chinese
+
 chineseHourName   "Hour Pillar" in Chinese
+
 chineseMonthName  "Month Pillar in Chinese
+
 chineseYearName   "Year Pillar" in Chinese
+
 isHoliday         is the specified date holiday?        
+
 isLunarLeapMonth  is the specified month Lunar Leap Month?
+
 lunarDay          The lunar day of the specified date in Chinese.         
+
 lunarFestival     It return the lunar festival info   
+
 lunarLeapMonth    It return the lunar Leap Month of the specified year  
+
 lunarMonth        The lunar month of the specified date in Chinese.          
+
 lunarYear         The lunar year of the specified date in Chinese.
+
 solarTermInfo     Solar Term Info    
 
 The class is inspired by Sean Lin DHTML web page:
@@ -26,17 +40,17 @@ Scope: school, society, guild, company, program research, personal website for p
 
 
 Open Source does not mean any abandon of copyright , a written notification should be provided before 
-any form of reference or forward.
+any form of reference or forwarded.
 
 My written authorization is required before the code or information used in this section for "business or profit" purposes.
 
 The latest version and update information is published at http://sean.o4u.com/ap/calendar/
 
 
-							Welcome letter to discuss the study and correct misunderstanding
-                       		Contact: http://sean.o4u.com/contact/
-                       		Sean Lin (Lin Xunxian)
-                           	Respect for others ‧ Do not delete or change this description
+                                Welcome letter to discuss the study and correct misunderstanding
+                                Contact: http://sean.o4u.com/contact/
+                                Sean Lin (Lin Xunxian)
+                                Respect for others ‧ Do not delete or change this description
 
 Sean Lin (Lin Xunxian) Mr. email address is sean.tw+blog@gmail.com.
 
