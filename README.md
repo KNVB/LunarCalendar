@@ -1,49 +1,43 @@
 # LunarCalendar
-This is MyCalendar object which extends GregorianCalendar object,
-user can get lunar information by reading related attributes.
+This is LunarCalendar object which extends GregorianCalendar object, user can get the following lunar information by reading related attributes:
+animalOfYear      The animal Of the year in Chinese    
+chineseDateString The lunar date in Chinese
+chineseDayName    "Day Pillar" in Chinese
+chineseHourName   "Hour Pillar" in Chinese
+chineseMonthName  "Month Pillar in Chinese
+chineseYearName   "Year Pillar" in Chinese
+isHoliday         is the specified date holiday?        
+isLunarLeapMonth  is the specified month Lunar Leap Month?
+lunarDay          The lunar day of the specified date in Chinese.         
+lunarFestival     It return the lunar festival info   
+lunarLeapMonth    It return the lunar Leap Month of the specified year  
+lunarMonth        The lunar month of the specified date in Chinese.          
+lunarYear         The lunar year of the specified date in Chinese.
+solarTermInfo     Solar Term Info    
 
-由於本程式是參考自Sean Lin (林洵賢)先生的農曆月曆與世界時間DHTML程式(AD1900至AD2100)
-http://sean.o4u.com/2008/04/dhtml.html,
+The class is inspired by Sean Lin DHTML web page:
 
-所以如果想引用和修改本程式,請以下參考Sean Lin (林洵賢)先生的聲明:
+http://sean.o4u.com/2008/04/dhtml.html
 
-如果您覺得這個程式不錯，您可以自由轉寄給親朋好友分享。自由使
-用範圍: 學校、學會、公會、公司內部、程式研究、個人網站供人查
-詢使用。
+Here is the disclaimer from Sean:
 
-Open Source 不代表放棄著作權，任何形式之引用或轉載前請來信告
-知。如需於「商業或營利」目的中使用此部份之程式碼或資料，需取
-得本人書面授權。
-
-最新版本與更新資訊於 http://sean.o4u.com/ap/calendar/ 公佈
+If you think this program is good, you can freely forwarded to friends and family to share. Free to make
+Scope: school, society, guild, company, program research, personal website for people to use it.
 
 
-　                            歡迎來信互相討論研究與指正誤謬
-                      連絡方式：http://sean.o4u.com/contact/
-                      　　　　　　　　　　Sean Lin (林洵賢)
-                          尊重他人創作‧請勿刪除或變更此說明
+Open Source does not mean any abandon of copyright , a written notification should be provided before 
+any form of reference or forward.
 
-Sean Lin (林洵賢)先生的email address是sean.tw+blog@gmail.com.
+My written authorization is required before the code or information used in this section for "business or profit" purposes.
 
-LunarCalendar:
-這是一個由西曆(java 來說即是GregorianCalendar)擴展出來物件,
-用家只需要new 一個MyCalendar物件便可以透過以下的屬性得知相關資訊:
-animalOfYear      該年生肖
-chineseDateString 當天農曆日子(用四柱來表示)
-chineseDayName    當天日柱
-chineseHourName   當天時柱
-chineseMonthName  當天月柱
-chineseYearName   當天年柱
-isHoliday         當天是假期嗎?
-isLunarLeapMonth  本月是閏月嗎?
-lunarDay          當天農曆日子(用數字來表示)
-lunarFestival     該天農曆節日訊息
-lunarLeapMonth    該年的閏月是那一個月
-lunarMonth        當天農曆月份(用數字來表示)
-lunarYear         當天農曆年份(用數字來表示)
-solarTermInfo     節氣訊息 
+The latest version and update information is published at http://sean.o4u.com/ap/calendar/
 
-QQCalendar:
-This class demonstrate how to use checkFestival method to check whether the date is a holiday.
-這是示範如何extend MyCalendar 物件和implements 自己的
-checkFestival method來設定假期
+
+							Welcome letter to discuss the study and correct misunderstanding
+                       		Contact: http://sean.o4u.com/contact/
+                       		Sean Lin (Lin Xunxian)
+                           	Respect for others ‧ Do not delete or change this description
+
+Sean Lin (Lin Xunxian) Mr. email address is sean.tw+blog@gmail.com.
+
+The QQCalendar class demonstrate how to use the checkFestival() method to define the date of holidays/festival(* mean that day is holiday).
