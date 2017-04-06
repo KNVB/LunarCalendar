@@ -2,7 +2,9 @@
 This is LunarCalendar object which extends GregorianCalendar object, user can get the following lunar information by reading related attributes:
 
 animalOfYear      The animal Of the year in Chinese
+
 chineseDateString The lunar date in Chinese
+
 chineseDayName    "Day Pillar" in Chinese
 
 chineseHourName   "Hour Pillar" in Chinese
