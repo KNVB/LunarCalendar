@@ -2,6 +2,7 @@ package common;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Hashtable;
 
 /**
  * * 參考自Sean Lin (林洵賢)先生的農曆月曆與世界時間DHTML程式(AD1900至AD2100)<br>
@@ -36,6 +37,18 @@ import java.util.GregorianCalendar;
 	private String nStr2[] = {"初","十","廿","卅","卌"};
 	private String Zhi[]={"子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"};
 	private String solarTerm[] ={"小寒","大寒","立春","雨水","驚蟄","春分","清明","穀雨","立夏","小滿","芒種","夏至","小暑","大暑","立秋","處暑","白露","秋分","寒露","霜降","立冬","小雪","大雪","冬至"};
+	private Hashtable <String,String>lunarHolidayList=new Hashtable<String,String>();
+
+	public CalendarUtility()
+	{
+		lunarHolidayList.put("0101","大年初一");
+		lunarHolidayList.put("0102","年初二");
+		lunarHolidayList.put("0103","年初三");
+		
+		lunarHolidayList.put("0505","端午節");
+		lunarHolidayList.put("0816","中秋節翌日");
+		lunarHolidayList.put("0909","重陽節");
+	}
 	//===========================================================================================================================	
 	//	private method
 	/**
@@ -183,7 +196,7 @@ import java.util.GregorianCalendar;
 	 */
 	public LunarCalendar getLunarCalendar(GregorianCalendar inCalendarObj)
 	{
-		int i,lunarLeapMonth,firstNode;
+		int i,lunarLeapMonth,firstNode,solarTermDate;
 		long offset=0L,temp=0L,dayCyclical=0L;
 		int inYear,inMonth,inDate;
 		
@@ -204,7 +217,7 @@ import java.util.GregorianCalendar;
 			offset+=temp; 
 			i--; 
 		}
-		result.year=i;
+		result.lunarYear=i;
 		lunarLeapMonth=getLunarLeapMonth(i);
 		result.isLeap=false;
 		
@@ -214,11 +227,11 @@ import java.util.GregorianCalendar;
 			if(lunarLeapMonth>0 && i==(lunarLeapMonth+1) && result.isLeap==false)
 			{ --i; 
 			result.isLeap = true; 
-			temp = leapDays(result.year); 
+			temp = leapDays(result.lunarYear); 
 			}
 			else
 			{ 
-				temp = lunarMonthDayCount(result.year, i); 
+				temp = lunarMonthDayCount(result.lunarYear, i); 
 			}
 
 			//解除閏月
@@ -243,8 +256,8 @@ import java.util.GregorianCalendar;
 			offset += temp; 
 			--i; 
 		}
-		result.month=i;
-		result.date=(int)offset+1;
+		result.lunarMonth=i;
+		result.lunarDate=(int)offset+1;
 		
 		 ////////年柱 1900年立春後為庚子年(60進制36)
 		 if(inCalendarObj.get(Calendar.MONTH)<2)
@@ -270,6 +283,20 @@ import java.util.GregorianCalendar;
 		result.chineseDayName = getCyclical((int)dayCyclical+inDate);
 		//時柱
 		result.chineseHourName=getChineseHourName(inCalendarObj.get(Calendar.HOUR_OF_DAY));
+		solarTermDate=sTerm(inYear,inMonth*2);
+		
+		//節氣
+		if (solarTermDate==inDate)
+			result.solarTermInfo = solarTerm[inMonth*2];
+		else
+		{	
+			solarTermDate=sTerm(inYear,inMonth*2+1);
+			if (solarTermDate==inDate)
+			{
+				result.solarTermInfo = solarTerm[inMonth*2+1];
+			}
+		}
+		
 		return result;
 	}
 	/**
@@ -282,9 +309,9 @@ import java.util.GregorianCalendar;
 		int lMlen,term2=sTerm(y,5); //取得春分日期
 		GregorianCalendar dayTerm2=new GregorianCalendar(y,2,term2,0,0,0);//取得春分的國曆日期物件(春分一定出現在3月)
 		LunarCalendar lDayTerm2 = getLunarCalendar(dayTerm2); //取得取得春分農曆
-		if (lDayTerm2.date<15)
+		if (lDayTerm2.lunarDate<15)
 		{
-			lMlen=15-lDayTerm2.date;
+			lMlen=15-lDayTerm2.lunarDate;
 		}
 		else
 		{
@@ -294,9 +321,9 @@ import java.util.GregorianCalendar;
 			}
 			else
 			{
-				lMlen=lunarMonthDayCount(lDayTerm2.year,lDayTerm2.month);//農曆 y年m月的總天數
+				lMlen=lunarMonthDayCount(lDayTerm2.lunarYear,lDayTerm2.lunarMonth);//農曆 y年m月的總天數
 			}
-			lMlen=lMlen-lDayTerm2.date + 15;
+			lMlen=lMlen-lDayTerm2.lunarDate + 15;
 		}
 		dayTerm2.add(Calendar.DAY_OF_WEEK,lMlen);
 		if (dayTerm2.get(Calendar.DAY_OF_WEEK)==Calendar.SUNDAY)
@@ -316,11 +343,13 @@ import java.util.GregorianCalendar;
 		int year=2017;
 		CalendarUtility cu=new CalendarUtility();
 		GregorianCalendar now=new GregorianCalendar();
+		//GregorianCalendar now=new GregorianCalendar(year,7,7);//節氣=立秋
 		LunarCalendar lc=cu.getLunarCalendar(now);
 		GregorianCalendar easterDate=cu.getEasterDateByYear(year);
 		System.out.println("Solar Date="+now.get(Calendar.YEAR)+"/"+(1+now.get(Calendar.MONTH))+"/"+now.get(Calendar.DAY_OF_MONTH));
-		System.out.println("Lunar Date="+lc.chineseYearName+"年"+cu.numToChineseNum(lc.month)+"月"+cu.numToChineseNum(lc.date)+"日");
+		System.out.println("Lunar Date="+lc.chineseYearName+"年"+cu.numToChineseNum(lc.lunarMonth)+"月"+cu.numToChineseNum(lc.lunarDate)+"日");
 		System.out.println("Lunar Date in Chinese="+lc.chineseYearName+"年"+((lc.isLeap)?"(閏)":"")+lc.chineseMonthName+"月"+lc.chineseDayName+"日"+lc.chineseHourName+"時");
+		System.out.println("Solar Term Info="+lc.solarTermInfo);
 		System.out.println("isLeapMonth="+lc.isLeap);
 		System.out.println("AnimalOfYear="+lc.animalOfYear);
 		System.out.println("Easter Date for "+year+"/"+(easterDate.get(Calendar.MONTH)+1)+"/"+easterDate.get(Calendar.DAY_OF_MONTH));
