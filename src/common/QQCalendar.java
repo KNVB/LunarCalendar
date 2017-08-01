@@ -9,7 +9,7 @@ import java.util.*;
  *
  * @author Roy Tsang
  */
-public class QQCalendar extends LunarCalendar 
+public class QQCalendar extends LunarCalendar_qq 
 {
 	static final long serialVersionUID=21513345134L;
 	/**
