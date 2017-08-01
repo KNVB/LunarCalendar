@@ -5,7 +5,11 @@ import java.util.GregorianCalendar;
 import java.util.Hashtable;
 
 /**
- * * 參考自Sean Lin (林洵賢)先生的農曆月曆與世界時間DHTML程式(AD1900至AD2100)<br>
+ * 
+ * 農曆日曆物件<br> 	
+ * 這是一個由西曆(java 來說即是GregorianCalendar)擴展出來物件<br>
+ * 用戶透過讀取屬性來得知相關資訊<br>
+ * 參考自Sean Lin (林洵賢)先生的農曆月曆與世界時間DHTML程式(AD1900至AD2100)<br>
  * http://sean.o4u.com/2008/04/dhtml.html
  *
  * @author Roy Tsang
@@ -36,9 +40,11 @@ import java.util.Hashtable;
 	private String nStr1[] = {"日","一","二","三","四","五","六","七","八","九","十"};
 	private String nStr2[] = {"初","十","廿","卅","卌"};
 	private String Zhi[]={"子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"};
+	private int solarMonth[]={31,28,31,30,31,30,31,31,30,31,30,31};
+
 	private String solarTerm[] ={"小寒","大寒","立春","雨水","驚蟄","春分","清明","穀雨","立夏","小滿","芒種","夏至","小暑","大暑","立秋","處暑","白露","秋分","寒露","霜降","立冬","小雪","大雪","冬至"};
 	private Hashtable <String,String>lunarHolidayList=new Hashtable<String,String>();
-
+	private Hashtable <String,String>solarHolidayList=new Hashtable<String,String>();
 	public CalendarUtility()
 	{
 		lunarHolidayList.put("0101","大年初一");
@@ -48,6 +54,13 @@ import java.util.Hashtable;
 		lunarHolidayList.put("0505","端午節");
 		lunarHolidayList.put("0816","中秋節翌日");
 		lunarHolidayList.put("0909","重陽節");
+
+		solarHolidayList.put("0101","新曆新年");
+		solarHolidayList.put("0501","勞動節");
+		solarHolidayList.put("0701","香港特別行政區成立紀念日");
+		solarHolidayList.put("1001","國慶日");
+		solarHolidayList.put("1225","聖誕節");
+		solarHolidayList.put("1226","聖誕節翌日");
 	}
 	//===========================================================================================================================	
 	//	private method
@@ -120,6 +133,18 @@ import java.util.Hashtable;
 		else
 			return 29;	  
 	}
+	/**
+	 * 傳回國曆 y年某month+1月的天數
+	 * @return 該月的天數
+	 */
+	private int getMonthLength(int year,int month) 
+	{
+	 if(month==1)
+	    return(((year%4 == 0) && (year%100 != 0) || (year%400 == 0))? 29: 28);
+	 else
+	    return(solarMonth[month]);
+	}
+
 	/**
 	 * 傳回某年的第n個節氣為幾日(從0小寒起算)
 	 * @param y 年份
@@ -336,6 +361,75 @@ import java.util.Hashtable;
 		return dayTerm2;
 	}
 	/**
+	 * 傳回整個月的日期資料物件
+	 * @param year
+	 * @param month-1
+	 * @return MonthlyCalend object
+	 */
+	public MonthlyCalendar getMonthlyCalendar(int year,int month)
+	{
+		int term2; //立春日期
+		int firstNode; //當月「節」為幾日開始
+		int lD=1,lX=0,n=0, firstLM = 0;
+		long dayCyclical;
+		LunarCalendar lDObj;
+		String cY, cM, cD; //年柱,月柱,日柱
+		MonthlyCalendar mc=new MonthlyCalendar();
+		GregorianCalendar sDObj=new GregorianCalendar(year,month,1);
+		mc.length=getMonthLength(year,month);
+		mc.firstWeekDay=sDObj.get(Calendar.DAY_OF_WEEK);
+		 
+		////////年柱 1900年立春後為庚子年(60進制36)
+		if(month<2) 
+			cY=getCyclical(year-1900+36-1);
+		else 
+			cY=getCyclical(year-1900+36);
+		
+		term2=sTerm(year,2); 
+		firstNode = sTerm(year,month*2);//傳回當月「節」為幾日開始
+		cM = getCyclical((year-1900)*12+month+12);
+
+		//當月一日與 1900/1/1 相差天數
+		//1900/1/1與 1970/1/1 相差25567日, 1900/1/1 日柱為甲戌日(60進制10)
+		GregorianCalendar ref=new GregorianCalendar(year,month,1);
+		dayCyclical=ref.getTime().getTime()/86400000L+25567L+10L;
+		for (int i=0;i<mc.length;i++)
+		{
+			MyCalendar m=new MyCalendar();
+			m.chineseYearName=cY;
+			sDObj=new GregorianCalendar(year,month,i+1);
+			m.year=sDObj.get(Calendar.YEAR);
+			m.month=sDObj.get(Calendar.MONTH);
+			m.date=sDObj.get(Calendar.DAY_OF_MONTH);
+			if (lD>lX)
+			{
+				lDObj=getLunarCalendar(sDObj);
+				m.lunarYear=lDObj.lunarYear;
+				m.lunarMonth=lDObj.lunarMonth;
+				m.lunarDate=lDObj.lunarDate;
+				m.isLeap=lDObj.isLeap;
+				lD=lDObj.lunarDate;
+				lX=((m.isLeap)?leapDays(year):lunarMonthDayCount(m.lunarYear,m.lunarMonth));
+				if(n==0) 
+					firstLM = m.lunarMonth;
+
+			}
+			//依節氣調整二月分的年柱, 以立春為界
+		    if(month==1 && (i+1)==term2) 
+		    	cY=getCyclical(year-1900+36);
+		    //依節氣月柱, 以「節」為界
+		    if((i+1)==firstNode) 
+		    	cM = getCyclical((year-1900)*12+month+13);
+		    //日柱
+		    cD = getCyclical((int)dayCyclical+i);
+		    m.chineseDayName=cD;
+		    m.chineseMonthName=cM;
+		    m.chineseYearName=cY;
+			mc.addMyCalendar(i,m);
+		}
+		return mc;
+	}
+	/**
 	 * For Testing only
 	 */
 	public static void main(String[] args) throws Exception
@@ -353,5 +447,15 @@ import java.util.Hashtable;
 		System.out.println("isLeapMonth="+lc.isLeap);
 		System.out.println("AnimalOfYear="+lc.animalOfYear);
 		System.out.println("Easter Date for "+year+"/"+(easterDate.get(Calendar.MONTH)+1)+"/"+easterDate.get(Calendar.DAY_OF_MONTH));
+		MonthlyCalendar mc=cu.getMonthlyCalendar(year, 4);
+		System.out.println("Monthly Calendar for 5/"+year);
+		System.out.println("Month Lenght="+mc.length);
+		for (int i=0;i<mc.length;i++)
+		{
+			MyCalendar myCalendar=mc.getMonthlyCalendar().get(i);
+			System.out.println("Solar Date="+myCalendar.year+"/"+(myCalendar.month+1)+"/"+myCalendar.date);
+			System.out.println("Lunar Date="+myCalendar.lunarYear+"年"+myCalendar.lunarMonth+"月"+myCalendar.lunarDate+"日");
+			System.out.println("Lunar Date in Chinese="+myCalendar.chineseYearName+"年"+((myCalendar.isLeap)?"(閏)":"")+myCalendar.chineseMonthName+"月"+myCalendar.chineseDayName+"日"+myCalendar.chineseHourName+"時");
+		}
 	}
  }
