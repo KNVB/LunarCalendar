@@ -7,14 +7,15 @@ public class MyCalendar
 	private int date;
 	private int weekDay;
 	
-	private boolean isHoliday=false;
-	private String holidayInfo=new String();
+	private boolean isPublicHoliday=false;
+	private String festivalInfo=new String();
 	private LunarCalendar lunarCalendar;
-	public String getHolidayInfo() {
-		return holidayInfo;
+	public String getFestivalInfo() {
+		return festivalInfo;
 	}
-	public void setHolidayInfo(String holidayInfo) {
-		this.holidayInfo = holidayInfo;
+	public void setFestivalInfo(String festivalInfo) 
+	{
+		this.festivalInfo = festivalInfo;
 	}
 	public String getChineseYearName() 
 	{
@@ -71,11 +72,11 @@ public class MyCalendar
 	public void setWeekDay(int weekDay) {
 		this.weekDay = weekDay;
 	}
-	public boolean isHoliday() {
-		return isHoliday;
+	public boolean isPublicHoliday() {
+		return isPublicHoliday;
 	}
-	public void setHoliday(boolean isHoliday) {
-		this.isHoliday = isHoliday;
+	public void setPublicHoliday(boolean isPublicHoliday) {
+		this.isPublicHoliday = isPublicHoliday;
 	}
 	public int getLunarYear()
 	{
