@@ -398,13 +398,14 @@ import java.util.Hashtable;
 			m.setWeekDay(sDObj.get(Calendar.DAY_OF_WEEK));
 			myCalendarList.put(i+1,m);
 		}
+		System.out.println(myCalendarList.containsKey(31));
 		for (Enumeration<String> keys = solarHolidayList.keys(); keys.hasMoreElements();)
 		{       
 			key=keys.nextElement();
 			if (key.startsWith(solarMonthPattern))
 			{	
 				//System.out.println(key+","+key.substring(2));
-				holidayCompensation(myCalendarList,Integer.valueOf(key.substring(2)),solarHolidayList.get(key));
+				processHoliday(myCalendarList,solarHolidayList.get(key),Integer.valueOf(key.substring(2)));
 			}
 		}
 		switch (month)
@@ -412,16 +413,65 @@ import java.util.Hashtable;
 			case 0:
 			case 1: processLunarYearHoliday(myCalendarList,lunarHolidayDates);
 					break;
-			case 3: int tempDate=sTerm(year,month*2); //清明節日期
-					holidayCompensation(myCalendarList,tempDate,solarTerm[month*2]+"節");
-			case 2: processEasterHoliday(myCalendarList,year);//復活節只出現在3或4月
+			case 2:	processEasterHoliday(myCalendarList,year);//復活節只出現在3或4月
 					break;
+			case 3:	int tempDate=sTerm(year,month*2); //清明節日期
+					processHoliday(myCalendarList,solarTerm[month*2]+"節",tempDate);
+					processEasterHoliday(myCalendarList,year);//復活節只出現在3或4月
+					break;
+		
 		}
 		
 		mc.setMonthlyCalendar(myCalendarList);
 		return mc;
 	}
 	
+	private void processHoliday(Hashtable<Integer, MyCalendar> myCalendarList, String festivalInfo,int inDate) 
+	{
+		MyCalendar m1=myCalendarList.get(inDate);
+		if((m1.getWeekDay()!=Calendar.SUNDAY) && (!m1.isPublicHoliday()))
+		{
+			setHoliday(myCalendarList,festivalInfo,inDate);
+		}
+		else
+		{
+			holidayCompensation(myCalendarList,festivalInfo,inDate);
+		}
+	}
+	private void holidayCompensation(Hashtable<Integer, MyCalendar> myCalendarList, String festivalInfo,int inDate) 
+	{
+		MyCalendar m1,m2; 
+		m1=myCalendarList.get(inDate);
+		if((m1.getWeekDay()==Calendar.SUNDAY) || (m1.isPublicHoliday()))
+		{
+			holidayCompensation(myCalendarList,festivalInfo,inDate+1);
+		}
+		else
+		{
+			if (myCalendarList.containsKey(inDate-1))
+			{
+				m2=myCalendarList.get(inDate-1);
+				if (m2.getWeekDay()==Calendar.SUNDAY)
+				{
+					setHoliday(myCalendarList,festivalInfo+"翌日",m1.getDate());
+				}
+				else
+				{	
+					if (m2.isPublicHoliday())
+					{
+						setHoliday(myCalendarList,m2.getFestivalInfo()+"翌日",m2.getDate());
+						setHoliday(myCalendarList,festivalInfo+"翌日",m1.getDate());
+					}
+					else
+					{
+						setHoliday(myCalendarList,festivalInfo,m1.getDate());
+					}
+				}
+			}
+			else
+				setHoliday(myCalendarList,festivalInfo,m1.getDate());
+		}
+	}
 	private void processEasterHoliday(Hashtable<Integer,MyCalendar>myCalendarList,int year) 
 	{
 		GregorianCalendar goodFriday,holySaturday,easterMonday;
@@ -433,13 +483,13 @@ import java.util.Hashtable;
 		easterMonday=(GregorianCalendar)easterDate.clone();
 		
 		goodFriday.add(Calendar.DATE,-2);
-		setHoliday(myCalendarList,"Good Friday",goodFriday.get(Calendar.DAY_OF_MONTH));
+		processHoliday(myCalendarList,"Good Friday",goodFriday.get(Calendar.DAY_OF_MONTH));
 	
 		holySaturday.add(Calendar.DATE,-1);
-		setHoliday(myCalendarList,"Holy Saturday",holySaturday.get(Calendar.DAY_OF_MONTH));
+		processHoliday(myCalendarList,"Holy Saturday",holySaturday.get(Calendar.DAY_OF_MONTH));
 		
 		easterMonday.add(Calendar.DATE,1);
-		setHoliday(myCalendarList,"Easter Monday",easterMonday.get(Calendar.DAY_OF_MONTH));
+		processHoliday(myCalendarList,"Easter Monday",easterMonday.get(Calendar.DAY_OF_MONTH));
 	}
 	private void processLunarYearHoliday(Hashtable<Integer,MyCalendar>myCalendarList,Hashtable<Integer,String>lunarHolidayDates) 
 	{
@@ -477,40 +527,6 @@ import java.util.Hashtable;
 			}
 		}
 	}
-	private void holidayCompensation(Hashtable<Integer,MyCalendar>myCalendarList,int inDate,String festivalInfo)
-	{
-		MyCalendar m1,m2; 
-		m1=myCalendarList.get(inDate);
-		if((m1.getWeekDay()==Calendar.SUNDAY) || (m1.isPublicHoliday()))
-		{
-			holidayCompensation(myCalendarList,inDate+1,festivalInfo);
-		}
-		else
-		{
-			if (myCalendarList.containsKey(inDate-1))
-			{
-				m2=myCalendarList.get(inDate-1);
-				if (m2.getWeekDay()==Calendar.SUNDAY)
-				{
-					setHoliday(myCalendarList,festivalInfo+"翌日",m1.getDate());
-				}
-				else
-				{	
-					if (m2.isPublicHoliday())
-					{
-						setHoliday(myCalendarList,m2.getFestivalInfo()+"翌日",m1.getDate());
-						setHoliday(myCalendarList,festivalInfo+"翌日",m2.getDate());
-					}
-					else
-					{
-						setHoliday(myCalendarList,festivalInfo,m1.getDate());
-					}
-				}
-			}
-			else
-				setHoliday(myCalendarList,festivalInfo,m1.getDate());
-		}
-	}
 	private void setFestivalInfo(Hashtable<Integer,MyCalendar>myCalendarList,String festivalInfo,int date)
 	{
 		MyCalendar m=myCalendarList.remove(date);
@@ -531,8 +547,8 @@ import java.util.Hashtable;
 	public static void main(String[] args) throws Exception
 	{
 		//int year=2017,month=0;//
-		int year=2015,month=3;//復活節清明節overlap
-		//int year=2013,month=2;//復活節撗跨3,4月
+		//int year=2015,month=3;//復活節清明節overlap
+		int year=2013,month=2;//復活節撗跨3,4月
 		CalendarUtility cu=new CalendarUtility();
 		GregorianCalendar now=new GregorianCalendar(year,month,14);
 		//GregorianCalendar now=new GregorianCalendar(2017,7,7);//節氣=立秋
