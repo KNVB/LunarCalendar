@@ -5,15 +5,15 @@ public class LunarCalendar
 	/**
 	 *當天農曆年份(用數字來表示)
 	 */ 	
-	public int lunarYear;
+	public int year;
 	/**
 	 *當天農曆月份(用數字來表示)
 	 */ 	
-	public int lunarMonth;
+	public int month;
 	/**
 	 *當天農曆日子(用數字來表示)
 	 */ 	
-	public int lunarDate;
+	public int date;
 	/**
 	 * 是否為閏月
 	 */
