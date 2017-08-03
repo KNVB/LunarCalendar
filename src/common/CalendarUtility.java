@@ -1,15 +1,12 @@
 package common;
-
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Hashtable;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
-import java.util.Hashtable;
-
 /**
  * 
- * 農曆日曆物件<br> 	
- * 這是一個由西曆(java 來說即是GregorianCalendar)擴展出來物件<br>
+ * 日曆工廠物件<br> 	
+ * <br>
  * 用戶透過讀取屬性來得知相關資訊<br>
  * 參考自Sean Lin (林洵賢)先生的農曆月曆與世界時間DHTML程式(AD1900至AD2100)<br>
  * http://sean.o4u.com/2008/04/dhtml.html
@@ -52,8 +49,9 @@ import java.util.Hashtable;
 		lunarHolidayList.put("0101","大年初一");
 		lunarHolidayList.put("0102","年初二");
 		lunarHolidayList.put("0103","年初三");
+		lunarHolidayList.put("0408","佛誕");
 		lunarHolidayList.put("0505","端午節");
-		lunarHolidayList.put("0815","中秋節翌日");
+		lunarHolidayList.put("0816","中秋節翌日");
 		lunarHolidayList.put("0909","重陽節");
 
 		solarHolidayList.put("0101","新曆新年");
@@ -217,8 +215,8 @@ import java.util.Hashtable;
 	}
 	/**
 	 * 傳入GregorianCalendar物件, 傳回LunarCalendar物件
-	 * @param GregorianCalendar物件
-	 * @return LunarCalendar
+	 * @param inCalendarObj GregorianCalendar物件
+	 * @return LunarCalendar物件
 	 */
 	public LunarCalendar getLunarCalendar(GregorianCalendar inCalendarObj)
 	{
@@ -303,12 +301,17 @@ import java.util.Hashtable;
 			result.chineseMonthName  = getCyclical((inYear-1900)*12+inMonth+13);
 		else
 			result.chineseMonthName = getCyclical((inYear-1900)*12+inMonth+12);
+		
+		//當月一日與 1900/1/1 相差天數
+		//1900/1/1與 1970/1/1 相差25567日, 1900/1/1 日柱為甲戌日(60進制10)
 		dayCyclical=new GregorianCalendar(inYear,inMonth,1).getTime().getTime();
 		dayCyclical=dayCyclical/86400000L+25567L+10L;
+		
 		//日柱
 		result.chineseDayName = getCyclical((int)dayCyclical+inDate);
 		//時柱
 		result.chineseHourName=getChineseHourName(inCalendarObj.get(Calendar.HOUR_OF_DAY));
+		
 		solarTermDate=sTerm(inYear,inMonth*2);
 		
 		//節氣
@@ -326,9 +329,9 @@ import java.util.Hashtable;
 		return result;
 	}
 	/**
-	 * 傳回該年的復活節(春分後第一次滿月週後的第一主日)
+	 * 傳回該年的復活節GregorianCalendar物件(春分後第一次滿月週後的第一主日)
 	 * @param y 年份
-	 * @return 傳回該年復活節日期(春分後第一次滿月週後的第一主日)
+	 * @return 傳回該年復活節GregorianCalendar物件
 	 */
 	public GregorianCalendar getEasterDateByYear(int y)
 	{
@@ -363,27 +366,25 @@ import java.util.Hashtable;
 	}
 	/**
 	 * 傳回整個月的日期資料物件
-	 * @param year
-	 * @param month-1
+	 * @param year 年份
+	 * @param month month-1 月份
 	 * @return MonthlyCalend object
 	 */
 	public MonthlyCalendar getMonthlyCalendar(int year,int month)
 	{
 		String key;
-		
+		int tempDate;
 		MyCalendar m;
 		LunarCalendar lDObj;
 		Hashtable<Integer,String>lunarHolidayDates=new Hashtable<Integer,String>();
 		String solarMonthPattern,lunarPattern=new String();
 		MonthlyCalendar mc=new MonthlyCalendar();
-		
-		GregorianCalendar sDObj = new GregorianCalendar(year,month,1,0,0,0);    //當月一日日期
-		
+	
+		solarMonthPattern=String.format("%02d", month+1); 
+		GregorianCalendar sDObj = new GregorianCalendar(year,month,1,0,0,0);    //西曆當月一日日期
+		mc.length=getMonthLength(year,month); //西曆當月的天數
+		mc.firstWeekDay=sDObj.get(Calendar.DAY_OF_WEEK); //西曆當月1日星期幾
 		Hashtable<Integer,MyCalendar>myCalendarList=new Hashtable<Integer,MyCalendar>();
-		solarMonthPattern=String.format("%02d", month+1);
-		mc.length=getMonthLength(year,month);
-		mc.firstWeekDay=sDObj.get(Calendar.DAY_OF_WEEK);
-		
 		for (int i=0;i<mc.length;i++)
 		{
 			sDObj = new GregorianCalendar(year,month,i+1);
@@ -398,7 +399,8 @@ import java.util.Hashtable;
 			m.setWeekDay(sDObj.get(Calendar.DAY_OF_WEEK));
 			myCalendarList.put(i+1,m);
 		}
-		System.out.println(myCalendarList.containsKey(31));
+		
+		//處理西曆假期
 		for (Enumeration<String> keys = solarHolidayList.keys(); keys.hasMoreElements();)
 		{       
 			key=keys.nextElement();
@@ -411,21 +413,31 @@ import java.util.Hashtable;
 		switch (month)
 		{
 			case 0:
-			case 1: processLunarYearHoliday(myCalendarList,lunarHolidayDates);
+			case 1: processLunarYearHoliday(myCalendarList,lunarHolidayDates);//處理農曆新年假期
 					break;
-			case 2:	processEasterHoliday(myCalendarList,year);//復活節只出現在3或4月
+			case 2:	processEasterHoliday(myCalendarList,year,month);//復活節只出現在3或4月
 					break;
-			case 3:	int tempDate=sTerm(year,month*2); //清明節日期
+			case 3:	tempDate=sTerm(year,month*2); //取得清明節日期
 					processHoliday(myCalendarList,solarTerm[month*2]+"節",tempDate);
-					processEasterHoliday(myCalendarList,year);//復活節只出現在3或4月
+					processEasterHoliday(myCalendarList,year,month);//復活節只出現在3或4月
 					break;
-		
+			default://處理其理農曆假期
+					for (Enumeration<Integer>dates=lunarHolidayDates.keys();dates.hasMoreElements();)
+					{
+						tempDate=dates.nextElement();
+						processHoliday(myCalendarList,lunarHolidayDates.get(tempDate),tempDate);
+					}
 		}
 		
 		mc.setMonthlyCalendar(myCalendarList);
 		return mc;
 	}
-	
+	/**
+	 * 處理假期
+	 * @param myCalendarList
+	 * @param festivalInfo
+	 * @param inDate
+	 */
 	private void processHoliday(Hashtable<Integer, MyCalendar> myCalendarList, String festivalInfo,int inDate) 
 	{
 		MyCalendar m1=myCalendarList.get(inDate);
@@ -438,6 +450,12 @@ import java.util.Hashtable;
 			holidayCompensation(myCalendarList,festivalInfo,inDate);
 		}
 	}
+	/**
+	 * 處理補假
+	 * @param myCalendarList
+	 * @param festivalInfo
+	 * @param inDate
+	 */
 	private void holidayCompensation(Hashtable<Integer, MyCalendar> myCalendarList, String festivalInfo,int inDate) 
 	{
 		MyCalendar m1,m2; 
@@ -453,44 +471,60 @@ import java.util.Hashtable;
 				m2=myCalendarList.get(inDate-1);
 				if (m2.getWeekDay()==Calendar.SUNDAY)
 				{
-					setHoliday(myCalendarList,festivalInfo+"翌日",m1.getDate());
+					if (festivalInfo.indexOf("補假")==-1)
+						setHoliday(myCalendarList,festivalInfo+"補假",m1.getDate());
+					else
+						setHoliday(myCalendarList,festivalInfo,m1.getDate());
 				}
 				else
 				{	
-					if (m2.isPublicHoliday())
-					{
-						setHoliday(myCalendarList,m2.getFestivalInfo()+"翌日",m2.getDate());
-						setHoliday(myCalendarList,festivalInfo+"翌日",m1.getDate());
-					}
+					if (m2.getFestivalInfo().indexOf("補假")==-1)
+						setHoliday(myCalendarList,m2.getFestivalInfo()+"補假",m2.getDate());
 					else
-					{
+						setHoliday(myCalendarList,m2.getFestivalInfo(),m2.getDate());
+					if (festivalInfo.indexOf("補假")==-1)
+						setHoliday(myCalendarList,festivalInfo+"補假",m1.getDate());
+					else
 						setHoliday(myCalendarList,festivalInfo,m1.getDate());
-					}
 				}
 			}
-			else
-				setHoliday(myCalendarList,festivalInfo,m1.getDate());
 		}
 	}
-	private void processEasterHoliday(Hashtable<Integer,MyCalendar>myCalendarList,int year) 
+	/**
+	 * 處理復活假期
+	 * @param myCalendarList
+	 * @param festivalInfo
+	 * @param inDate
+	 */
+	private void processEasterHoliday(Hashtable<Integer,MyCalendar>myCalendarList,int year,int month) 
 	{
 		GregorianCalendar goodFriday,holySaturday,easterMonday;
 		GregorianCalendar easterDate=getEasterDateByYear(year);
 		
-		setFestivalInfo(myCalendarList,"Easter",easterDate.get(Calendar.DAY_OF_MONTH));
 		goodFriday=(GregorianCalendar)easterDate.clone();
 		holySaturday=(GregorianCalendar)easterDate.clone();
 		easterMonday=(GregorianCalendar)easterDate.clone();
 		
 		goodFriday.add(Calendar.DATE,-2);
-		processHoliday(myCalendarList,"Good Friday",goodFriday.get(Calendar.DAY_OF_MONTH));
-	
+		if (goodFriday.get(Calendar.MONTH)==month)
+			processHoliday(myCalendarList,"Good Friday",goodFriday.get(Calendar.DAY_OF_MONTH));
+		
 		holySaturday.add(Calendar.DATE,-1);
-		processHoliday(myCalendarList,"Holy Saturday",holySaturday.get(Calendar.DAY_OF_MONTH));
+		if (holySaturday.get(Calendar.MONTH)==month)
+			processHoliday(myCalendarList,"Holy Saturday",holySaturday.get(Calendar.DAY_OF_MONTH));
+		
+		if (easterDate.get(Calendar.MONTH)==month)
+			setFestivalInfo(myCalendarList,"Easter",easterDate.get(Calendar.DAY_OF_MONTH));
 		
 		easterMonday.add(Calendar.DATE,1);
-		processHoliday(myCalendarList,"Easter Monday",easterMonday.get(Calendar.DAY_OF_MONTH));
+		if (easterMonday.get(Calendar.MONTH)==month)
+			processHoliday(myCalendarList,"Easter Monday",easterMonday.get(Calendar.DAY_OF_MONTH));
 	}
+	/**
+	 * 處理農曆假期
+	 * @param myCalendarList
+	 * @param lunarHolidayDates
+	 */
 	private void processLunarYearHoliday(Hashtable<Integer,MyCalendar>myCalendarList,Hashtable<Integer,String>lunarHolidayDates) 
 	{
 		MyCalendar m;
@@ -508,7 +542,8 @@ import java.util.Hashtable;
 				{
 					i++;
 				}
-				setHoliday(myCalendarList,lunarHolidayDates.get(tempDate),tempDate);
+				else
+					setHoliday(myCalendarList,lunarHolidayDates.get(tempDate),tempDate);
 			}
 			if (i>0)
 			{
@@ -518,7 +553,6 @@ import java.util.Hashtable;
 					if (myCalendarList.containsKey(j))
 					{	
 						m=myCalendarList.get(j);
-						//System.out.println("festivalInfo="+festivalInfo+numToChineseNum(m.getLunarDate())+",j="+j+",maxDate="+maxDate+",i="+i);
 						setHoliday(myCalendarList,festivalInfo+numToChineseNum(m.getLunarDate()),j);
 					}
 					else
@@ -527,6 +561,12 @@ import java.util.Hashtable;
 			}
 		}
 	}
+	/**
+	 * 設定當日的節日/假期資訊
+	 * @param myCalendarList
+	 * @param festivalInfo 節日/假期資訊
+	 * @param date 當日的日期
+	 */
 	private void setFestivalInfo(Hashtable<Integer,MyCalendar>myCalendarList,String festivalInfo,int date)
 	{
 		MyCalendar m=myCalendarList.remove(date);
@@ -534,6 +574,12 @@ import java.util.Hashtable;
 		m.setFestivalInfo(festivalInfo);
 		myCalendarList.put(date,m);
 	}
+	/**
+	 * 設定當日為假期
+	 * @param myCalendarList
+	 * @param festivalInfo 節日/假期資訊
+	 * @param date 當日的日期
+	 */
 	private void setHoliday(Hashtable<Integer,MyCalendar>myCalendarList,String festivalInfo,int date)
 	{
 		MyCalendar m=myCalendarList.remove(date);
@@ -546,9 +592,9 @@ import java.util.Hashtable;
 	 */
 	public static void main(String[] args) throws Exception
 	{
-		//int year=2017,month=0;//
+		int year=2017,month=4;//
 		//int year=2015,month=3;//復活節清明節overlap
-		int year=2013,month=2;//復活節撗跨3,4月
+		//int year=2013,month=3;//復活節撗跨3,4月
 		CalendarUtility cu=new CalendarUtility();
 		GregorianCalendar now=new GregorianCalendar(year,month,14);
 		//GregorianCalendar now=new GregorianCalendar(2017,7,7);//節氣=立秋
@@ -563,20 +609,23 @@ import java.util.Hashtable;
 		System.out.println("Easter Date for "+year+"/"+(easterDate.get(Calendar.MONTH)+1)+"/"+easterDate.get(Calendar.DAY_OF_MONTH));
 		System.out.println("===================================================");
 		
-		MonthlyCalendar mc=cu.getMonthlyCalendar(year, month);
-		System.out.println("Monthly Calendar for "+(month+1)+"/"+year);
-		System.out.println("Month Lenght="+mc.length);
-		for (int i=1;i<=mc.length;i++)
+		for (int j=0;j<12;j++)
 		{
-			MyCalendar myCalendar=mc.getMonthlyCalendar().get(i);
-			System.out.println("i="+i+",Solar Date="+myCalendar.getYear());	
-			System.out.println("Solar Date="+myCalendar.getYear()+"/"+(myCalendar.getMonth()+1)+"/"+myCalendar.getDate()+" "+myCalendar.getWeekDay());
-			System.out.println("Lunar Date="+myCalendar.getChineseYearName()+"年"+cu.numToChineseNum(myCalendar.getLunarMonth())+"月"+cu.numToChineseNum(myCalendar.getLunarDate())+"日");
-			System.out.println("Lunar Date in Chinese="+myCalendar.getChineseYearName()+"年"+((myCalendar.isLeap())?"(閏)":"")+myCalendar.getChineseMonthName()+"月"+myCalendar.getChineseDayName()+"日"+myCalendar.getChineseHourName()+"時");
-			System.out.println("Solar Term Info="+myCalendar.getSolarTermInfo());
-			System.out.println("Festival Info="+myCalendar.getFestivalInfo());
-			System.out.println("is Holiday="+myCalendar.isPublicHoliday());
-			System.out.println("===================================================");
+			MonthlyCalendar mc=cu.getMonthlyCalendar(year, j);
+			//System.out.println("Monthly Calendar for "+(j+1)+"/"+year);
+			//System.out.println("Month Lenght="+mc.length);
+			for (int i=1;i<=mc.length;i++)
+			{
+				MyCalendar myCalendar=mc.getMonthlyCalendar().get(i);
+				System.out.println("i="+i+",Solar Date="+myCalendar.getYear());	
+				System.out.println("Solar Date="+myCalendar.getYear()+"/"+(myCalendar.getMonth()+1)+"/"+myCalendar.getDate()+" "+myCalendar.getWeekDay());
+				System.out.println("Lunar Date="+myCalendar.getChineseYearName()+"年"+cu.numToChineseNum(myCalendar.getLunarMonth())+"月"+cu.numToChineseNum(myCalendar.getLunarDate())+"日");
+				System.out.println("Lunar Date in Chinese="+myCalendar.getChineseYearName()+"年"+((myCalendar.isLeap())?"(閏)":"")+myCalendar.getChineseMonthName()+"月"+myCalendar.getChineseDayName()+"日"+myCalendar.getChineseHourName()+"時");
+				System.out.println("Solar Term Info="+myCalendar.getSolarTermInfo());
+				System.out.println("Festival Info="+myCalendar.getFestivalInfo());
+				System.out.println("is Holiday="+myCalendar.isPublicHoliday());
+				System.out.println("===================================================");
+			}
 		}
 	}
  }
