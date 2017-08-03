@@ -6,11 +6,11 @@ http://sean.o4u.com/2008/04/dhtml.html
 
 Here is the disclaimer from Sean:
 
-If you think this program is good, you can freely forwarded to friends and family to share. Free to make Scope: school, society, guild, company, program research, personal website for people to use it.
+If you think this program is good, you can freely forwarded to friends and family to share. The scope of free to use including: school, society, guild, company, program research, personal website.
 
 Open Source does not mean any abandon of copyright , a written notification should be provided before any form of reference or forwarded.
 
-My written authorization is required before the code or information used in this section for "business or profit" purposes.
+My written authorization is required before any coding or information used for business or profit purposes.
 
 The latest version and update information is published at http://sean.o4u.com/ap/calendar/
 
@@ -18,7 +18,8 @@ The latest version and update information is published at http://sean.o4u.com/ap
                             Contact: http://sean.o4u.com/contact/
                             Sean Lin (Lin Xunxian)
                             Respect for others creation‧ Do not delete or change this description
-Sean Lin (Lin Xunxian) Mr. email address is sean.tw+blog@gmail.com.
+
+Mr. Sean Lin (Lin Xunxian) email address is sean.tw+blog@gmail.com.
 
 由於本程式是參考自Sean Lin (林洵賢)先生的農曆月曆與世界時間DHTML程式(AD1900至AD2100) http://sean.o4u.com/2008/04/dhtml.html,
 所以如果想引用和修改本程式,請參考以下Sean Lin (林洵賢)先生的聲明:
