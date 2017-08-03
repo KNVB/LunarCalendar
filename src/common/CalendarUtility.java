@@ -407,10 +407,10 @@ import java.util.GregorianCalendar;
 			if (lunarHolidayList.containsKey(lunarPattern))
 				lunarHolidayDates.put(i+1,lunarHolidayList.get(lunarPattern));
 			m=new MyCalendar(lDObj);
-			m.setDate(sDObj.get(Calendar.DAY_OF_MONTH));
+			m.setDayOfMonth(sDObj.get(Calendar.DAY_OF_MONTH));
 			m.setMonth(sDObj.get(Calendar.MONTH));
 			m.setYear(sDObj.get(Calendar.YEAR));
-			m.setWeekDay(sDObj.get(Calendar.DAY_OF_WEEK));
+			m.setDayOfWeek(sDObj.get(Calendar.DAY_OF_WEEK));
 			myCalendarList.put(i+1,m);
 		}
 		
@@ -455,7 +455,7 @@ import java.util.GregorianCalendar;
 	private void processHoliday(Hashtable<Integer, MyCalendar> myCalendarList, String festivalInfo,int inDate) 
 	{
 		MyCalendar m1=myCalendarList.get(inDate);
-		if((m1.getWeekDay()!=Calendar.SUNDAY) && (!m1.isPublicHoliday()))
+		if((m1.getDayOfWeek()!=Calendar.SUNDAY) && (!m1.isPublicHoliday()))
 		{
 			setHoliday(myCalendarList,festivalInfo,inDate);
 		}
@@ -474,7 +474,7 @@ import java.util.GregorianCalendar;
 	{
 		MyCalendar m1,m2; 
 		m1=myCalendarList.get(inDate);
-		if((m1.getWeekDay()==Calendar.SUNDAY) || (m1.isPublicHoliday()))
+		if((m1.getDayOfWeek()==Calendar.SUNDAY) || (m1.isPublicHoliday()))
 		{
 			holidayCompensation(myCalendarList,festivalInfo,inDate+1);
 		}
@@ -483,23 +483,23 @@ import java.util.GregorianCalendar;
 			if (myCalendarList.containsKey(inDate-1))
 			{
 				m2=myCalendarList.get(inDate-1);
-				if (m2.getWeekDay()==Calendar.SUNDAY)
+				if (m2.getDayOfWeek()==Calendar.SUNDAY)
 				{
 					if (festivalInfo.indexOf("補假")==-1)
-						setHoliday(myCalendarList,festivalInfo+"補假",m1.getDate());
+						setHoliday(myCalendarList,festivalInfo+"補假",m1.getDayOfMonth());
 					else
-						setHoliday(myCalendarList,festivalInfo,m1.getDate());
+						setHoliday(myCalendarList,festivalInfo,m1.getDayOfMonth());
 				}
 				else
 				{	
 					if (m2.getFestivalInfo().indexOf("補假")==-1)
-						setHoliday(myCalendarList,m2.getFestivalInfo()+"補假",m2.getDate());
+						setHoliday(myCalendarList,m2.getFestivalInfo()+"補假",m2.getDayOfMonth());
 					else
-						setHoliday(myCalendarList,m2.getFestivalInfo(),m2.getDate());
+						setHoliday(myCalendarList,m2.getFestivalInfo(),m2.getDayOfMonth());
 					if (festivalInfo.indexOf("補假")==-1)
-						setHoliday(myCalendarList,festivalInfo+"補假",m1.getDate());
+						setHoliday(myCalendarList,festivalInfo+"補假",m1.getDayOfMonth());
 					else
-						setHoliday(myCalendarList,festivalInfo,m1.getDate());
+						setHoliday(myCalendarList,festivalInfo,m1.getDayOfMonth());
 				}
 			}
 		}
@@ -550,9 +550,9 @@ import java.util.GregorianCalendar;
 			{
 				tempDate=tempDates.nextElement();
 				m=myCalendarList.get(tempDate);
-				if (m.getDate()>maxDate)
-					maxDate=m.getDate();
-				if (m.getWeekDay()==Calendar.SUNDAY)
+				if (m.getDayOfMonth()>maxDate)
+					maxDate=m.getDayOfMonth();
+				if (m.getDayOfWeek()==Calendar.SUNDAY)
 				{
 					i++;
 				}
@@ -632,7 +632,7 @@ import java.util.GregorianCalendar;
 			{
 				MyCalendar myCalendar=mc.getMonthlyCalendar().get(i);
 				System.out.println("i="+i+",Solar Date="+myCalendar.getYear());	
-				System.out.println("Solar Date="+myCalendar.getYear()+"/"+(myCalendar.getMonth()+1)+"/"+myCalendar.getDate()+" "+myCalendar.getWeekDay());
+				System.out.println("Solar Date="+myCalendar.getYear()+"/"+(myCalendar.getMonth()+1)+"/"+myCalendar.getDayOfMonth()+" "+myCalendar.getDayOfWeek());
 				System.out.println("Lunar Date="+myCalendar.getChineseYearName()+"年"+cu.numToChineseNum(myCalendar.getLunarMonth())+"月"+cu.numToChineseNum(myCalendar.getLunarDate())+"日");
 				System.out.println("Lunar Date in Chinese="+myCalendar.getChineseYearName()+"年"+((myCalendar.isLeap())?"(閏)":"")+myCalendar.getChineseMonthName()+"月"+myCalendar.getChineseDayName()+"日"+myCalendar.getChineseHourName()+"時");
 				System.out.println("Solar Term Info="+myCalendar.getSolarTermInfo());

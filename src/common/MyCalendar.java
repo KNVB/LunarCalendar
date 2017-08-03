@@ -15,8 +15,8 @@ public class MyCalendar
 {
 	private int year;
 	private int month;
-	private int date;
-	private int weekDay;
+	private int day_of_month;
+	private int day_of_week;
 	
 	private boolean isPublicHoliday=false;
 	private String festivalInfo=new String();
@@ -28,7 +28,7 @@ public class MyCalendar
 	}
 	/**
 	 * 傳回當日的節日/假期資訊<br>
-	 * It return the festival information the specified date
+	 * It return the festival/holiday information the specified date
 	 * @return 當日的節日/假期資訊<br>
 	 * The festival/holiday information the specified date.
 	 */
@@ -128,27 +128,27 @@ public class MyCalendar
 	}
 	/**
 	 * 傳回當天西曆日子<br>
-	 * It return the date of the specified date
+	 * It return the date of month of the specified date
 	 * @return 當天西曆日子<br>
-	 * The date of the specified date
+	 * The date of month of the specified date
 	 */
-	public int getDate() {
-		return date;
+	public int getDayOfMonth() {
+		return day_of_month;
 	}
-	protected void setDate(int date) {
-		this.date = date;
+	protected void setDayOfMonth(int date) {
+		this.day_of_month= date;
 	}
 	/**
 	 * 傳回當天星期幾<br>
-	 * It return the day of the specified date.
+	 * It return the day of week of the specified date.
 	 * @return 當天星期幾<br>
-	 * The day of the specified date.
+	 * The day of week of the specified date.
 	 */
-	public int getWeekDay() {
-		return weekDay;
+	public int getDayOfWeek() {
+		return day_of_week;
 	}
-	protected void setWeekDay(int weekDay) {
-		this.weekDay = weekDay;
+	protected void setDayOfWeek(int weekDay) {
+		this.day_of_week = weekDay;
 	}
 	/**
 	 * 傳回當天是否為公眾假期<br>
