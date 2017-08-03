@@ -40,22 +40,19 @@ The CalendarUtility class provide 2 method:
 
 1. getLunarCalendar: It require a GregorianCalendar object as a input parameter;it return a corresponding LunarCalendar object and this object provide the following information.
 
-<table>
-<tr><td>Attribute</td><td>Meaning</td></tr>
-<tr><td>animalOfYear</td><td>The animal Of the year in Chinese</td></tr>
-<tr><td>chineseDateString</td><td>The lunar date in Chinese</td></tr>
-<tr><td>chineseDayName</td><td>"Day Pillar" in Chinese</td></tr>
-<tr><td>chineseHourName</td><td>"Hour Pillar" in Chinese</td></tr>
-<tr><td>chineseMonthName</td><td>"Month Pillar in Chinese</td></tr>
-<tr><td>chineseYearName</td><td>"Year Pillar" in Chinese</td></tr>
-<tr><td>isHoliday</td><td>is the specified date holiday?</td></tr>
-<tr><td>isLunarLeapMonth</td><td>is the specified month Lunar Leap Month?</td></tr>
-<tr><td>lunarDay</td><td>The lunar day of the specified date in Chinese.</td></tr>
-<tr><td>lunarFestival</td><td>It return the lunar festival info</td></tr>
-<tr><td>lunarLeapMonth</td><td>It return the lunar Leap Month of the specified year</td></tr>
-<tr><td>lunarMonth</td><td>The lunar month of the specified date.</td></tr>
-<tr><td>lunarYear</td><td>The lunar year of the specified date.</td></tr>
-<tr><td>solarTermInfo</td><td>Solar Term Info</td></tr>
-</table> 
+	<table>
+	<tr><td>Attribute</td><td>Meaning</td></tr>
+	<tr><td>animalOfYear</td><td>The animal Of the year in Chinese</td></tr>
+	<tr><td>chineseDateString</td><td>The lunar date in Chinese</td></tr>
+	<tr><td>chineseDayName</td><td>"Day Pillar" in Chinese</td></tr>
+	<tr><td>chineseHourName</td><td>"Hour Pillar" in Chinese</td></tr>
+	<tr><td>chineseMonthName</td><td>"Month Pillar in Chinese</td></tr>
+	<tr><td>chineseYearName</td><td>"Year Pillar" in Chinese</td></tr>
+	<tr><td>isLeap</td><td>is the specified month Lunar Leap Month?</td></tr>
+	<tr><td>date</td><td>The lunar day of the specified date in Chinese.</td></tr>
+	<tr><td>month</td><td>The lunar month of the specified date.</td></tr>
+	<tr><td>year</td><td>The lunar year of the specified date.</td></tr>
+	<tr><td>solarTermInfo</td><td>Solar Term Info</td></tr>
+	</table>
 
 
