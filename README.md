@@ -40,11 +40,11 @@ Sean Lin (林洵賢)先生的email address是sean.tw+blog@gmail.com.
 The CalendarUtility class provide 2 method:
 
 1. getLunarCalendar: 
-	It return a corresponding LunarCalendar object when a GregorianCalendar object is given.
+	It return a corresponding LunarCalendar object when a GregorianCalendar object is given.<br>
 	The detail information about LunarCalendar object are provided in JavaDoc. 
 	
-
-2.getMonthlyCalendar:
-	It return a MonthlyCalendar object when a year and month parameter is provided.
-	The detail information about MonthlyCalendar and MyCalendar object are provided in JavaDoc.
+2. getMonthlyCalendar:	
+	It return a MonthlyCalendar object when a year and month parameter is provided.<br>
+	The detail information about MonthlyCalendar and MyCalendar object are provided in JavaDoc.<br>
 	It is useful for Monthly Calendar.
+	
