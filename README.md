@@ -1,4 +1,4 @@
-# LunarCalendar
+# Lunar Calendar Utility
 
 The program is inspired by Sean Lin DHTML web page:
 
@@ -20,8 +20,6 @@ The latest version and update information is published at http://sean.o4u.com/ap
                             Respect for others creation‧ Do not delete or change this description
 Sean Lin (Lin Xunxian) Mr. email address is sean.tw+blog@gmail.com.
 
-The QQCalendar class demonstrate how to use the checkFestival() method to define the date of holidays/festival(* mean that day is holiday).
-
 由於本程式是參考自Sean Lin (林洵賢)先生的農曆月曆與世界時間DHTML程式(AD1900至AD2100) http://sean.o4u.com/2008/04/dhtml.html,
 所以如果想引用和修改本程式,請以下參考Sean Lin (林洵賢)先生的聲明:
 
@@ -36,3 +34,28 @@ Open Source 不代表放棄著作權，任何形式之引用或轉載前請來�
                             Sean Lin (林洵賢)
                             尊重他人創作‧請勿刪除或變更此說明
 Sean Lin (林洵賢)先生的email address是sean.tw+blog@gmail.com.
+
+#Usage
+The CalendarUtility class provide 2 method:
+
+1. getLunarCalendar: It require a GregorianCalendar object as a input parameter;it return a corresponding LunarCalendar object and this object provide the following information.
+
+<table>
+<tr><td>Attribute</td><td>Meaning</td></tr>
+<tr><td>animalOfYear</td><td>The animal Of the year in Chinese</td></tr>
+<tr><td>chineseDateString</td><td>The lunar date in Chinese</td></tr>
+<tr><td>chineseDayName</td><td>"Day Pillar" in Chinese</td></tr>
+<tr><td>chineseHourName</td><td>"Hour Pillar" in Chinese</td></tr>
+<tr><td>chineseMonthName</td><td>"Month Pillar in Chinese</td></tr>
+<tr><td>chineseYearName</td><td>"Year Pillar" in Chinese</td></tr>
+<tr><td>isHoliday</td><td>is the specified date holiday?</td></tr>
+<tr><td>isLunarLeapMonth</td><td>is the specified month Lunar Leap Month?</td></tr>
+<tr><td>lunarDay</td><td>The lunar day of the specified date in Chinese.</td></tr>
+<tr><td>lunarFestival</td><td>It return the lunar festival info</td></tr>
+<tr><td>lunarLeapMonth</td><td>It return the lunar Leap Month of the specified year</td></tr>
+<tr><td>lunarMonth</td><td>The lunar month of the specified date.</td></tr>
+<tr><td>lunarYear</td><td>The lunar year of the specified date.</td></tr>
+<tr><td>solarTermInfo</td><td>Solar Term Info</td></tr>
+</table> 
+
+
