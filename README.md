@@ -35,7 +35,8 @@ Open Source 不代表放棄著作權，任何形式之引用或轉載前請來�
                             尊重他人創作‧請勿刪除或變更此說明
 Sean Lin (林洵賢)先生的email address是sean.tw+blog@gmail.com.
 
-#Usage
+# Usage
+
 The CalendarUtility class provide 2 method:
 
 1. getLunarCalendar: It require a GregorianCalendar object as a input parameter;it return a corresponding LunarCalendar object and this object provide the following information.
