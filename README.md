@@ -50,7 +50,7 @@ The CalendarUtility class provide 2 method:
 	<tr><td>chineseMonthName</td><td>"Month Pillar in Chinese</td></tr>
 	<tr><td>chineseYearName</td><td>"Year Pillar" in Chinese</td></tr>
 	<tr><td>isLeap</td><td>is the specified month Lunar Leap Month?</td></tr>
-	<tr><td>date</td><td>The lunar day of the specified date in Chinese.</td></tr>
+	<tr><td>date</td><td>The lunar day of the specified date in number.</td></tr>
 	<tr><td>month</td><td>The lunar month of the specified date.</td></tr>
 	<tr><td>year</td><td>The lunar year of the specified date.</td></tr>
 	<tr><td>solarTermInfo</td><td>Solar Term Info</td></tr>
