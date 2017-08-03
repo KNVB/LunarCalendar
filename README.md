@@ -21,7 +21,7 @@ The latest version and update information is published at http://sean.o4u.com/ap
 Sean Lin (Lin Xunxian) Mr. email address is sean.tw+blog@gmail.com.
 
 由於本程式是參考自Sean Lin (林洵賢)先生的農曆月曆與世界時間DHTML程式(AD1900至AD2100) http://sean.o4u.com/2008/04/dhtml.html,
-所以如果想引用和修改本程式,請以下參考Sean Lin (林洵賢)先生的聲明:
+所以如果想引用和修改本程式,請參考以下Sean Lin (林洵賢)先生的聲明:
 
 如果您覺得這個程式不錯，您可以自由轉寄給親朋好友分享。自由使 用範圍: 學校、學會、公會、公司內部、程式研究、個人網站供人查 詢使用。
 
