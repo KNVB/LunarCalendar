@@ -1,24 +1,6 @@
 # LunarCalendar
 
-This LunarCalendar object which extends GregorianCalendar object, user can get the following lunar information by reading related attributes:
-<table>
-<tr><td>Attribute</td><td>Meaning</td></tr>
-<tr><td>animalOfYear</td><td>The animal Of the year in Chinese</td></tr>
-<tr><td>chineseDateString</td><td>The lunar date in Chinese</td></tr>
-<tr><td>chineseDayName</td><td>"Day Pillar" in Chinese</td></tr>
-<tr><td>chineseHourName</td><td>"Hour Pillar" in Chinese</td></tr>
-<tr><td>chineseMonthName</td><td>"Month Pillar in Chinese</td></tr>
-<tr><td>chineseYearName</td><td>"Year Pillar" in Chinese</td></tr>
-<tr><td>isHoliday</td><td>is the specified date holiday?</td></tr>
-<tr><td>isLunarLeapMonth</td><td>is the specified month Lunar Leap Month?</td></tr>
-<tr><td>lunarDay</td><td>The lunar day of the specified date in Chinese.</td></tr>
-<tr><td>lunarFestival</td><td>It return the lunar festival info</td></tr>
-<tr><td>lunarLeapMonth</td><td>It return the lunar Leap Month of the specified year</td></tr>
-<tr><td>lunarMonth</td><td>The lunar month of the specified date.</td></tr>
-<tr><td>lunarYear</td><td>The lunar year of the specified date.</td></tr>
-<tr><td>solarTermInfo</td><td>Solar Term Info</td></tr>
-</table>
-The class is inspired by Sean Lin DHTML web page:
+The program is inspired by Sean Lin DHTML web page:
 
 http://sean.o4u.com/2008/04/dhtml.html
 
@@ -54,27 +36,3 @@ Open Source 不代表放棄著作權，任何形式之引用或轉載前請來�
                             Sean Lin (林洵賢)
                             尊重他人創作‧請勿刪除或變更此說明
 Sean Lin (林洵賢)先生的email address是sean.tw+blog@gmail.com.
-
-Calendar:
-
-這是一個由西曆(java 來說即是GregorianCalendar)擴展出來物件, 用家只需要new 一個MyCalendar物件便可以透過以下的屬性得知相關資訊:
-<table>
-<tr><td>屬性</td><td>意思</td></tr>
-<tr><td>animalOfYear</td><td>該年生肖</td></tr>
-<tr><td>chineseDateString</td><td>當天農曆日子(用四柱來表示)</td></tr>
-<tr><td>chineseDayName</td><td>當天日柱</td></tr>
-<tr><td>chineseHourName</td><td>當天時柱</td></tr>
-<tr><td>chineseMonthName</td><td>當天月柱</td></tr>
-<tr><td>chineseYearName</td><td>當天年柱</td></tr>
-<tr><td>isHoliday</td><td>當天是假期嗎?</td></tr>
-<tr><td>isLunarLeapMonth</td><td>本月是閏月嗎?</td></tr>
-<tr><td>lunarDay</td><td>當天農曆日子(用數字來表示)</td></tr>
-<tr><td>lunarFestival</td><td>該天農曆節日訊息</td></tr>
-<tr><td>lunarLeapMonth</td><td>該年的閏月是那一個月</td></tr>
-<tr><td>lunarMonth</td><td>當天農曆月份(用數字來表示)</td></tr>
-<tr><td>lunarYear</td><td>當天農曆年份(用數字來表示)</td></tr>
-<tr><td>solarTermInfo</td><td>節氣訊息</td></tr>
-</table>
-QQCalendar:
-
-這是示範如何extend MyCalendar 物件和implements 自己的 checkFestival method來設定假期
