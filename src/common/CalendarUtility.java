@@ -9,6 +9,9 @@ import java.util.GregorianCalendar;
  * <br>
  * 用戶透過讀取屬性來得知相關資訊<br>
  * 本程式參考自Sean Lin (林洵賢)先生的農曆月曆與世界時間DHTML程式(AD1900至AD2100)<br>
+ * http://sean.o4u.com/2008/04/dhtml.html<br><br>
+ * 
+ * The program is inspired by Sean Lin DHTML web page:<br>
  * http://sean.o4u.com/2008/04/dhtml.html
  *
  * @author Roy Tsang
@@ -46,7 +49,9 @@ import java.util.GregorianCalendar;
 	private Hashtable <String,String>solarHolidayList=new Hashtable<String,String>();
 	/**
 	 * 日曆工具物件<br>
-	 * 支援年份(由AD1900至AD2100)
+	 * 支援年份(由AD1900至AD2100)<br><b>
+	 * Calendar Utility<br>
+	 * It support from AD1900 to AD2100
 	 */
 	public CalendarUtility()
 	{
@@ -181,7 +186,8 @@ import java.util.GregorianCalendar;
 		return(Gan[num%10 ]+Zhi[num%12]);
 	}
 	/**
-	 * 傳回時柱
+	 * 傳回時柱<br>
+	 * It returns "Hour Pillar" in Chinese of a given hour
 	 * @param h 傳入hour
 	 * @return 傳回時柱
 	 */
@@ -200,7 +206,8 @@ import java.util.GregorianCalendar;
 		return Zhi[i];
 	} 
 	/**
-	 * 傳入數字傳回相應的中文數字
+	 * 傳入數字傳回相應的中文數字<br>
+	 * It return corresponding Chinese of a given number 
 	 * @param d 傳入數字
 	 * @return 傳回中文數字
 	 */
@@ -218,9 +225,11 @@ import java.util.GregorianCalendar;
 		return s;
 	}
 	/**
-	 * 傳入GregorianCalendar物件, 傳回LunarCalendar物件
+	 * 傳入GregorianCalendar物件, 傳回LunarCalendar物件<br>
+	 * It return a corresponding LunarCalendar object when a GregorianCalendar object is given.
 	 * @param inCalendarObj GregorianCalendar物件
-	 * @return LunarCalendar物件
+	 * @return LunarCalendar物件<br>
+	 * A corresponding LunarCalendar object when a GregorianCalendar object is given.
 	 */
 	public LunarCalendar getLunarCalendar(GregorianCalendar inCalendarObj)
 	{
@@ -333,7 +342,8 @@ import java.util.GregorianCalendar;
 		return result;
 	}
 	/**
-	 * 傳回該年的復活節GregorianCalendar物件(春分後第一次滿月週後的第一主日)
+	 * 傳回該年的復活節GregorianCalendar物件(春分後第一次滿月週後的第一主日)<br>
+	 * It returns a GregorianCalendar object which devote the date of easter of given year
 	 * @param y 年份
 	 * @return 傳回該年復活節GregorianCalendar物件
 	 */
@@ -369,10 +379,11 @@ import java.util.GregorianCalendar;
 		return dayTerm2;
 	}
 	/**
-	 * 傳回整個月的日期資料物件
+	 * 傳回整個月的日期資料物件<br>
+	 * It return a MonthlyCalendar object when a year and month parameter is provided.
 	 * @param year 年份
 	 * @param month 月份
-	 * @return MonthlyCalend object
+	 * @return MonthlyCalendar object
 	 */
 	public MonthlyCalendar getMonthlyCalendar(int year,int month)
 	{
