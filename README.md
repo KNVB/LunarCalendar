@@ -39,21 +39,12 @@ Sean Lin (林洵賢)先生的email address是sean.tw+blog@gmail.com.
 
 The CalendarUtility class provide 2 method:
 
-1. getLunarCalendar: It require a GregorianCalendar object as a input parameter;it return a corresponding LunarCalendar object and this object provide the following information.
+1. getLunarCalendar: 
+	It return a corresponding LunarCalendar object when a GregorianCalendar object is given.
+	The detail information about LunarCalendar object are provided in JavaDoc. 
+	
 
-	<table>
-	<tr><td>Attribute</td><td>Meaning</td></tr>
-	<tr><td>animalOfYear</td><td>The animal Of the year in Chinese</td></tr>
-	<tr><td>chineseDateString</td><td>The lunar date in Chinese</td></tr>
-	<tr><td>chineseDayName</td><td>"Day Pillar" in Chinese</td></tr>
-	<tr><td>chineseHourName</td><td>"Hour Pillar" in Chinese</td></tr>
-	<tr><td>chineseMonthName</td><td>"Month Pillar in Chinese</td></tr>
-	<tr><td>chineseYearName</td><td>"Year Pillar" in Chinese</td></tr>
-	<tr><td>isLeap</td><td>is the specified month Lunar Leap Month?</td></tr>
-	<tr><td>date</td><td>The lunar day of the specified date in number.</td></tr>
-	<tr><td>month</td><td>The lunar month of the specified date.</td></tr>
-	<tr><td>year</td><td>The lunar year of the specified date.</td></tr>
-	<tr><td>solarTermInfo</td><td>Solar Term Info</td></tr>
-	</table>
-
-
+2.getMonthlyCalendar:
+	It return a MonthlyCalendar object when a year and month parameter is provided.
+	The detail information about MonthlyCalendar and MyCalendar object are provided in JavaDoc.
+	It is useful for Monthly Calendar.
