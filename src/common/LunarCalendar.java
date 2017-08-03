@@ -4,7 +4,7 @@ package common;
  * 農曆日曆物件<br> 	
  *
  * 用戶透過讀取屬性來得知相關資訊<br>
- * 參考自Sean Lin (林洵賢)先生的農曆月曆與世界時間DHTML程式(AD1900至AD2100)<br>
+ * 本程式參考自Sean Lin (林洵賢)先生的農曆月曆與世界時間DHTML程式(AD1900至AD2100)<br>
  * http://sean.o4u.com/2008/04/dhtml.html
  *
  * @author Roy Tsang
@@ -40,7 +40,7 @@ public class LunarCalendar
 	 */
 	public String chineseDayName=new String();  
 	/**
-	 *當天時柱
+	 *當時時柱
 	 */
 	public String chineseHourName=new String();
 	/**
@@ -48,7 +48,14 @@ public class LunarCalendar
 	 */
 	public String animalOfYear=new String();
 	/**
-	 節氣訊息
+	 當天節氣訊息
 	 */
-	public String solarTermInfo=new String();   
+	public String solarTermInfo=new String();
+	/**
+	 * 農曆日曆物件
+	 */
+	public LunarCalendar()
+	{
+		
+	}
 }

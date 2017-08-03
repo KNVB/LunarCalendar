@@ -13,12 +13,31 @@ import java.util.Hashtable;
  */
 public class MonthlyCalendar 
 {
-	public int length,firstWeekDay;
+	/**
+	 * 該月的日數
+	 */
+	public int length;
+	/**
+	 * 該月1日是星期幾
+	 */
+	public int firstWeekDay;
 	private Hashtable<Integer,MyCalendar> monthlyCalendar; 
-	public void setMonthlyCalendar(Hashtable<Integer,MyCalendar> monthlyCalendar)
+	/**
+	 * 西曆月曆物件
+	 * @param monthlyCalendar
+	 */
+	protected MonthlyCalendar()
+	{
+		
+	}
+	protected void setMonthlyCalendar(Hashtable<Integer,MyCalendar> monthlyCalendar)
 	{
 		this.monthlyCalendar=monthlyCalendar;
-	}	
+	}
+	/**
+	 * 傳回整個月的 MyCalendar物件
+	 * @return 整個月的 MyCalendar物件
+	 */
 	public Hashtable<Integer,MyCalendar> getMonthlyCalendar()
 	{
 		return monthlyCalendar;

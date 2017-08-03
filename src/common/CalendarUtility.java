@@ -5,10 +5,10 @@ import java.util.Enumeration;
 import java.util.GregorianCalendar;
 /**
  * 
- * 日曆工廠物件<br> 	
+ * 日曆工具物件<br> 	
  * <br>
  * 用戶透過讀取屬性來得知相關資訊<br>
- * 參考自Sean Lin (林洵賢)先生的農曆月曆與世界時間DHTML程式(AD1900至AD2100)<br>
+ * 本程式參考自Sean Lin (林洵賢)先生的農曆月曆與世界時間DHTML程式(AD1900至AD2100)<br>
  * http://sean.o4u.com/2008/04/dhtml.html
  *
  * @author Roy Tsang
@@ -44,6 +44,10 @@ import java.util.GregorianCalendar;
 	private String solarTerm[] ={"小寒","大寒","立春","雨水","驚蟄","春分","清明","穀雨","立夏","小滿","芒種","夏至","小暑","大暑","立秋","處暑","白露","秋分","寒露","霜降","立冬","小雪","大雪","冬至"};
 	private Hashtable <String,String>lunarHolidayList=new Hashtable<String,String>();
 	private Hashtable <String,String>solarHolidayList=new Hashtable<String,String>();
+	/**
+	 * 日曆工具物件<br>
+	 * 支援年份(由AD1900至AD2100)
+	 */
 	public CalendarUtility()
 	{
 		lunarHolidayList.put("0101","大年初一");
@@ -196,7 +200,7 @@ import java.util.GregorianCalendar;
 		return Zhi[i];
 	} 
 	/**
-	 * 傳回中文數字
+	 * 傳入數字傳回相應的中文數字
 	 * @param d 傳入數字
 	 * @return 傳回中文數字
 	 */
@@ -367,7 +371,7 @@ import java.util.GregorianCalendar;
 	/**
 	 * 傳回整個月的日期資料物件
 	 * @param year 年份
-	 * @param month month-1 月份
+	 * @param month 月份
 	 * @return MonthlyCalend object
 	 */
 	public MonthlyCalendar getMonthlyCalendar(int year,int month)
