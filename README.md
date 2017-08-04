@@ -4,6 +4,8 @@ The program is inspired by Sean Lin DHTML web page:
 
 http://sean.o4u.com/2008/04/dhtml.html
 
+## Disclaimer
+
 Here is the disclaimer from Sean:
 
 If you think this program is good, you can freely forwarded to friends and family to share. The scope of free to use including: school, society, guild, company, program research, personal website.
@@ -36,17 +38,32 @@ Open Source 不代表放棄著作權，任何形式之引用或轉載前請來�
                             尊重他人創作‧請勿刪除或變更此說明
 Sean Lin (林洵賢)先生的email address是sean.tw+blog@gmail.com.
 
-# Usage
+## Usage
 
-The CalendarUtility class provide 2 method:
-
-1. getLunarCalendar: 
-	It return a corresponding LunarCalendar object when a GregorianCalendar object is given.<br>
-	The detail information about LunarCalendar object are provided in JavaDoc. 
-	
-	
-2. getMonthlyCalendar:	
-	It return a MonthlyCalendar object when a year and month parameter is provided.<br>
-	The detail information about MonthlyCalendar and MyCalendar object are provided in JavaDoc.<br>
-	It is useful for Monthly Calendar generation.
+There are 2 methods CalendarUtility class provided :
+<ol>
+	<li>
+		getLunarCalendar:<br> 
+		It return a corresponding LunarCalendar object when a GregorianCalendar object is given.<br>
+		The detail information about LunarCalendar object are provided in JavaDoc. 
+	</li><br>
+	<li> 
+		getMonthlyCalendar:<br>	
+		It return a MonthlyCalendar object when a year and month parameter is provided.<br>
+		The detail information about MonthlyCalendar and MyCalendar object are provided in JavaDoc.<br>
+		It is useful for Monthly Calendar generation.
+	</li>	
+</ol>	
+CalendarUtility 有兩個重要的method
+<ol>
+	<li>
+		getLunarCalendar:<br>
+		傳入單一西曆日子(即是 GregorianCalendar物件),傳回LunarCalendar物件,有關LunarCalendar物件的詳細資料請參考JavaDoc.
+	</li><br>
+	<li>
+		getMonthlyCalendar:<br>
+		傳入年份月份,傳回對應的MonthlyCalendar物件,在這個物件內可以獲取整個月的MyCalendar物件,關於MyCalendar物件的詳細資料請參考JavaDoc.<br>
+		這個method對編制月曆很有用.
+	</li>
+</ol>	
 	

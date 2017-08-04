@@ -406,11 +406,7 @@ import java.util.GregorianCalendar;
 			lunarPattern=String.format("%02d", lDObj.month)+String.format("%02d", lDObj.date);
 			if (lunarHolidayList.containsKey(lunarPattern))
 				lunarHolidayDates.put(i+1,lunarHolidayList.get(lunarPattern));
-			m=new MyCalendar(lDObj);
-			m.setDayOfMonth(sDObj.get(Calendar.DAY_OF_MONTH));
-			m.setMonth(sDObj.get(Calendar.MONTH));
-			m.setYear(sDObj.get(Calendar.YEAR));
-			m.setDayOfWeek(sDObj.get(Calendar.DAY_OF_WEEK));
+			m=new MyCalendar(sDObj,lDObj);
 			myCalendarList.put(i+1,m);
 		}
 		
@@ -606,9 +602,9 @@ import java.util.GregorianCalendar;
 	 */
 	public static void main(String[] args) throws Exception
 	{
-		int year=2017,month=4;//
+		//int year=2017,month=4;//
 		//int year=2015,month=3;//復活節清明節overlap
-		//int year=2013,month=3;//復活節撗跨3,4月
+		int year=2013,month=3;//復活節撗跨3,4月
 		CalendarUtility cu=new CalendarUtility();
 		GregorianCalendar now=new GregorianCalendar(year,month,14);
 		//GregorianCalendar now=new GregorianCalendar(2017,7,7);//節氣=立秋
@@ -623,9 +619,9 @@ import java.util.GregorianCalendar;
 		System.out.println("Easter Date for "+year+"/"+(easterDate.get(Calendar.MONTH)+1)+"/"+easterDate.get(Calendar.DAY_OF_MONTH));
 		System.out.println("===================================================");
 		
-		for (int j=0;j<12;j++)
+		//for (int j=0;j<12;j++)
 		{
-			MonthlyCalendar mc=cu.getMonthlyCalendar(year, j);
+			MonthlyCalendar mc=cu.getMonthlyCalendar(year, month);
 			//System.out.println("Monthly Calendar for "+(j+1)+"/"+year);
 			//System.out.println("Month Lenght="+mc.length);
 			for (int i=1;i<=mc.length;i++)

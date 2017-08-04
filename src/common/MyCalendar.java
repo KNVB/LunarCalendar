@@ -1,4 +1,8 @@
 package common;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 /**
  * 
  * MyCalendar 日期物件<br> 	
@@ -13,18 +17,16 @@ package common;
  */
 public class MyCalendar 
 {
-	private int year;
-	private int month;
-	private int day_of_month;
-	private int day_of_week;
-	
 	private boolean isPublicHoliday=false;
 	private String festivalInfo=new String();
 	private LunarCalendar lunarCalendar;
+	private GregorianCalendar solarCalendar;
 	
-	protected MyCalendar(LunarCalendar lc)
+	
+	protected MyCalendar(GregorianCalendar sc, LunarCalendar lc)
 	{
 		lunarCalendar=lc;
+		solarCalendar=sc;
 	}
 	/**
 	 * 傳回當日的節日/假期資訊<br>
@@ -108,48 +110,43 @@ public class MyCalendar
 	 * @return 當天西曆年份<br>
 	 * The year of the specified date
 	 */
-	public int getYear() {
-		return year;
-	}
-	protected void setYear(int year) {
-		this.year = year;
-	}
+	public int getYear() 
+	{
+		return solarCalendar.get(Calendar.YEAR);
+	}	
 	/**
 	 * 傳回當天西曆月份<br>
 	 * It return the month of the specified date
 	 * @return 當天西曆月份<br>
 	 * The month of the specified date
 	 */
-	public int getMonth() {
-		return month;
+	public int getMonth() 
+	{
+		return solarCalendar.get(Calendar.MONTH);
 	}
-	protected void setMonth(int month) {
-		this.month = month;
-	}
+
 	/**
 	 * 傳回當天西曆日子<br>
 	 * It return the date of month of the specified date
 	 * @return 當天西曆日子<br>
 	 * The date of month of the specified date
 	 */
-	public int getDayOfMonth() {
-		return day_of_month;
+	public int getDayOfMonth() 
+	{
+		return solarCalendar.get(Calendar.DAY_OF_MONTH);
 	}
-	protected void setDayOfMonth(int date) {
-		this.day_of_month= date;
-	}
+	
 	/**
 	 * 傳回當天星期幾<br>
 	 * It return the day of week of the specified date.
 	 * @return 當天星期幾<br>
 	 * The day of week of the specified date.
 	 */
-	public int getDayOfWeek() {
-		return day_of_week;
+	public int getDayOfWeek() 
+	{
+		return solarCalendar.get(Calendar.DAY_OF_WEEK);
 	}
-	protected void setDayOfWeek(int weekDay) {
-		this.day_of_week = weekDay;
-	}
+	
 	/**
 	 * 傳回當天是否為公眾假期<br>
 	 * It check if public holiday of the specified date.
