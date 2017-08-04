@@ -1,5 +1,5 @@
 # Calendar Utility
-It is a tool for generate both solar and lunar information, festival and holiday information for a given date.
+It is a tool for generate solar information , lunar information, festival and holiday information and related information for a given date.
 The program is inspired by Sean Lin DHTML web page:
 
 http://sean.o4u.com/2008/04/dhtml.html
