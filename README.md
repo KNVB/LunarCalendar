@@ -1,5 +1,5 @@
 # Calendar Utility
-
+It is a tool for generate both solar and lunar information, festival and holiday information for a given date.
 The program is inspired by Sean Lin DHTML web page:
 
 http://sean.o4u.com/2008/04/dhtml.html
@@ -23,6 +23,7 @@ The latest version and update information is published at http://sean.o4u.com/ap
 
 Mr. Sean Lin (Lin Xunxian) email address is sean.tw+blog@gmail.com.
 
+本工具程式可以計算出某天的西曆,農曆,節日/假期和相關資訊
 由於本程式是參考自Sean Lin (林洵賢)先生的農曆月曆與世界時間DHTML程式(AD1900至AD2100) http://sean.o4u.com/2008/04/dhtml.html,
 所以如果想引用和修改本程式,請參考以下Sean Lin (林洵賢)先生的聲明:
 
