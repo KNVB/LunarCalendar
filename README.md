@@ -1,4 +1,4 @@
-# Lunar Calendar Utility
+# Calendar Utility
 
 The program is inspired by Sean Lin DHTML web page:
 
