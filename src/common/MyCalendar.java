@@ -30,7 +30,7 @@ public class MyCalendar
 	}
 	/**
 	 * 傳回當日的節日/假期資訊<br>
-	 * It return the festival/holiday information the specified date
+	 * It returns the festival/holiday information the specified date
 	 * @return 當日的節日/假期資訊<br>
 	 * The festival/holiday information the specified date.
 	 */
@@ -44,7 +44,7 @@ public class MyCalendar
 	}
 	/** 
 	 * 傳回當天年柱<br>
-	 * It return the "Year Pillar" in Chinese of the specified date
+	 * It returns the "Year Pillar" in Chinese of the specified date
 	 * @return 當天年柱 <br>
 	 * The "Year Pillar" in Chinese of the specified date 
 	 */
@@ -54,7 +54,7 @@ public class MyCalendar
 	}
 	/** 
 	 * 傳回當天月柱<br>
-	 * It return the "Month Pillar" in Chinese of the specified date
+	 * It returns the "Month Pillar" in Chinese of the specified date
 	 * @return 當天月柱<br>
 	 * The "Month Pillar" in Chinese of the specified date   
 	 */
@@ -64,7 +64,7 @@ public class MyCalendar
 	}
 	/**
 	 *傳回當天日柱<br>
-	 *It return the "Day Pillar" in Chinese of the specified date
+	 *It returns the "Day Pillar" in Chinese of the specified date
 	 *@return 當天日柱<br>
 	 * The "Day Pillar" in Chinese of the specified date
 	 */
@@ -74,7 +74,7 @@ public class MyCalendar
 	}
 	/**
 	 *傳回當時時柱<br>
-	 *It return the "Hour Pillar" in Chinese of the specified hour
+	 *It returns the "Hour Pillar" in Chinese of the specified hour
 	 *@return 當時時柱<br>
 	 *The "Day Pillar" in Chinese of the specified hour
 	 */
@@ -84,7 +84,7 @@ public class MyCalendar
 	}
 	/**
 	 * 傳回該年生肖<br>
-	 * It return the animal Of the year in Chinese of the specified date
+	 * It returns the animal Of the year in Chinese of the specified date
 	 * @return 該年生肖<br>
 	 * The animal Of the year in Chinese of the specified date.
 	 */
@@ -94,7 +94,7 @@ public class MyCalendar
 	}
 	/**
 	 * 傳回當天節氣訊息<br>
-	 * It return the Solar Term Info of the specified date
+	 * It returns the Solar Term Info of the specified date
 	 * @return 當天節氣訊息<br>
 	 * Solar Term Info of the specified date 
 	 */
@@ -106,7 +106,7 @@ public class MyCalendar
 	
 	/**
 	 * 傳回當天西曆年份<br>
-	 * It return the year of the specified date
+	 * It returns the year of the specified date
 	 * @return 當天西曆年份<br>
 	 * The year of the specified date
 	 */
@@ -116,7 +116,7 @@ public class MyCalendar
 	}	
 	/**
 	 * 傳回當天西曆月份<br>
-	 * It return the month of the specified date
+	 * It returns the month of the specified date
 	 * @return 當天西曆月份<br>
 	 * The month of the specified date
 	 */
@@ -127,7 +127,7 @@ public class MyCalendar
 
 	/**
 	 * 傳回當天西曆日子<br>
-	 * It return the date of month of the specified date
+	 * It returns the date of month of the specified date
 	 * @return 當天西曆日子<br>
 	 * The date of month of the specified date
 	 */
@@ -138,7 +138,7 @@ public class MyCalendar
 	
 	/**
 	 * 傳回當天星期幾<br>
-	 * It return the day of week of the specified date.
+	 * It returns the day of week of the specified date.
 	 * @return 當天星期幾<br>
 	 * The day of week of the specified date.
 	 */
@@ -161,7 +161,7 @@ public class MyCalendar
 	}
 	/**
 	 * 傳回當天農曆年份(用數字來表示)<Br>
-	 * It return the lunar year of the specified date in number format.
+	 * It returns the lunar year of the specified date in number format.
 	 * @return 當天農曆年份(用數字來表示)<br>
 	 * The lunar year of the specified date in number format.
 	 */
@@ -171,7 +171,7 @@ public class MyCalendar
 	}
 	/**
 	 * 傳回當天農曆月份(用數字來表示)<br>
-	 * It return the lunar month of the specified date in number format.
+	 * It returns the lunar month of the specified date in number format.
 	 * @return 當天農曆月份(用數字來表示)<br>
 	 * The lunar month of the specified date in number format.
 	 */
@@ -181,7 +181,7 @@ public class MyCalendar
 	}
 	/**
 	 * 傳回當天農曆日子(用數字來表示)<br>
-	 * It return the lunar date of the specified date in number format.
+	 * It returns the lunar date of the specified date in number format.
 	 * @return 當天農曆日子(用數字來表示)<br>
 	 * The lunar date of the specified date in number format.
 	 */
@@ -191,7 +191,7 @@ public class MyCalendar
 	}
 	/**
 	 * 傳回當天是否為閏月<br>
-	 * It return whether is a Lunar Leap Month of the specified month?
+	 * It returns whether is a Lunar Leap Month of the specified month?
 	 * @return 當天是否為閏月<br> 
 	 * is the specified month Lunar Leap Month?
 	 */

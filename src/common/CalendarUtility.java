@@ -171,7 +171,6 @@ import java.util.GregorianCalendar;
 		index=(index-48)*24+n;
 		result=solarTermOS.getBytes()[index]-48; //convert char to int
 		result+=solarTermBase[n];
-
 		return result;
 	}	
 	/**
@@ -206,7 +205,7 @@ import java.util.GregorianCalendar;
 	} 
 	/**
 	 * 傳入數字傳回相應的中文數字<br>
-	 * It return corresponding Chinese of a given number 
+	 * It returns corresponding Chinese of a given number 
 	 * @param d 傳入數字
 	 * @return 傳回中文數字
 	 */
@@ -225,7 +224,7 @@ import java.util.GregorianCalendar;
 	}
 	/**
 	 * 傳入GregorianCalendar物件, 傳回LunarCalendar物件<br>
-	 * It return a corresponding LunarCalendar object when a GregorianCalendar object is given.
+	 * It returns a corresponding LunarCalendar object when a GregorianCalendar object is given.
 	 * @param inCalendarObj GregorianCalendar物件
 	 * @return LunarCalendar物件<br>
 	 * A corresponding LunarCalendar object when a GregorianCalendar object is given.
@@ -261,9 +260,10 @@ import java.util.GregorianCalendar;
 		{
 			//閏月
 			if(lunarLeapMonth>0 && i==(lunarLeapMonth+1) && result.isLeap==false)
-			{ --i; 
-			result.isLeap = true; 
-			temp = leapDays(result.year); 
+			{ 
+				--i; 
+				result.isLeap = true; 
+				temp = leapDays(result.year); 
 			}
 			else
 			{ 
@@ -379,7 +379,7 @@ import java.util.GregorianCalendar;
 	}
 	/**
 	 * 傳回整個月的日期資料物件<br>
-	 * It return a MonthlyCalendar object when a year and month parameter is provided.
+	 * It returns a MonthlyCalendar object when a year and month parameter is provided.
 	 * @param year 年份
 	 * @param month 月份
 	 * @return MonthlyCalendar object
@@ -395,9 +395,21 @@ import java.util.GregorianCalendar;
 		MonthlyCalendar mc=new MonthlyCalendar();
 	
 		solarMonthPattern=String.format("%02d", month+1); 
-		GregorianCalendar sDObj = new GregorianCalendar(year,month,1,0,0,0);    //西曆當月一日日期
-		mc.length=getMonthLength(year,month); //西曆當月的天數
-		mc.firstWeekDay=sDObj.get(Calendar.DAY_OF_WEEK); //西曆當月1日星期幾
+		/*
+		 * 西曆當月一日日期
+		 * Create GregorianCalendar object for the 1st of the month 
+		 */
+		GregorianCalendar sDObj = new GregorianCalendar(year,month,1,0,0,0);
+		/*
+		 * 西曆當月的天數
+		 * the length of the month
+		 */
+		mc.length=getMonthLength(year,month); 
+		/*
+		 * 西曆當月1日星期幾
+		 * the weekday of 1st of the month
+		 */
+		mc.firstWeekDay=sDObj.get(Calendar.DAY_OF_WEEK);
 		Hashtable<Integer,MyCalendar>myCalendarList=new Hashtable<Integer,MyCalendar>();
 		for (int i=0;i<mc.length;i++)
 		{
@@ -431,7 +443,7 @@ import java.util.GregorianCalendar;
 					processHoliday(myCalendarList,solarTerm[month*2]+"節",tempDate);
 					processEasterHoliday(myCalendarList,year,month);//復活節只出現在3或4月
 					break;
-			default://處理其理農曆假期
+			default://處理其餘理農曆假期
 					for (Enumeration<Integer>dates=lunarHolidayDates.keys();dates.hasMoreElements();)
 					{
 						tempDate=dates.nextElement();
@@ -604,7 +616,8 @@ import java.util.GregorianCalendar;
 	{
 		//int year=2017,month=4;//
 		//int year=2015,month=3;//復活節清明節overlap
-		int year=2013,month=3;//復活節撗跨3,4月
+		//int year=2013,month=3;//復活節撗跨3,4月
+		int year=2018,month=3;
 		CalendarUtility cu=new CalendarUtility();
 		GregorianCalendar now=new GregorianCalendar(year,month,14);
 		//GregorianCalendar now=new GregorianCalendar(2017,7,7);//節氣=立秋
@@ -619,23 +632,19 @@ import java.util.GregorianCalendar;
 		System.out.println("Easter Date for "+year+"/"+(easterDate.get(Calendar.MONTH)+1)+"/"+easterDate.get(Calendar.DAY_OF_MONTH));
 		System.out.println("===================================================");
 		
-		//for (int j=0;j<12;j++)
+		MonthlyCalendar mc=cu.getMonthlyCalendar(year, month);
+		for (int i=1;i<=mc.length;i++)
 		{
-			MonthlyCalendar mc=cu.getMonthlyCalendar(year, month);
-			//System.out.println("Monthly Calendar for "+(j+1)+"/"+year);
-			//System.out.println("Month Lenght="+mc.length);
-			for (int i=1;i<=mc.length;i++)
-			{
-				MyCalendar myCalendar=mc.getMonthlyCalendar().get(i);
-				System.out.println("i="+i+",Solar Date="+myCalendar.getYear());	
-				System.out.println("Solar Date="+myCalendar.getYear()+"/"+(myCalendar.getMonth()+1)+"/"+myCalendar.getDayOfMonth()+" "+myCalendar.getDayOfWeek());
-				System.out.println("Lunar Date="+myCalendar.getChineseYearName()+"年"+cu.numToChineseNum(myCalendar.getLunarMonth())+"月"+cu.numToChineseNum(myCalendar.getLunarDate())+"日");
-				System.out.println("Lunar Date in Chinese="+myCalendar.getChineseYearName()+"年"+((myCalendar.isLeap())?"(閏)":"")+myCalendar.getChineseMonthName()+"月"+myCalendar.getChineseDayName()+"日"+myCalendar.getChineseHourName()+"時");
-				System.out.println("Solar Term Info="+myCalendar.getSolarTermInfo());
-				System.out.println("Festival Info="+myCalendar.getFestivalInfo());
-				System.out.println("is Holiday="+myCalendar.isPublicHoliday());
-				System.out.println("===================================================");
-			}
+			MyCalendar myCalendar=mc.getMonthlyCalendar().get(i);
+			System.out.println("i="+i+",Solar Date="+myCalendar.getYear());	
+			System.out.println("Solar Date="+myCalendar.getYear()+"/"+(myCalendar.getMonth()+1)+"/"+myCalendar.getDayOfMonth()+" "+myCalendar.getDayOfWeek());
+			System.out.println("Lunar Date="+myCalendar.getChineseYearName()+"年"+cu.numToChineseNum(myCalendar.getLunarMonth())+"月"+cu.numToChineseNum(myCalendar.getLunarDate())+"日");
+			System.out.println("Lunar Date in Chinese="+myCalendar.getChineseYearName()+"年"+((myCalendar.isLeap())?"(閏)":"")+myCalendar.getChineseMonthName()+"月"+myCalendar.getChineseDayName()+"日"+myCalendar.getChineseHourName()+"時");
+			System.out.println("Solar Term Info="+myCalendar.getSolarTermInfo());
+			System.out.println("Festival Info="+myCalendar.getFestivalInfo());
+			System.out.println("is Holiday="+myCalendar.isPublicHoliday());
+			System.out.println("===================================================");
 		}
+		
 	}
  }
