@@ -248,7 +248,7 @@ public class CalendarUtility {
 		
 		offset=inLocalDateTimeObj.atZone(ZoneId.of("UTC")).toInstant().toEpochMilli();
 		offset=(offset-solarStartDate.atStartOfDay().atZone(ZoneId.of("UTC")).toInstant().toEpochMilli())/86400000L;
-		System.out.println("offset="+offset);
+		//System.out.println("offset="+offset);
 		for(i=1900; i<2100 && offset>0; i++) 
 		{ 
 			temp=lYearDays(i); 
@@ -314,7 +314,7 @@ public class CalendarUtility {
 			 result.animalOfYear=getAnimalOfYear(inYear);
 		}
 		////////月柱 1900年1月小寒以前為 丙子月(60進制12)
-		firstNode = sTerm(inLocalDateObj.getYear(),inMonth*2); //傳回當月「節」為幾日開始
+		firstNode = sTerm(inLocalDateObj.getYear(),(inMonth-1)*2); //傳回當月「節」為幾日開始
 		
 		//依節氣月柱, 以「節」為界
 		if(inDate>=firstNode) 
@@ -324,23 +324,23 @@ public class CalendarUtility {
 		//當月一日與 1900/1/1 相差天數
 		//1900/1/1與 1970/1/1 相差25567日, 1900/1/1 日柱為甲戌日(60進制10)
 		dayCyclical=LocalDate.of(inYear,inMonth,1).atStartOfDay(ZoneId.of("UTC")).toInstant().toEpochMilli();
-		dayCyclical=dayCyclical/86400000L+25567L+10L;
-		System.out.println("dayCyclical="+dayCyclical+","+inDate);
+		dayCyclical=dayCyclical/86400000L+25567L+10L-1;
+		
 		//日柱
 		result.chineseDayName = getCyclical((int)dayCyclical+inDate);
 		//時柱
 		result.chineseHourName=getChineseHourName(inLocalDateObj.atStartOfDay().getHour());
 		
-		solarTermDate=sTerm(inYear,inMonth*2);
+		solarTermDate=sTerm(inYear,(inMonth-1)*2);
 		//節氣
 		if (solarTermDate==inDate)
-			result.solarTermInfo = solarTerm[inMonth*2];
+			result.solarTermInfo = solarTerm[(inMonth-1)*2];
 		else
 		{	
-			solarTermDate=sTerm(inYear,inMonth*2);
+			solarTermDate=sTerm(inYear,(inMonth-1)*2);
 			if (solarTermDate==inDate)
 			{
-				result.solarTermInfo = solarTerm[inMonth*2];
+				result.solarTermInfo = solarTerm[(inMonth-1)*2];
 			}
 		}
 		return result;
@@ -394,7 +394,7 @@ public class CalendarUtility {
 	public MonthlyCalendar getMonthlyCalendar(int year,int month)
 	{
 		String key;
-		int tempDate;
+		int i,tempDate;
 		MyLocalDate m;
 		LunarDate lDObj;
 		Hashtable<Integer,String>lunarHolidayDates=new Hashtable<Integer,String>();
@@ -420,19 +420,20 @@ public class CalendarUtility {
 		 */
 		mc.firstWeekDay=sDObj.getDayOfWeek().getValue();
 		Hashtable<Integer,MyLocalDate>myCalendarList=new Hashtable<Integer,MyLocalDate>();
-		for (int i=1;i<=mc.length;i++)
+		
+		for (i=1;i<=mc.length;i++)
 		{
 			
 			sDObj = LocalDate.of(year,month,i);
 			lDObj=getLunarDate(sDObj);
-			System.out.printf("%d-%d-%d %s年%s月%s日 %d-%d\n",year,month,i,lDObj.chineseYearName,lDObj.chineseMonthName,lDObj.chineseDayName,lDObj.month,lDObj.date);
-		/*	lunarPattern=String.format("%02d", lDObj.month)+String.format("%02d", lDObj.date);
+			//System.out.printf("%d-%d-%d %s年%s月%s日 %d-%d\n",year,month,i,lDObj.chineseYearName,lDObj.chineseMonthName,lDObj.chineseDayName,lDObj.month,lDObj.date);
+			lunarPattern=String.format("%02d", lDObj.month)+String.format("%02d", lDObj.date);
 			if (lunarHolidayList.containsKey(lunarPattern))
 				lunarHolidayDates.put(i,lunarHolidayList.get(lunarPattern));
 			m=new MyLocalDate(sDObj,lDObj);
-			myCalendarList.put(i,m);*/
+			myCalendarList.put(i,m);
 		}
-		/*
+		
 		//處理西曆假期
 		for (Enumeration<String> keys = solarHolidayList.keys(); keys.hasMoreElements();)
 		{       
@@ -446,13 +447,13 @@ public class CalendarUtility {
 		
 		switch (month)
 		{
-			case 0:
-			case 1: processLunarYearHoliday(myCalendarList,lunarHolidayDates);//處理農曆新年假期
+			case 1:
+			case 2: processLunarYearHoliday(myCalendarList,lunarHolidayDates);//處理農曆新年假期
 					break;
-			case 2:	processEasterHoliday(myCalendarList,year,month);//復活節只出現在3或4月
+			case 3:	processEasterHoliday(myCalendarList,year,month);//復活節只出現在3或4月
 					break;
-			case 3:	tempDate=sTerm(year,month*2); //取得清明節日期
-					processHoliday(myCalendarList,solarTerm[month*2]+"節",tempDate);
+			case 4:	tempDate=sTerm(year,(month-1)*2); //取得清明節日期
+					processHoliday(myCalendarList,solarTerm[(month-1)*2]+"節",tempDate);
 					processEasterHoliday(myCalendarList,year,month);//復活節只出現在3或4月
 					break;
 			default://處理其餘理農曆假期
@@ -461,7 +462,7 @@ public class CalendarUtility {
 						tempDate=dates.nextElement();
 						processHoliday(myCalendarList,lunarHolidayDates.get(tempDate),tempDate);
 					}
-		}*/
+		}
 		mc.setMonthlyCalendar(myCalendarList);
 		return mc;
 	}
@@ -628,23 +629,22 @@ public class CalendarUtility {
 		//int year=2017,month=4;//
 		//int year=2015,month=3;//復活節清明節overlap
 		//int year=2013,month=3;//復活節撗跨3,4月
-		int year=2018,month=4;
+		int year=2018,month=12;
 		CalendarUtility cu=new CalendarUtility();
-		//LocalDate now=LocalDate.of(2018,10,17);
 		//LocalDate now=LocalDate.now();
-		//LocaleDate now=LocalDate.of(year,month,14);
-		//LunarDate lc=cu.getLunarDate(now);
-		//LocalDate easterDate=cu.getEasterDateByYear(year);
-		/*System.out.println("Solar Date="+now.getYear()+"/"+now.getMonthValue()+"/"+now.getDayOfMonth());
+		LocalDate now=LocalDate.of(year,month,5);
+		LunarDate lc=cu.getLunarDate(now);
+		LocalDate easterDate=cu.getEasterDateByYear(year);
+		System.out.println("Solar Date="+now.getYear()+"/"+now.getMonthValue()+"/"+now.getDayOfMonth());
 		System.out.println("Lunar Date="+lc.chineseYearName+"年"+cu.numToChineseNum(lc.month)+"月"+cu.numToChineseNum(lc.date)+"日");
 		System.out.println("Lunar Date in Chinese="+lc.chineseYearName+"年"+((lc.isLeap)?"(閏)":"")+lc.chineseMonthName+"月"+lc.chineseDayName+"日"+lc.chineseHourName+"時");		
 		System.out.println("Solar Term Info="+lc.solarTermInfo);
 		System.out.println("isLeapMonth="+lc.isLeap);
 		System.out.println("AnimalOfYear="+lc.animalOfYear);
 		System.out.println("Easter Date for "+year+"/"+easterDate.getMonthValue()+"/"+easterDate.getDayOfMonth());
-		System.out.println("===================================================");*/
-		MonthlyCalendar mc=cu.getMonthlyCalendar(year, month);
-	/*	for (int i=1;i<=mc.length;i++)
+		System.out.println("===================================================");
+		MonthlyCalendar mc=cu.getMonthlyCalendar(now.getYear(), now.getMonthValue());
+		for (int i=1;i<=mc.length;i++)
 		{
 			MyLocalDate myLocalDate=mc.getMonthlyCalendar().get(i);
 			System.out.println("i="+i+",Solar Date="+myLocalDate.getYear());	
@@ -655,7 +655,7 @@ public class CalendarUtility {
 			System.out.println("Festival Info="+myLocalDate.getFestivalInfo());
 			System.out.println("is Holiday="+myLocalDate.isPublicHoliday());
 			System.out.println("===================================================");
-		}*/
+		}
 	}
 
 }
