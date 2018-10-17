@@ -631,8 +631,8 @@ public class CalendarUtility {
 		//int year=2013,month=3;//復活節撗跨3,4月
 		int year=2018,month=12;
 		CalendarUtility cu=new CalendarUtility();
-		//LocalDate now=LocalDate.now();
-		LocalDate now=LocalDate.of(year,month,5);
+		LocalDate now=LocalDate.now();
+		//LocalDate now=LocalDate.of(year,month,5);
 		LunarDate lc=cu.getLunarDate(now);
 		LocalDate easterDate=cu.getEasterDateByYear(year);
 		System.out.println("Solar Date="+now.getYear()+"/"+now.getMonthValue()+"/"+now.getDayOfMonth());
