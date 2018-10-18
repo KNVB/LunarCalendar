@@ -51,7 +51,7 @@ public class MyDateUtility {
 	private LocalDate solarStartDate=LocalDate.of(1900, 1, 31);
 	/**
 	 * 日曆工具物件<br>
-	 * 支援年份(由AD1900至AD2100)<br><b>
+	 * 支援年份(由AD1900至AD2100)<br><br>
 	 * Calendar Utility<br>
 	 * It support from AD1900 to AD2100
 	 */
@@ -231,7 +231,7 @@ public class MyDateUtility {
 	/**
 	 * 傳入LocalDate物件, 傳回LunarDate物件<br>
 	 * It returns a corresponding LunarDate object when a LocalDate object is given.
-	 * @param inCalendarObj LocalDate物件
+	 * @param inLocalDateObj LocalDate物件
 	 * @return LunarDate物件<br>
 	 * A corresponding LunarDate object when a LocalDate object is given.
 	 */
@@ -623,7 +623,8 @@ public class MyDateUtility {
 	}
 	/**
 	 * For Testing only
-	 */	
+	 * @param args command line parameter
+	 */
 	public static void main(String[] args) 
 	{
 		//int year=2017,month=4;//
