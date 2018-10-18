@@ -15,7 +15,7 @@ import java.time.LocalDate;
  *
  * @author Roy Tsang
  */
-public class MyLocalDate 
+public class MyDate 
 {
 	private boolean isPublicHoliday=false;
 	private String festivalInfo=new String();
@@ -23,7 +23,7 @@ public class MyLocalDate
 	private LocalDate solarDate;
 	
 	
-	protected MyLocalDate(LocalDate sc, LunarDate lc)
+	protected MyDate(LocalDate sc, LunarDate lc)
 	{
 		lunarDate=lc;
 		solarDate=sc;

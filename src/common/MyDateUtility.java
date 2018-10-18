@@ -17,7 +17,7 @@ import java.util.Hashtable;
  *
  * @author Roy Tsang
  */
-public class CalendarUtility {
+public class MyDateUtility {
 
 	private int lunarInfo[]={0x4bd8,0x4ae0,0xa570,0x54d5,0xd260,0xd950,0x5554,0x56af,0x9ad0,0x55d2,
 			0x4ae0,0xa5b6,0xa4d0,0xd250,0xd295,0xb54f,0xd6a0,0xada2,0x95b0,0x4977,
@@ -55,7 +55,7 @@ public class CalendarUtility {
 	 * Calendar Utility<br>
 	 * It support from AD1900 to AD2100
 	 */
-	public CalendarUtility()
+	public MyDateUtility()
 	{
 		lunarHolidayList.put("0101","大年初一");
 		lunarHolidayList.put("0102","年初二");
@@ -395,7 +395,7 @@ public class CalendarUtility {
 	{
 		String key;
 		int i,tempDate;
-		MyLocalDate m;
+		MyDate m;
 		LunarDate lDObj;
 		Hashtable<Integer,String>lunarHolidayDates=new Hashtable<Integer,String>();
 		String solarMonthPattern,lunarPattern=new String();
@@ -419,7 +419,7 @@ public class CalendarUtility {
 		 * the weekday of 1st of the month
 		 */
 		mc.firstWeekDay=sDObj.getDayOfWeek().getValue();
-		Hashtable<Integer,MyLocalDate>myCalendarList=new Hashtable<Integer,MyLocalDate>();
+		Hashtable<Integer,MyDate>myCalendarList=new Hashtable<Integer,MyDate>();
 		
 		for (i=1;i<=mc.length;i++)
 		{
@@ -430,7 +430,7 @@ public class CalendarUtility {
 			lunarPattern=String.format("%02d", lDObj.month)+String.format("%02d", lDObj.date);
 			if (lunarHolidayList.containsKey(lunarPattern))
 				lunarHolidayDates.put(i,lunarHolidayList.get(lunarPattern));
-			m=new MyLocalDate(sDObj,lDObj);
+			m=new MyDate(sDObj,lDObj);
 			myCalendarList.put(i,m);
 		}
 		
@@ -472,9 +472,9 @@ public class CalendarUtility {
 	 * @param festivalInfo
 	 * @param inDate
 	 */
-	private void processHoliday(Hashtable<Integer, MyLocalDate> myCalendarList, String festivalInfo,int inDate) 
+	private void processHoliday(Hashtable<Integer, MyDate> myCalendarList, String festivalInfo,int inDate) 
 	{
-		MyLocalDate m1=myCalendarList.get(inDate);
+		MyDate m1=myCalendarList.get(inDate);
 		if((m1.getDayOfWeek()!=DayOfWeek.SUNDAY) && (!m1.isPublicHoliday()))
 		{
 			setHoliday(myCalendarList,festivalInfo,inDate);
@@ -490,7 +490,7 @@ public class CalendarUtility {
 	 * @param festivalInfo
 	 * @param inDate
 	 */
-	private void processEasterHoliday(Hashtable<Integer,MyLocalDate>myCalendarList,int year,int month) 
+	private void processEasterHoliday(Hashtable<Integer,MyDate>myCalendarList,int year,int month) 
 	{
 		LocalDate goodFriday,holySaturday,easterMonday;
 		LocalDate easterDate=getEasterDateByYear(year);
@@ -519,9 +519,9 @@ public class CalendarUtility {
 	 * @param myCalendarList
 	 * @param lunarHolidayDates
 	 */
-	private void processLunarYearHoliday(Hashtable<Integer,MyLocalDate>myCalendarList,Hashtable<Integer,String>lunarHolidayDates) 
+	private void processLunarYearHoliday(Hashtable<Integer,MyDate>myCalendarList,Hashtable<Integer,String>lunarHolidayDates) 
 	{
-		MyLocalDate m;
+		MyDate m;
 		int tempDate,maxDate=0,i=0;
 		String festivalInfo;
 		if (!lunarHolidayDates.isEmpty())
@@ -561,9 +561,9 @@ public class CalendarUtility {
 	 * @param festivalInfo
 	 * @param inDate
 	 */
-	private void holidayCompensation(Hashtable<Integer, MyLocalDate> myCalendarList, String festivalInfo,int inDate) 
+	private void holidayCompensation(Hashtable<Integer, MyDate> myCalendarList, String festivalInfo,int inDate) 
 	{
-		MyLocalDate m1,m2; 
+		MyDate m1,m2; 
 		m1=myCalendarList.get(inDate);
 		if((m1.getDayOfWeek()==DayOfWeek.SUNDAY) || (m1.isPublicHoliday()))
 		{
@@ -601,9 +601,9 @@ public class CalendarUtility {
 	 * @param festivalInfo 節日/假期資訊
 	 * @param date 當日的日期
 	 */
-	private void setFestivalInfo(Hashtable<Integer,MyLocalDate>myCalendarList,String festivalInfo,int date)
+	private void setFestivalInfo(Hashtable<Integer,MyDate>myCalendarList,String festivalInfo,int date)
 	{
-		MyLocalDate m=myCalendarList.remove(date);
+		MyDate m=myCalendarList.remove(date);
 		m.setPublicHoliday(false);
 		m.setFestivalInfo(festivalInfo);
 		myCalendarList.put(date,m);
@@ -614,9 +614,9 @@ public class CalendarUtility {
 	 * @param festivalInfo 節日/假期資訊
 	 * @param date 當日的日期
 	 */
-	private void setHoliday(Hashtable<Integer,MyLocalDate>myCalendarList,String festivalInfo,int date)
+	private void setHoliday(Hashtable<Integer,MyDate>myCalendarList,String festivalInfo,int date)
 	{
-		MyLocalDate m=myCalendarList.remove(date);
+		MyDate m=myCalendarList.remove(date);
 		m.setPublicHoliday(true);
 		m.setFestivalInfo(festivalInfo);
 		myCalendarList.put(date,m);
@@ -630,7 +630,7 @@ public class CalendarUtility {
 		//int year=2015,month=3;//復活節清明節overlap
 		//int year=2013,month=3;//復活節撗跨3,4月
 		int year=2018,month=12;
-		CalendarUtility cu=new CalendarUtility();
+		MyDateUtility cu=new MyDateUtility();
 		LocalDate now=LocalDate.now();
 		//LocalDate now=LocalDate.of(year,month,5);
 		LunarDate lc=cu.getLunarDate(now);
@@ -646,7 +646,7 @@ public class CalendarUtility {
 		MonthlyCalendar mc=cu.getMonthlyCalendar(now.getYear(), now.getMonthValue());
 		for (int i=1;i<=mc.length;i++)
 		{
-			MyLocalDate myLocalDate=mc.getMonthlyCalendar().get(i);
+			MyDate myLocalDate=mc.getMonthlyCalendar().get(i);
 			System.out.println("i="+i+",Solar Date="+myLocalDate.getYear());	
 			System.out.println("Solar Date="+myLocalDate.getYear()+"/"+(myLocalDate.getMonth())+"/"+myLocalDate.getDayOfMonth()+" "+myLocalDate.getDayOfWeek());
 			System.out.println("Lunar Date="+myLocalDate.getChineseYearName()+"年"+cu.numToChineseNum(myLocalDate.getLunarMonth())+"月"+cu.numToChineseNum(myLocalDate.getLunarDate())+"日");
