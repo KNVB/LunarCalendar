@@ -349,7 +349,7 @@ public class MyCalendarUtility {
 	 * 傳回該年的復活節LocalDate物件(春分後第一次滿月週後的第一主日)<br>
 	 * It returns a LocalDate object which devote the date of easter of given year
 	 * @param y 年份
-	 * @return 傳回該年復活節GregorianCalendar物件
+	 * @return 傳回該年復活節LocalDate物件
 	 */
 	public LocalDate getEasterDateByYear(int y)
 	{
