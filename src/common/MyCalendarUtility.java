@@ -17,7 +17,7 @@ import java.util.Hashtable;
  *
  * @author Roy Tsang
  */
-public class MyDateUtility {
+public class MyCalendarUtility {
 
 	private int lunarInfo[]={0x4bd8,0x4ae0,0xa570,0x54d5,0xd260,0xd950,0x5554,0x56af,0x9ad0,0x55d2,
 			0x4ae0,0xa5b6,0xa4d0,0xd250,0xd295,0xb54f,0xd6a0,0xada2,0x95b0,0x4977,
@@ -55,7 +55,7 @@ public class MyDateUtility {
 	 * Calendar Utility<br>
 	 * It support from AD1900 to AD2100
 	 */
-	public MyDateUtility()
+	public MyCalendarUtility()
 	{
 		lunarHolidayList.put("0101","大年初一");
 		lunarHolidayList.put("0102","年初二");
@@ -631,7 +631,7 @@ public class MyDateUtility {
 		//int year=2015,month=3;//復活節清明節overlap
 		//int year=2013,month=3;//復活節撗跨3,4月
 		int year=2018,month=12;
-		MyDateUtility cu=new MyDateUtility();
+		MyCalendarUtility cu=new MyCalendarUtility();
 		LocalDate now=LocalDate.now();
 		//LocalDate now=LocalDate.of(year,month,5);
 		LunarDate lc=cu.getLunarDate(now);
