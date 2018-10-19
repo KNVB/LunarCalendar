@@ -46,29 +46,29 @@ Sean Lin (林洵賢)先生的email address是sean.tw+blog@gmail.com.
 
 ## Usage
 
-There are 2 methods CalendarUtility class provided :
+There are 2 methods LunarDateObjectFactory class provided :
 <ol>
 	<li>
-		getLunarCalendar:<br> 
-		It return a corresponding LunarCalendar object when a GregorianCalendar object is given.<br>
-		The detail information about LunarCalendar object are provided in JavaDoc. 
+		getLunarDateTime:<br> 
+		It return a corresponding LunarDateTime object when a LocalDateTime object is given.<br>
+		The detail information about LunarDateTime object are provided in JavaDoc. 
 	</li><br>
 	<li> 
 		getMonthlyCalendar:<br>	
 		It return a MonthlyCalendar object when a year and month parameter is provided.<br>
-		The detail information about MonthlyCalendar and MyCalendar object are provided in JavaDoc.<br>
+		The detail information about MonthlyCalendar and MyDateTime object are provided in JavaDoc.<br>
 		It is useful for Monthly Calendar generation.
 	</li>	
 </ol>	
-CalendarUtility 有兩個重要的method
+LunarDateObjectFactory 有兩個重要的method
 <ol>
 	<li>
 		getLunarCalendar:<br>
-		傳入單一西曆日子(即是 GregorianCalendar物件),傳回LunarCalendar物件,有關LunarCalendar物件的詳細資料請參考JavaDoc.
+		傳入單一西曆日子(即是LocalDateTime物件),傳回LunarDateTime物件,有關LunarDateTime物件的詳細資料請參考JavaDoc.
 	</li><br>
 	<li>
 		getMonthlyCalendar:<br>
-		傳入年份月份,傳回對應的MonthlyCalendar物件,在這個物件內可以獲取整個月的MyCalendar物件,關於MyCalendar物件的詳細資料請參考JavaDoc.<br>
+		傳入年份月份,傳回對應的MonthlyCalendar物件,在這個物件內可以獲取整個月的MyDateTime物件,關於MyDateTime物件的詳細資料請參考JavaDoc.<br>
 		這個method對編制月曆很有用.
 	</li>
 </ol>	
