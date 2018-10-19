@@ -1,5 +1,6 @@
 package common;
 
+import java.time.DayOfWeek;
 import java.util.Hashtable;
 /**
  * 
@@ -24,7 +25,7 @@ public class MonthlyCalendar
 	 * 該月1日是星期幾<br>
 	 * The day of 1st of the specified month.
 	 */
-	public int firstWeekDay;
+	public DayOfWeek firstWeekDay;
 	private Hashtable<Integer,MyDate> monthlyCalendar; 
 	/**
 	 * 西曆月曆物件

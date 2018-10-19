@@ -3,8 +3,10 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.TextStyle;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Locale;
 /**
  * 
  * 日曆工具物件<br> 	
@@ -418,7 +420,7 @@ public class MyCalendarUtility {
 		 * 西曆當月1日星期幾
 		 * the weekday of 1st of the month
 		 */
-		mc.firstWeekDay=sDObj.getDayOfWeek().getValue();
+		mc.firstWeekDay=sDObj.getDayOfWeek();
 		Hashtable<Integer,MyDate>myCalendarList=new Hashtable<Integer,MyDate>();
 		
 		for (i=1;i<=mc.length;i++)
@@ -649,7 +651,7 @@ public class MyCalendarUtility {
 		{
 			MyDate myLocalDate=mc.getMonthlyCalendar().get(i);
 			System.out.println("i="+i+",Solar Date="+myLocalDate.getYear());	
-			System.out.println("Solar Date="+myLocalDate.getYear()+"/"+(myLocalDate.getMonth())+"/"+myLocalDate.getDayOfMonth()+" "+myLocalDate.getDayOfWeek());
+			System.out.println("Solar Date="+myLocalDate.getYear()+"/"+(myLocalDate.getMonth())+"/"+myLocalDate.getDayOfMonth()+" "+myLocalDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.TRADITIONAL_CHINESE));
 			System.out.println("Lunar Date="+myLocalDate.getChineseYearName()+"年"+cu.numToChineseNum(myLocalDate.getLunarMonth())+"月"+cu.numToChineseNum(myLocalDate.getLunarDate())+"日");
 			System.out.println("Lunar Date in Chinese="+myLocalDate.getChineseYearName()+"年"+((myLocalDate.isLeap())?"(閏)":"")+myLocalDate.getChineseMonthName()+"月"+myLocalDate.getChineseDayName()+"日"+myLocalDate.getChineseHourName()+"時");
 			System.out.println("Solar Term Info="+myLocalDate.getSolarTermInfo());
