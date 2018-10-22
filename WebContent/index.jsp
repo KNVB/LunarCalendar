@@ -36,37 +36,37 @@ catch  (NumberFormatException nfe)
 <table border=1>
 	<thead>
 		<form method="post">
-		<tr>
-			<td style="text-align: center;">
-					<select name="year" onchange="this.form.submit();">
-<%					for (int i=1900;i<2100;i++)
-					{
-						out.println("<option value=\""+i+"\""+((i==thisYear)?" selected":"")+">"+i+"</option>");
-					}%>						
-					</select>
-					/
-					<select name="month" onchange="this.form.submit();">
-<%						for (Month c : Month.values())
-						{  
-							out.println("<option value=\""+c.getValue()+"\""+((c.getValue()==thisMonth)?" selected":"")+">"+c.getDisplayName(TextStyle.FULL, locale)+"</option>");
-						}%>
-					</select>
-					/
-					<select name="date" onchange="this.form.submit();">
-<%					for (int i=1;i<32;i++)
-					{
-						out.println("<option value=\""+i+"\""+((i==thisDate)?" selected":"")+">"+i+"</option>");
-					}%>						
-					</select>
-					&nbsp;
-					<select name="hour" onchange="this.form.submit();">
-<%					for (int i=0;i<24;i++)
-					{
-						out.println("<option value=\""+i+"\""+((i==thisHour)?" selected":"")+">"+i+"</option>");
-					}%>					
-					</select>
-			</td>	
-		</tr>
+			<tr>
+				<td style="text-align: center;">
+						<select name="year" onchange="this.form.submit();">
+	<%					for (int i=1900;i<2100;i++)
+						{
+							out.println("<option value=\""+i+"\""+((i==thisYear)?" selected":"")+">"+i+"</option>");
+						}%>						
+						</select>
+						/
+						<select name="month" onchange="this.form.submit();">
+	<%						for (Month c : Month.values())
+							{  
+								out.println("<option value=\""+c.getValue()+"\""+((c.getValue()==thisMonth)?" selected":"")+">"+c.getDisplayName(TextStyle.FULL, locale)+"</option>");
+							}%>
+						</select>
+						/
+						<select name="date" onchange="this.form.submit();">
+	<%					for (int i=1;i<=now.toLocalDate().lengthOfMonth();i++)
+						{
+							out.println("<option value=\""+i+"\""+((i==thisDate)?" selected":"")+">"+i+"</option>");
+						}%>						
+						</select>
+						&nbsp;
+						<select name="hour" onchange="this.form.submit();">
+	<%					for (int i=0;i<24;i++)
+						{
+							out.println("<option value=\""+i+"\""+((i==thisHour)?" selected":"")+">"+i+"</option>");
+						}%>					
+						</select>
+				</td>	
+			</tr>
 		</form>
 	</thead>
 	<tbody>
