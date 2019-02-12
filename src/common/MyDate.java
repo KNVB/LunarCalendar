@@ -1,7 +1,7 @@
 package common;
 
 import java.time.DayOfWeek;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * 
@@ -20,10 +20,10 @@ public class MyDate
 	private boolean isPublicHoliday=false;
 	private String festivalInfo=new String();
 	private LunarDate lunarDate;
-	private LocalDate solarDate;
+	private LocalDateTime solarDate;
 	
 	
-	protected MyDate(LocalDate sc, LunarDate lc)
+	protected MyDate(LocalDateTime sc, LunarDate lc)
 	{
 		lunarDate=lc;
 		solarDate=sc;

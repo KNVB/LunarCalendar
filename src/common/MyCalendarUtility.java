@@ -7,6 +7,7 @@ import java.time.format.TextStyle;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Locale;
+
 /**
  * 
  * 日曆工具物件<br> 	
@@ -50,7 +51,7 @@ public class MyCalendarUtility {
 	private String solarTerm[] ={"小寒","大寒","立春","雨水","驚蟄","春分","清明","穀雨","立夏","小滿","芒種","夏至","小暑","大暑","立秋","處暑","白露","秋分","寒露","霜降","立冬","小雪","大雪","冬至"};
 	private Hashtable <String,String>lunarHolidayList=new Hashtable<String,String>();
 	private Hashtable <String,String>solarHolidayList=new Hashtable<String,String>();
-	private LocalDate solarStartDate=LocalDate.of(1900, 1, 31);
+	private LocalDateTime solarStartDate=LocalDateTime.of(1900, 1, 31,0,0,0);
 	/**
 	 * 日曆工具物件<br>
 	 * 支援年份(由AD1900至AD2100)<br><br>
@@ -237,19 +238,19 @@ public class MyCalendarUtility {
 	 * @return LunarDate物件<br>
 	 * A corresponding LunarDate object when a LocalDate object is given.
 	 */
-	public LunarDate getLunarDate(LocalDate inLocalDateObj)
+	public LunarDate getLunarDate(LocalDateTime inLocalDateObj)
 	{
 		int i,lunarLeapMonth,firstNode,solarTermDate;
 		long offset=0L,temp=0L,dayCyclical=0L;
 		int inYear,inMonth,inDate;
 		LunarDate result=new LunarDate();
-		LocalDateTime inLocalDateTimeObj=inLocalDateObj.atStartOfDay();
+
 		inYear=inLocalDateObj.getYear();
 		inMonth=inLocalDateObj.getMonthValue();
 		inDate=inLocalDateObj.getDayOfMonth();
 		
-		offset=inLocalDateTimeObj.atZone(ZoneId.of("UTC")).toInstant().toEpochMilli();
-		offset=(offset-solarStartDate.atStartOfDay().atZone(ZoneId.of("UTC")).toInstant().toEpochMilli())/86400000L;
+		offset=inLocalDateObj.atZone(ZoneId.of("UTC")).toInstant().toEpochMilli();
+		offset=(offset-solarStartDate.atZone(ZoneId.of("UTC")).toInstant().toEpochMilli())/86400000L;
 		//System.out.println("offset="+offset);
 		for(i=1900; i<2100 && offset>0; i++) 
 		{ 
@@ -305,15 +306,23 @@ public class MyCalendarUtility {
 		result.date=(int)offset+1;
 		
 		////////年柱 1900年立春後為庚子年(60進制36)
-		if(inLocalDateObj.getMonthValue()<3)	
+		switch(inMonth)
 		{
-			 result.chineseYearName=getCyclical(inYear-1900+36-1);
-			 result.animalOfYear=getAnimalOfYear(inYear-1);
-		}
-		else
-		{
-			 result.chineseYearName=getCyclical(inYear-1900+36);
-			 result.animalOfYear=getAnimalOfYear(inYear);
+			case 1:
+			case 2:	if ((result.month==12)||(result.month==11))
+					{
+						 result.chineseYearName=getCyclical(inYear-1900+36-1);
+						 result.animalOfYear=getAnimalOfYear(inYear-1);
+					}
+					else
+					{
+						result.chineseYearName=getCyclical(inYear-1900+36);
+				 		result.animalOfYear=getAnimalOfYear(inYear);
+					}
+					break;
+			default:result.chineseYearName=getCyclical(inYear-1900+36);
+			 		result.animalOfYear=getAnimalOfYear(inYear);
+					break;
 		}
 		////////月柱 1900年1月小寒以前為 丙子月(60進制12)
 		firstNode = sTerm(inLocalDateObj.getYear(),(inMonth-1)*2); //傳回當月「節」為幾日開始
@@ -323,6 +332,8 @@ public class MyCalendarUtility {
 			result.chineseMonthName  = getCyclical((inYear-1900)*12+inMonth+12);
 		else
 			result.chineseMonthName = getCyclical((inYear-1900)*12+inMonth+11);
+		
+		
 		//當月一日與 1900/1/1 相差天數
 		//1900/1/1與 1970/1/1 相差25567日, 1900/1/1 日柱為甲戌日(60進制10)
 		dayCyclical=LocalDate.of(inYear,inMonth,1).atStartOfDay(ZoneId.of("UTC")).toInstant().toEpochMilli();
@@ -330,8 +341,9 @@ public class MyCalendarUtility {
 		
 		//日柱
 		result.chineseDayName = getCyclical((int)dayCyclical+inDate);
+		
 		//時柱
-		result.chineseHourName=getChineseHourName(inLocalDateObj.atStartOfDay().getHour());
+		result.chineseHourName=getChineseHourName(inLocalDateObj.getHour());
 		
 		solarTermDate=sTerm(inYear,(inMonth-1)*2);
 		//節氣
@@ -345,6 +357,7 @@ public class MyCalendarUtility {
 				result.solarTermInfo = solarTerm[(inMonth-1)*2];
 			}
 		}
+		
 		return result;
 	}
 	/**
@@ -353,10 +366,10 @@ public class MyCalendarUtility {
 	 * @param y 年份
 	 * @return 傳回該年復活節LocalDate物件
 	 */
-	public LocalDate getEasterDateByYear(int y)
+	public LocalDateTime getEasterDateByYear(int y)
 	{
 		int lMlen,term2=sTerm(y,5); //取得春分日期
-		LocalDate dayTerm2=LocalDate.of(y,3, term2);//取得春分的國曆日期物件(春分一定出現在3月)
+		LocalDateTime dayTerm2=LocalDateTime.of(y,3, term2,0,0,0);//取得春分的國曆日期物件(春分一定出現在3月)
 		LunarDate lDayTerm2 = getLunarDate(dayTerm2); //取得取得春分農曆
 		
 		if (lDayTerm2.date<15)
@@ -408,7 +421,7 @@ public class MyCalendarUtility {
 		 * 西曆當月一日日期
 		 * Create GregorianCalendar object for the 1st of the month 
 		 */
-		LocalDate sDObj = LocalDate.of(year,month,1);
+		LocalDateTime sDObj = LocalDateTime.of(year,month,1,0,0,0);
 		
 		/*
 		 * 西曆當月的天數
@@ -426,7 +439,7 @@ public class MyCalendarUtility {
 		for (i=1;i<=mc.length;i++)
 		{
 			
-			sDObj = LocalDate.of(year,month,i);
+			sDObj = LocalDateTime.of(year,month,i,0,0,0);
 			lDObj=getLunarDate(sDObj);
 			//System.out.printf("%d-%d-%d %s年%s月%s日 %d-%d\n",year,month,i,lDObj.chineseYearName,lDObj.chineseMonthName,lDObj.chineseDayName,lDObj.month,lDObj.date);
 			lunarPattern=String.format("%02d", lDObj.month)+String.format("%02d", lDObj.date);
@@ -494,8 +507,8 @@ public class MyCalendarUtility {
 	 */
 	private void processEasterHoliday(Hashtable<Integer,MyDate>myCalendarList,int year,int month) 
 	{
-		LocalDate goodFriday,holySaturday,easterMonday;
-		LocalDate easterDate=getEasterDateByYear(year);
+		LocalDateTime goodFriday,holySaturday,easterMonday;
+		LocalDateTime easterDate=getEasterDateByYear(year);
 		
 		goodFriday=easterDate.minusDays(2);
 		holySaturday=easterDate.minusDays(1);
@@ -630,14 +643,14 @@ public class MyCalendarUtility {
 	public static void main(String[] args) 
 	{
 		//int year=2017,month=4;//
-		//int year=2015,month=3;//復活節清明節overlap
-		//int year=2013,month=3;//復活節撗跨3,4月
-		int year=2018,month=12;
+		//int year=2015,month=4;//復活節清明節overlap
+		//int year=2013,month=4;//復活節撗跨3,4月
+		int year=2019,month=4;
 		MyCalendarUtility cu=new MyCalendarUtility();
-		LocalDate now=LocalDate.now();
-		//LocalDate now=LocalDate.of(year,month,5);
+		//LocalDateTime now=LocalDateTime.now();
+		LocalDateTime now=LocalDateTime.of(year,month,29,0,0,0);
 		LunarDate lc=cu.getLunarDate(now);
-		LocalDate easterDate=cu.getEasterDateByYear(year);
+		LocalDateTime easterDate=cu.getEasterDateByYear(year);
 		System.out.println("Solar Date="+now.getYear()+"/"+now.getMonthValue()+"/"+now.getDayOfMonth());
 		System.out.println("Lunar Date="+lc.chineseYearName+"年"+cu.numToChineseNum(lc.month)+"月"+cu.numToChineseNum(lc.date)+"日");
 		System.out.println("Lunar Date in Chinese="+lc.chineseYearName+"年"+((lc.isLeap)?"(閏)":"")+lc.chineseMonthName+"月"+lc.chineseDayName+"日"+lc.chineseHourName+"時");		
