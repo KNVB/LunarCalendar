@@ -1,6 +1,17 @@
 package common;
-
-public class LunarDateTime 
+/**
+ * 
+ * 農曆日期物件<br> 	
+ *
+ * 本程式參考自Sean Lin (林洵賢)先生的農曆月曆與世界時間DHTML程式(AD1900至AD2100)<br>
+ * http://sean.o4u.com/2008/04/dhtml.html<br><br>
+ *
+ * The program is inspired by Sean Lin DHTML web page:<br>
+ * http://sean.o4u.com/2008/04/dhtml.html
+ *
+ * @author Roy Tsang
+ */
+public class LunarDate 
 {
 	/**
 	 *當天農曆年份(用數字來表示)<br>
@@ -26,31 +37,38 @@ public class LunarDateTime
 	 * 當天年柱<br>
 	 * "Year Pillar" in Chinese of the specified date
 	 */
-	public String yearPillar=new String();
+	public String chineseYearName=new String(); 
 	/**
 	 * 當天月柱<br>
 	 * "Month Pillar in Chinese of the specified date
 	 */
-	public String monthPillar=new String();
+	public String chineseMonthName=new String();
 	/**
 	 *當天日柱<br>
 	 *"Day Pillar" in Chinese of the specified date
 	 */
-	public String datePillar=new String();
+	public String chineseDayName=new String();  
 	/**
 	 *當時時柱<BR>
 	 *"Hour Pillar" in Chinese of the specified date
 	 */
-	public String hourPillar=new String();
+	public String chineseHourName=new String();
+	/**
+	 * 該年生肖<BR>
+	 * The animal Of the year in Chinese of the specified date
+	 */
+	public String animalOfYear=new String();
 	/**
 	 *當天節氣訊息<br>
 	 *Solar Term Info of the specified date
 	 */
 	public String solarTermInfo=new String();
 	/**
-	 * 該年生肖<BR>
-	 * The animal Of the year in Chinese of the specified date
+	 * 農曆日曆物件<BR>
+	 * Lunar Calendar object
 	 */
-	public String animalOfYear=new String();
-
+	public LunarDate()
+	{
+		
+	}
 }

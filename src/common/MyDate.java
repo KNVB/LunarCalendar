@@ -1,7 +1,8 @@
 package common;
 
 import java.time.DayOfWeek;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.Hashtable;
 
 /**
  * 
@@ -15,17 +16,17 @@ import java.time.LocalDateTime;
  *
  * @author Roy Tsang
  */
-public class MyDateTime 
+public class MyDate 
 {
 	private boolean isPublicHoliday=false;
 	private String festivalInfo=new String();
-	private LunarDateTime lunarDateTime;
-	private LocalDateTime solarDateTime;
-	
-	protected MyDateTime(LocalDateTime sc, LunarDateTime lc)
+	private LunarDate lunarDate;
+	private LocalDate solarDate;
+		
+	protected MyDate(LocalDate sc, LunarDate lc)
 	{
-		lunarDateTime=lc;
-		solarDateTime=sc;
+		lunarDate=lc;
+		solarDate=sc;
 	}
 	/**
 	 * 傳回當日的節日/假期資訊<br>
@@ -47,9 +48,9 @@ public class MyDateTime
 	 * @return 當天年柱 <br>
 	 * The "Year Pillar" in Chinese of the specified date 
 	 */
-	public String getYearPillar() 
+	public String getChineseYearName() 
 	{
-		return lunarDateTime.yearPillar;
+		return lunarDate.chineseYearName;
 	}
 	/** 
 	 * 傳回當天月柱<br>
@@ -57,9 +58,9 @@ public class MyDateTime
 	 * @return 當天月柱<br>
 	 * The "Month Pillar" in Chinese of the specified date   
 	 */
-	public String getMonthPillar() 
+	public String getChineseMonthName() 
 	{
-		return lunarDateTime.monthPillar;
+		return lunarDate.chineseMonthName;
 	}
 	/**
 	 *傳回當天日柱<br>
@@ -67,9 +68,9 @@ public class MyDateTime
 	 *@return 當天日柱<br>
 	 * The "Day Pillar" in Chinese of the specified date
 	 */
-	public String getDatePillar() 
+	public String getChineseDayName() 
 	{
-		return lunarDateTime.datePillar;
+		return lunarDate.chineseDayName;
 	}
 	/**
 	 *傳回當時時柱<br>
@@ -77,9 +78,9 @@ public class MyDateTime
 	 *@return 當時時柱<br>
 	 *The "Day Pillar" in Chinese of the specified hour
 	 */
-	public String getHourPillar() 
+	public String getChineseHourName() 
 	{
-		return lunarDateTime.hourPillar;
+		return lunarDate.chineseHourName;
 	}
 	/**
 	 * 傳回該年生肖<br>
@@ -89,7 +90,7 @@ public class MyDateTime
 	 */
 	public String getAnimalOfYear() 
 	{
-		return lunarDateTime.animalOfYear;
+		return lunarDate.animalOfYear;
 	}
 	/**
 	 * 傳回當天節氣訊息<br>
@@ -99,7 +100,7 @@ public class MyDateTime
 	 */
 	public String getSolarTermInfo() 
 	{
-		return lunarDateTime.solarTermInfo;
+		return lunarDate.solarTermInfo;
 	}
 	
 	
@@ -111,7 +112,7 @@ public class MyDateTime
 	 */
 	public int getYear() 
 	{
-		return solarDateTime.getYear();
+		return solarDate.getYear();
 	}	
 	/**
 	 * 傳回當天西曆月份<br>
@@ -121,7 +122,7 @@ public class MyDateTime
 	 */
 	public int getMonth() 
 	{
-		return solarDateTime.getMonthValue();
+		return solarDate.getMonthValue();
 	}
 
 	/**
@@ -132,7 +133,7 @@ public class MyDateTime
 	 */
 	public int getDayOfMonth() 
 	{
-		return solarDateTime.getDayOfMonth();
+		return solarDate.getDayOfMonth();
 	}
 	
 	/**
@@ -143,7 +144,7 @@ public class MyDateTime
 	 */
 	public DayOfWeek getDayOfWeek() 
 	{
-		return solarDateTime.getDayOfWeek();
+		return solarDate.getDayOfWeek();
 	}
 	
 	/**
@@ -166,7 +167,7 @@ public class MyDateTime
 	 */
 	public int getLunarYear()
 	{
-		return lunarDateTime.year;
+		return lunarDate.year;
 	}
 	/**
 	 * 傳回當天農曆月份(用數字來表示)<br>
@@ -176,7 +177,7 @@ public class MyDateTime
 	 */
 	public int getLunarMonth()
 	{
-		return lunarDateTime.month;
+		return lunarDate.month;
 	}
 	/**
 	 * 傳回當天農曆日子(用數字來表示)<br>
@@ -186,7 +187,7 @@ public class MyDateTime
 	 */
 	public int getLunarDate()
 	{
-		return lunarDateTime.date;
+		return lunarDate.date;
 	}
 	/**
 	 * 傳回當天是否為閏月<br>
@@ -196,6 +197,6 @@ public class MyDateTime
 	 */
 	public boolean isLeap()
 	{
-		return lunarDateTime.isLeap;
+		return lunarDate.isLeap;
 	}
 }

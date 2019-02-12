@@ -10,83 +10,140 @@
 <title>Calendar</title>
 </head>
 <body>
+<%! 
+	public void showWeekDay(MyCalendarUtility myCalendarUtility,MyDate myDate,JspWriter out) throws Exception
+	{
+		if (myDate==null)
+			out.println("<td></td>");
+		else
+		{	
+			if ((myDate.getDayOfWeek().equals(DayOfWeek.SUNDAY))||(myDate.isPublicHoliday()))
+				out.println("<td style=\"width:160px;height:100px;color:red;font-weight:bold;vertical-align:top\">"+getHTML(myCalendarUtility,myDate)+"</td>");
+			else	
+				out.println("<td style=\"width:160px;height:100px;vertical-align:top\">"+getHTML(myCalendarUtility,myDate)+"</td>");
+		}
+	}
+	public String getHTML(MyCalendarUtility myCalendarUtility,MyDate myDate)
+	{
+		String result=new String(),chineseDayNum; 
+		result ="<div style=\"display:flex;flex-direction:column;justify-content:space-between;height:100%\">";
+		result+="	<div style=\"display:flex;flex-direction:row;justify-content:space-between\">";
+		result+="		<div>"+myDate.getDayOfMonth()+"</div>";
+		if (myDate.getSolarTermInfo().equals(""))
+		{
+			chineseDayNum=myCalendarUtility.numToChineseNum(myDate.getLunarDate());
+			if (myDate.getLunarDate()<10)
+				chineseDayNum="初"+chineseDayNum;
+		}
+		else
+		{
+			chineseDayNum=myDate.getSolarTermInfo();
+		}
+		result+="		<div style=\"writing-mode:vertical-lr;\">"+chineseDayNum+"</div>";
+		result+="	</div>";
+		result+="	<div style=\"text-align:center;\">";
+		result+="		"+myDate.getFestivalInfo();
+		result+="	</div>";
+		result+="</div>";
+		return result;
+	}
+%>
 <%		
-int thisMonth,thisYear,thisDate,thisHour;
-LocalDateTime now;
-Locale locale = request.getLocale();
-LunarDateObjectFactory lunarDateObjectFactory=new LunarDateObjectFactory();
+int thisMonth,thisYear;
+LocalDate now=LocalDate.now();
+Locale locale = request.getLocale(); 
 try
 {
 	thisYear=Integer.parseInt(request.getParameter("year"));
 	thisMonth=Integer.parseInt(request.getParameter("month"));
-	thisDate=Integer.parseInt(request.getParameter("date"));
-	thisHour=Integer.parseInt(request.getParameter("hour"));
-	
-	now=LocalDateTime.of(thisYear, thisMonth, thisDate, thisHour, 0);
 }
 catch  (NumberFormatException nfe)
 {
-	now=LocalDateTime.now();
 	thisYear=now.getYear();
 	thisMonth=now.getMonthValue();
-	thisDate=now.getDayOfMonth();
-	thisHour=now.getHour();
 }
 %>
 <table border=1>
 	<thead>
 		<form method="post">
-			<tr>
-				<td style="text-align: center;">
-						<select name="year" onchange="this.form.submit();">
-	<%					for (int i=1900;i<2100;i++)
-						{
-							out.println("<option value=\""+i+"\""+((i==thisYear)?" selected":"")+">"+i+"</option>");
-						}%>						
-						</select>
-						/
-						<select name="month" onchange="this.form.submit();">
-	<%						for (Month c : Month.values())
-							{  
-								out.println("<option value=\""+c.getValue()+"\""+((c.getValue()==thisMonth)?" selected":"")+">"+c.getDisplayName(TextStyle.FULL, locale)+"</option>");
-							}%>
-						</select>
-						/
-						<select name="date" onchange="this.form.submit();">
-	<%					for (int i=1;i<=now.toLocalDate().lengthOfMonth();i++)
-						{
-							out.println("<option value=\""+i+"\""+((i==thisDate)?" selected":"")+">"+i+"</option>");
-						}%>						
-						</select>
-						&nbsp;
-						<select name="hour" onchange="this.form.submit();">
-	<%					for (int i=0;i<24;i++)
-						{
-							out.println("<option value=\""+i+"\""+((i==thisHour)?" selected":"")+">"+i+"</option>");
-						}%>					
-						</select>
-				</td>	
-			</tr>
+		<tr>
+			<td style="text-align: center;" colSpan="7">
+					<select name="year" onchange="this.form.submit();">
+<%					for (int i=1900;i<2100;i++)
+					{
+						out.println("<option value=\""+i+"\""+((i==thisYear)?" selected":"")+">"+i+"</option>");
+					}%>						
+					</select>
+					/
+					<select name="month" onchange="this.form.submit();">
+<%						for (Month c : Month.values())
+						{  
+							out.println("<option value=\""+c.getValue()+"\""+((c.getValue()==thisMonth)?" selected":"")+">"+c.getDisplayName(TextStyle.FULL, locale)+"</option>");
+						}%>
+					</select>
+			</td>	
+		</tr>
 		</form>
 	</thead>
 	<tbody>
 		<tr>
-			<td>
-				<% 
-					LunarDateTime lunarDateTime=lunarDateObjectFactory.getLunarDateTime(now);
-					out.println("西曆:"+now.getYear()+"年"+now.getMonthValue()+"月"+now.getDayOfMonth()+"日"+now.getHour()+"時"+now.getMinute()+"分"+now.getSecond()+"秒");
-				%>
-			</td>
+<%  int i;
+	MyCalendarUtility myCalendarUtility=new MyCalendarUtility();
+	MonthlyCalendar mc=myCalendarUtility.getMonthlyCalendar(thisYear, thisMonth);
+	Hashtable <Integer,MyDate>dateList=mc.getMonthlyCalendar();
+	ArrayList<DayOfWeek> myDayOfWeekList=new ArrayList<DayOfWeek>();
+	myDayOfWeekList.add(DayOfWeek.SUNDAY);
+	myDayOfWeekList.add(DayOfWeek.MONDAY);
+	myDayOfWeekList.add(DayOfWeek.TUESDAY);
+	myDayOfWeekList.add(DayOfWeek.WEDNESDAY);
+	myDayOfWeekList.add(DayOfWeek.THURSDAY);
+	myDayOfWeekList.add(DayOfWeek.FRIDAY);
+	myDayOfWeekList.add(DayOfWeek.SATURDAY);
+	for (DayOfWeek dow:myDayOfWeekList)
+	{	
+		if (dow.equals(DayOfWeek.SUNDAY))
+			out.println("<td style=\"text-align: center;color:red;font-weight:bold\">"+dow.getDisplayName(TextStyle.SHORT, locale)+"</td>");
+		else	
+			out.println("<td style=\"text-align: center;\">"+dow.getDisplayName(TextStyle.SHORT, locale)+"</td>");
+	}	
+%>
 		</tr>
 		<tr>
-			<td>
-			<% 
-				out.println("農曆歲次:"+lunarDateTime.yearPillar+"【"+lunarDateTime.animalOfYear+"】年"+((lunarDateTime.isLeap)?"閏":"")+lunarDateObjectFactory.numToChineseNum(lunarDateTime.month)+"月"+lunarDateObjectFactory.numToChineseNum(lunarDateTime.date)+"日"+lunarDateTime.hourPillar+"時<br>");
-				out.println(lunarDateTime.yearPillar+"年"+lunarDateTime.monthPillar+"月"+lunarDateTime.datePillar+"日"+lunarDateTime.hourPillar+"時");
-			%>
-			</td>	
+<%	int date=1;
+	boolean monthStarted=false;
+	for (DayOfWeek dow:myDayOfWeekList)
+	{
+		if (dow.equals(mc.firstWeekDay))
+			monthStarted=true;
+		if (monthStarted)
+		{
+			showWeekDay(myCalendarUtility,dateList.get(date++),out);
+		}
+		else
+		{
+			showWeekDay(myCalendarUtility,null, out);
+		}
+	}
+%>	
 		</tr>
+<% 
+	while (date<dateList.size())
+	{%>
+		<tr>
+<%			
+			for (DayOfWeek dow:myDayOfWeekList)
+			{
+				showWeekDay(myCalendarUtility,dateList.get(date++),out);
+			}
+%>		
+		</tr>	
+<%	}%>		
 	</tbody>
 </table>
+<% LunarDate lunarDate=myCalendarUtility.getLunarDate(LocalDate.of(2018,4,20));
+   out.println(lunarDate.solarTermInfo+"<br>");
+   lunarDate=myCalendarUtility.getLunarDate(LocalDate.now());
+   out.println("現在是:"+lunarDate.chineseYearName+"("+lunarDate.animalOfYear+")年"+lunarDate.chineseMonthName+"月"+lunarDate.chineseDayName+"日"+lunarDate.chineseHourName+"時<br>");
+%>
 </body>
 </html>
