@@ -647,8 +647,8 @@ public class MyCalendarUtility {
 		//int year=2013,month=4;//復活節撗跨3,4月
 		int year=2019,month=4;
 		MyCalendarUtility cu=new MyCalendarUtility();
-		//LocalDateTime now=LocalDateTime.now();
-		LocalDateTime now=LocalDateTime.of(year,month,29,0,0,0);
+		LocalDateTime now=LocalDateTime.now();
+		//LocalDateTime now=LocalDateTime.of(year,month,29,0,0,0);
 		LunarDate lc=cu.getLunarDate(now);
 		LocalDateTime easterDate=cu.getEasterDateByYear(year);
 		System.out.println("Solar Date="+now.getYear()+"/"+now.getMonthValue()+"/"+now.getDayOfMonth());
