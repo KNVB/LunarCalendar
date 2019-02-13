@@ -50,8 +50,8 @@ There are 2 methods CalendarUtility class provided :
 <ol>
 	<li>
 		getLunarCalendar:<br> 
-		It return a corresponding LunarCalendar object when a GregorianCalendar object is given.<br>
-		The detail information about LunarCalendar object are provided in JavaDoc. 
+		It return a corresponding LunarDate object when a LocalDateTime object is given.<br>
+		The detail information about LunarDate object are provided in JavaDoc. 
 	</li><br>
 	<li> 
 		getMonthlyCalendar:<br>	
@@ -64,7 +64,7 @@ CalendarUtility 有兩個重要的method
 <ol>
 	<li>
 		getLunarCalendar:<br>
-		傳入單一西曆日子(即是 GregorianCalendar物件),傳回LunarCalendar物件,有關LunarCalendar物件的詳細資料請參考JavaDoc.
+		傳入單一西曆日子(即是 LocalDateTime),傳回LunarDate物件,有關LunarDate物件的詳細資料請參考JavaDoc.
 	</li><br>
 	<li>
 		getMonthlyCalendar:<br>

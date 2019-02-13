@@ -27,7 +27,7 @@ public class MonthlyCalendar
 	 * The day of 1st of the specified month.
 	 */
 	public DayOfWeek firstWeekDay;
-	private MyDate[] monthlyCalendar; 
+	private MyDate[] dateList; 
 	/**
 	 * 西曆月曆物件
 	 * @param monthlyCalendar
@@ -36,9 +36,9 @@ public class MonthlyCalendar
 	{
 		
 	}
-	protected void setMonthlyCalendar(ArrayList<MyDate> monthlyCalendar)
+	protected void setDateList(ArrayList<MyDate> dateList)
 	{
-		this.monthlyCalendar=monthlyCalendar.toArray(new MyDate[0]);
+		this.dateList=dateList.toArray(new MyDate[0]);
 	}
 	/**
 	 * 傳回整個月的 MyLocalDate物件<br>
@@ -46,8 +46,8 @@ public class MonthlyCalendar
 	 * @return 整個月的 MyLocalDate物件<br>
 	 * A list of MyLocalDate object for specified month
 	 */
-	public MyDate[] getMonthlyCalendar()
+	public MyDate[] getDateList()
 	{
-		return monthlyCalendar;
+		return this.dateList;
 	}	
 }
