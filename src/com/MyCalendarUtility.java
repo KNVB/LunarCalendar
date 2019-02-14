@@ -6,7 +6,6 @@ import java.time.YearMonth;
 import java.time.ZoneId;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.TreeMap;
@@ -375,7 +374,7 @@ public class MyCalendarUtility {
 		LunarDate lDObj;
 		MonthlyCalendar mc=new MonthlyCalendar();
 		MyDate myDate;
-		Map <Integer,String>holidayList;
+		Map <Integer,ArrayList<String>>holidayList;
 		
 		/*
 		 * 西曆當月一日日期
@@ -400,35 +399,47 @@ public class MyCalendarUtility {
 			myDate=new MyDate(sDObj,lDObj);
 			dateList.add(myDate);
 		}
-		//holidayList=prepareHolidayList(dateList);
-		prepareHolidayList(dateList);
+		holidayList=prepareHolidayList(dateList);
+		for (Map.Entry<Integer,ArrayList<String>> entry : holidayList.entrySet()) 
+		{
+			 //System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
+			 holidayCompensation(entry.getKey(),entry.getValue(),dateList);
+	    }	
 		mc.setDateList(dateList);
 		return mc;
 	}	
 	
 	private void holidayCompensation(Integer festivalDate,ArrayList<String>festivalInfoList,ArrayList<MyDate> solarMonthlyDateList) 
 	{
-		MyDate myDate=solarMonthlyDateList.get(festivalDate-1);
-		
-		ArrayList<String> temp;
-		for (String festivalInfo:festivalInfoList)
+		try
 		{
-			if (myDate.getDayOfWeek().equals(DayOfWeek.SUNDAY) || myDate.isPublicHoliday())
+			MyDate myDate=solarMonthlyDateList.get(festivalDate-1);
+			ArrayList<String> temp;
+			for (String festivalInfo:festivalInfoList)
 			{
-				temp=new ArrayList<String>();
-				temp.add(festivalInfo);
-				holidayCompensation(festivalDate+1,temp,solarMonthlyDateList);
+				if ((myDate.getDayOfWeek().equals(DayOfWeek.SUNDAY) || myDate.isPublicHoliday()) &&(festivalInfo.indexOf("*")>-1))
+				{
+					if (festivalInfo.indexOf("補假")==-1)
+						festivalInfo=festivalInfo.replaceAll("\\*", "補假\\*");
+					temp=new ArrayList<String>();
+					temp.add(festivalInfo);
+					holidayCompensation(festivalDate+1,temp,solarMonthlyDateList);
+				}
+				else
+				{
+					if (festivalInfo.indexOf("*")>-1)
+						myDate.setPublicHoliday(true);
+					
+					festivalInfo=festivalInfo.replaceAll("\\*","");
+					myDate.setFestivalInfo(festivalInfo);
+					solarMonthlyDateList.remove(festivalDate-1);
+					solarMonthlyDateList.add(festivalDate-1,myDate);
+				}
 			}
-			else
-			{
-				if (festivalInfo.indexOf("*")>-1)
-					myDate.setPublicHoliday(true);
-				
-				festivalInfo=festivalInfo.replaceAll("\\*","");
-				myDate.setFestivalInfo(festivalInfo);
-				solarMonthlyDateList.remove(festivalDate-1);
-				solarMonthlyDateList.add(festivalDate-1,myDate);
-			}
+		}
+		catch (IndexOutOfBoundsException iOBErr)
+		{
+			
 		}
 	}
 	/**
@@ -437,16 +448,10 @@ public class MyCalendarUtility {
 	 * @param solarMonthlyDateList
 	 * @return Holiday List
 	 */
-	protected void prepareHolidayList(ArrayList<MyDate> solarMonthlyDateList)
+	protected Map <Integer,ArrayList<String>> prepareHolidayList(ArrayList<MyDate> solarMonthlyDateList)
 	{
 		Map <Integer,ArrayList<String>>holidayList=new TreeMap<>();
-		Map <Integer,String>finalHolidayList=new TreeMap<>();
-		
-		int month;
-		String key,lunarMonthPattern,solarMonthPattern;
-		
-		month=solarMonthlyDateList.get(0).getMonth();
-		
+		String lunarMonthPattern,solarMonthPattern;
 		
 		for (MyDate myDate:solarMonthlyDateList)
 		{
@@ -459,10 +464,6 @@ public class MyCalendarUtility {
 				holidayList.computeIfAbsent(myDate.getDayOfMonth(), k -> new ArrayList<String>()).add(lunarHolidayList.get(lunarMonthPattern));
 				
 		}
-		 for (Map.Entry<Integer,ArrayList<String>> entry : holidayList.entrySet()) 
-		 {
-			 //System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
-			 holidayCompensation(entry.getKey(),entry.getValue(),solarMonthlyDateList);
-	     }
+		return holidayList;
 	}	
 }

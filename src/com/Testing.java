@@ -4,7 +4,6 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
 
@@ -55,27 +54,36 @@ public class Testing extends MyCalendarUtility
 		}
 		return dayTerm2;
 	}
-	/*protected Map <Integer,ArrayList<String>> prepareHolidayList(ArrayList<MyDate> solarMonthlyDateList)
+	protected Map <Integer,ArrayList<String>> prepareHolidayList(ArrayList<MyDate> solarMonthlyDateList)
 	{
 		int year,month;
 		LocalDateTime easterDate,goodFriday,holySaturday,easterMonday;
 		Map <Integer,ArrayList<String>> holidayList=super.prepareHolidayList(solarMonthlyDateList);
 		
-		String chingMingDatePattern,key,lunarMonthPattern,solarMonthPattern;
+		String chingMingDatePattern,solarMonthPattern;
 		String easterDatePattern,goodFridayPattern,holySaturdayPattern,easterMondayPattern;
 		month=solarMonthlyDateList.get(0).getMonth();
 		year=solarMonthlyDateList.get(0).getYear();
 		
+		//Ching Ming Festival/清明節日期
 		chingMingDatePattern="04"+String.format("%02d",sTerm(year,6));
 		
+		//Easter/復活節日期
 		easterDate=getEasterDateByYear(year);
 		easterDatePattern=String.format("%02d", easterDate.getMonthValue())+String.format("%02d",easterDate.getDayOfMonth());
+		
+		//Good Friday日期
 		goodFriday=easterDate.minusDays(2);
 		goodFridayPattern=String.format("%02d",goodFriday.getMonthValue())+String.format("%02d",goodFriday.getDayOfMonth());
+		
+		//Holy Saturday日期
 		holySaturday=easterDate.minusDays(1);
 		holySaturdayPattern=String.format("%02d",holySaturday.getMonthValue())+String.format("%02d",holySaturday.getDayOfMonth());
+		
+		//Easter Monday日期
 		easterMonday=easterDate.plusDays(1);
 		easterMondayPattern=String.format("%02d",easterMonday.getMonthValue())+String.format("%02d",easterMonday.getDayOfMonth());
+		
 		for (MyDate myDate:solarMonthlyDateList)
 		{
 			solarMonthPattern=String.format("%02d", month)+String.format("%02d",myDate.getDayOfMonth());
@@ -91,9 +99,9 @@ public class Testing extends MyCalendarUtility
 			if (chingMingDatePattern.equals(solarMonthPattern))
 				holidayList.computeIfAbsent(myDate.getDayOfMonth(),k->new ArrayList<String>()).add("清明節*");
 		}
-		System.out.println(holidayList);
+		//System.out.println(holidayList);
 		return holidayList;
-	}*/
+	}
 	/**
 	 * For Testing only
 	 * @param args command line parameter
@@ -104,9 +112,9 @@ public class Testing extends MyCalendarUtility
 		//int year=2017,month=1;
 		//int year=2015,month=4;//復活節清明節overlap
 		//int year=2016,month=12;//聖誕節補假
-		//int year=2013,month=4;//復活節撗跨3,4月
+		int year=2013,month=3;//復活節撗跨3,4月
 		//int year=2014,month=1; //農曆,西曆都有
-		int year=2018,month=2;//農曆新年補假
+		//int year=2018,month=2;//農曆新年補假
 		Testing cu=new Testing();
 		
 		//LocalDateTime now=LocalDateTime.now();
