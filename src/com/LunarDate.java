@@ -2,7 +2,7 @@ package com;
 /**
  * 
  * 農曆日期物件<br> 	
- *
+ *This is Lunar Date object.
  * 本程式參考自Sean Lin (林洵賢)先生的農曆月曆與世界時間DHTML程式(AD1900至AD2100)<br>
  * http://sean.o4u.com/2008/04/dhtml.html<br><br>
  *
@@ -40,7 +40,7 @@ public class LunarDate
 	public String chineseYearName=new String(); 
 	/**
 	 * 當天月柱<br>
-	 * "Month Pillar in Chinese of the specified date
+	 * "Month Pillar" in Chinese of the specified date
 	 */
 	public String chineseMonthName=new String();
 	/**

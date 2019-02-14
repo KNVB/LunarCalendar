@@ -5,8 +5,8 @@ import java.time.LocalDateTime;
 
 /**
  * 
- * MyLocalDate 日期物件<br> 	
- * 
+ * MyDate 日期物件<br> 	
+ * This is MyDate object.<br> 
  * 本程式參考自Sean Lin (林洵賢)先生的農曆月曆與世界時間DHTML程式(AD1900至AD2100)<br>
  * http://sean.o4u.com/2008/04/dhtml.html<br><br>
  *

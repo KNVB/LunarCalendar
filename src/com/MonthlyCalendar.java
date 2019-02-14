@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * 
  * 西曆月曆物件<br> 	
- * 
+ * This is Monthly Calendar object.<br>
  * 參考自Sean Lin (林洵賢)先生的農曆月曆與世界時間DHTML程式(AD1900至AD2100)<br>
  * http://sean.o4u.com/2008/04/dhtml.html<br><br>
  *
@@ -40,10 +40,10 @@ public class MonthlyCalendar
 		this.dateList=dateList.toArray(new MyDate[0]);
 	}
 	/**
-	 * 傳回整個月的 MyLocalDate物件<br>
-	 * It return a list of MyLocalDate object for specified month  
-	 * @return 整個月的 MyLocalDate物件<br>
-	 * A list of MyLocalDate object for specified month
+	 * 傳回整個月的 MyDate物件<br>
+	 * It return a list of MyDate object for specified month  
+	 * @return 整個月的 MyDate物件<br>
+	 * A list of MyDate object for specified month
 	 */
 	public MyDate[] getDateList()
 	{

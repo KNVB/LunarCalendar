@@ -8,8 +8,9 @@ import java.util.Locale;
 import java.util.Map;
 
 import com.MyCalendarUtility;
-
-
+/**
+ * This is a testing class for the holiday handling customization demonstration.
+*/
 public class Testing extends MyCalendarUtility 
 {
 	public Testing() {
