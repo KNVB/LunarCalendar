@@ -73,6 +73,7 @@ public class MyCalendarUtility {
 		solarHolidayList.put("0501","勞動節*");
 		solarHolidayList.put("0701","香港特別行政區成立紀念日*");
 		solarHolidayList.put("1001","國慶日*");
+		solarHolidayList.put("1224","平安夜");
 		solarHolidayList.put("1225","聖誕節*");
 		solarHolidayList.put("1226","聖誕節翌日*");
 	}
@@ -428,9 +429,10 @@ public class MyCalendarUtility {
 				else
 				{
 					if (festivalInfo.indexOf("*")>-1)
+					{	
 						myDate.setPublicHoliday(true);
-					
-					festivalInfo=festivalInfo.replaceAll("\\*","");
+						festivalInfo=festivalInfo.replaceAll("\\*","");
+					}					
 					myDate.setFestivalInfo(festivalInfo);
 					solarMonthlyDateList.remove(festivalDate-1);
 					solarMonthlyDateList.add(festivalDate-1,myDate);

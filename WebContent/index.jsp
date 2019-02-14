@@ -3,7 +3,8 @@
 <%@ page import="java.time.*"%>
 <%@ page import="java.time.format.*"%>
 <%@ page import="java.util.*"%>
-<%@ page import="common.*"%>
+<%@ page import="com.*"%>
+<%@ page import="com.fasterxml.jackson.databind.ObjectMapper"%>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -48,102 +49,105 @@
 		return result;
 	}
 %>
-<%		
-int thisMonth,thisYear;
-LocalDate now=LocalDate.now();
-Locale locale = request.getLocale(); 
-try
-{
-	thisYear=Integer.parseInt(request.getParameter("year"));
-	thisMonth=Integer.parseInt(request.getParameter("month"));
-}
-catch  (NumberFormatException nfe)
-{
-	thisYear=now.getYear();
-	thisMonth=now.getMonthValue();
-}
-%>
-<table border=1>
-	<thead>
-		<form method="post">
-		<tr>
-			<td style="text-align: center;" colSpan="7">
-					<select name="year" onchange="this.form.submit();">
-<%					for (int i=1900;i<2100;i++)
-					{
-						out.println("<option value=\""+i+"\""+((i==thisYear)?" selected":"")+">"+i+"</option>");
-					}%>						
-					</select>
-					/
-					<select name="month" onchange="this.form.submit();">
-<%						for (Month c : Month.values())
-						{  
-							out.println("<option value=\""+c.getValue()+"\""+((c.getValue()==thisMonth)?" selected":"")+">"+c.getDisplayName(TextStyle.FULL, locale)+"</option>");
-						}%>
-					</select>
-			</td>	
-		</tr>
-		</form>
-	</thead>
-	<tbody>
-		<tr>
-<%  int i;
-	MyCalendarUtility myCalendarUtility=new MyCalendarUtility();
-	MonthlyCalendar mc=myCalendarUtility.getMonthlyCalendar(thisYear, thisMonth);
-	Hashtable <Integer,MyDate>dateList=mc.getMonthlyCalendar();
-	ArrayList<DayOfWeek> myDayOfWeekList=new ArrayList<DayOfWeek>();
-	myDayOfWeekList.add(DayOfWeek.SUNDAY);
-	myDayOfWeekList.add(DayOfWeek.MONDAY);
-	myDayOfWeekList.add(DayOfWeek.TUESDAY);
-	myDayOfWeekList.add(DayOfWeek.WEDNESDAY);
-	myDayOfWeekList.add(DayOfWeek.THURSDAY);
-	myDayOfWeekList.add(DayOfWeek.FRIDAY);
-	myDayOfWeekList.add(DayOfWeek.SATURDAY);
-	for (DayOfWeek dow:myDayOfWeekList)
-	{	
-		if (dow.equals(DayOfWeek.SUNDAY))
-			out.println("<td style=\"text-align: center;color:red;font-weight:bold\">"+dow.getDisplayName(TextStyle.SHORT, locale)+"</td>");
-		else	
-			out.println("<td style=\"text-align: center;\">"+dow.getDisplayName(TextStyle.SHORT, locale)+"</td>");
-	}	
-%>
-		</tr>
-		<tr>
-<%	int date=1;
-	boolean monthStarted=false;
-	for (DayOfWeek dow:myDayOfWeekList)
+<%
+	int thisMonth=0,thisYear=0;
+	LocalDate now=LocalDate.now();
+	Locale locale = request.getLocale(); 
+	try
 	{
-		if (dow.equals(mc.firstWeekDay))
-			monthStarted=true;
-		if (monthStarted)
-		{
-			showWeekDay(myCalendarUtility,dateList.get(date++),out);
-		}
-		else
-		{
-			showWeekDay(myCalendarUtility,null, out);
-		}
+		thisYear=Integer.parseInt(request.getParameter("year"));
+		thisMonth=Integer.parseInt(request.getParameter("month"));
 	}
-%>	
-		</tr>
-<% 
-	while (date<dateList.size())
+	catch  (NumberFormatException nfe)
+	{
+		thisYear=now.getYear();
+		thisMonth=now.getMonthValue();
+	}
+	finally
 	{%>
-		<tr>
-<%			
-			for (DayOfWeek dow:myDayOfWeekList)
-			{
-				showWeekDay(myCalendarUtility,dateList.get(date++),out);
-			}
-%>		
-		</tr>	
-<%	}%>		
-	</tbody>
-</table>
-<% LunarDate lunarDate=myCalendarUtility.getLunarDate(LocalDateTime.of(2018,4,20,0,0,0));
-   out.println(lunarDate.solarTermInfo+"<br>");
-   lunarDate=myCalendarUtility.getLunarDate(LocalDateTime.now());
-   out.println("現在是:"+lunarDate.chineseYearName+"("+lunarDate.animalOfYear+")年"+lunarDate.chineseMonthName+"月"+lunarDate.chineseDayName+"日"+lunarDate.chineseHourName+"時<br>");
+		<table border=1>
+			<thead>
+				<tr>
+					<td style="text-align: center;" colSpan="7">
+							<form method="post">
+								<select name="year" onchange="this.form.submit();">
+			<%					for (int i=1900;i<2100;i++)
+								{
+									out.println("<option value=\""+i+"\""+((i==thisYear)?" selected":"")+">"+i+"</option>");
+								}%>						
+								</select>
+								/
+								<select name="month" onchange="this.form.submit();">
+			<%						for (Month c : Month.values())
+									{  
+										out.println("<option value=\""+c.getValue()+"\""+((c.getValue()==thisMonth)?" selected":"")+">"+c.getDisplayName(TextStyle.FULL, locale)+"</option>");
+									}%>
+								</select>
+							</form>
+					</td>	
+				</tr>
+			</thead>
+			<tbody>
+				<tr>	
+<%		MyCalendarUtility myCalendarUtility=new Testing();	
+		MonthlyCalendar mc=myCalendarUtility.getMonthlyCalendar(thisYear, thisMonth);
+		MyDate dateList[]=mc.getDateList();
+		ArrayList<DayOfWeek> myDayOfWeekList=new ArrayList<DayOfWeek>();
+		myDayOfWeekList.add(DayOfWeek.SUNDAY);
+		myDayOfWeekList.add(DayOfWeek.MONDAY);
+		myDayOfWeekList.add(DayOfWeek.TUESDAY);
+		myDayOfWeekList.add(DayOfWeek.WEDNESDAY);
+		myDayOfWeekList.add(DayOfWeek.THURSDAY);
+		myDayOfWeekList.add(DayOfWeek.FRIDAY);
+		myDayOfWeekList.add(DayOfWeek.SATURDAY);
+		for (DayOfWeek dow:myDayOfWeekList)
+		{	
+			if (dow.equals(DayOfWeek.SUNDAY))
+				out.println("<td style=\"text-align: center;color:red;font-weight:bold\">"+dow.getDisplayName(TextStyle.SHORT, locale)+"</td>");
+			else	
+				out.println("<td style=\"text-align: center;\">"+dow.getDisplayName(TextStyle.SHORT, locale)+"</td>");
+		}	
+	
 %>
+				</tr>
+				<tr>
+<%		int date=0;
+		boolean monthStarted=false;
+		for (DayOfWeek dow:myDayOfWeekList)
+		{
+			if (dow.equals(mc.firstWeekDay))
+				monthStarted=true;
+			if (monthStarted)
+			{
+				showWeekDay(myCalendarUtility,dateList[date++],out);
+			}
+			else
+			{
+				showWeekDay(myCalendarUtility,null, out);
+			}
+		}%>
+				</tr>
+<%		while(date<dateList.length)	 
+		{%>
+				<tr>
+				<%	for (DayOfWeek dow:myDayOfWeekList)
+					{
+						if (date<dateList.length)
+						{	
+							showWeekDay(myCalendarUtility,dateList[date++],out);
+						}
+						else
+						{
+							showWeekDay(myCalendarUtility,null, out);
+						}
+					}%>
+				</tr>
+<%		}%>		
+	</tbody>
+</table>		
+<%		
+		ObjectMapper objectMapper = new ObjectMapper();
+		out.println(objectMapper.writeValueAsString(dateList));
+	} %>				
 </body>
 </html>
