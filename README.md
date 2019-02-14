@@ -62,7 +62,7 @@ There are 2 methods MyCalendarUtility class provided :
 MyCalendarUtility 有兩個重要的method
 <ol>
 	<li>
-		getLunarCalendar:<br>
+		getLunarDate:<br>
 		傳入單一西曆日子(即是 LocalDateTime),傳回LunarDate物件,有關LunarDate物件的詳細資料請參考JavaDoc.
 	</li><br>
 	<li>
