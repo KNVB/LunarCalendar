@@ -49,9 +49,15 @@ Sean Lin (林洵賢)先生的email address是sean.tw+blog@gmail.com.
 There are 2 methods LunarDateObjectFactory class provided :
 <ol>
 	<li>
+<<<<<<< HEAD
 		getLunarDateTime:<br> 
 		It return a corresponding LunarDateTime object when a LocalDateTime object is given.<br>
 		The detail information about LunarDateTime object are provided in JavaDoc. 
+=======
+		getLunarCalendar:<br> 
+		It return a corresponding LunarDate object when a LocalDateTime object is given.<br>
+		The detail information about LunarDate object are provided in JavaDoc. 
+>>>>>>> refs/heads/ArraySolution
 	</li><br>
 	<li> 
 		getMonthlyCalendar:<br>	
@@ -64,7 +70,11 @@ LunarDateObjectFactory 有兩個重要的method
 <ol>
 	<li>
 		getLunarCalendar:<br>
+<<<<<<< HEAD
 		傳入單一西曆日子(即是LocalDateTime物件),傳回LunarDateTime物件,有關LunarDateTime物件的詳細資料請參考JavaDoc.
+=======
+		傳入單一西曆日子(即是 LocalDateTime),傳回LunarDate物件,有關LunarDate物件的詳細資料請參考JavaDoc.
+>>>>>>> refs/heads/ArraySolution
 	</li><br>
 	<li>
 		getMonthlyCalendar:<br>
