@@ -46,23 +46,17 @@ Sean Lin (林洵賢)先生的email address是sean.tw+blog@gmail.com.
 
 ## Usage
 
-There are 2 methods LunarDateObjectFactory class provided :
+There are 2 methods  MyCalendarUtility class provided :
 <ol>
 	<li>
-<<<<<<< HEAD
-		getLunarDateTime:<br> 
-		It return a corresponding LunarDateTime object when a LocalDateTime object is given.<br>
-		The detail information about LunarDateTime object are provided in JavaDoc. 
-=======
-		getLunarCalendar:<br> 
+		getLunarDate:<br> 
 		It return a corresponding LunarDate object when a LocalDateTime object is given.<br>
-		The detail information about LunarDate object are provided in JavaDoc. 
->>>>>>> refs/heads/ArraySolution
+		The detail information about LunarDateTime object are provided in JavaDoc. 
 	</li><br>
 	<li> 
 		getMonthlyCalendar:<br>	
 		It return a MonthlyCalendar object when a year and month parameter is provided.<br>
-		The detail information about MonthlyCalendar and MyDateTime object are provided in JavaDoc.<br>
+		The detail information about MonthlyCalendar and MyDate object are provided in JavaDoc.<br>
 		It is useful for Monthly Calendar generation.
 	</li>	
 </ol>	
@@ -70,15 +64,11 @@ LunarDateObjectFactory 有兩個重要的method
 <ol>
 	<li>
 		getLunarCalendar:<br>
-<<<<<<< HEAD
-		傳入單一西曆日子(即是LocalDateTime物件),傳回LunarDateTime物件,有關LunarDateTime物件的詳細資料請參考JavaDoc.
-=======
 		傳入單一西曆日子(即是 LocalDateTime),傳回LunarDate物件,有關LunarDate物件的詳細資料請參考JavaDoc.
->>>>>>> refs/heads/ArraySolution
 	</li><br>
 	<li>
 		getMonthlyCalendar:<br>
-		傳入年份月份,傳回對應的MonthlyCalendar物件,在這個物件內可以獲取整個月的MyDateTime物件,關於MyDateTime物件的詳細資料請參考JavaDoc.<br>
+		傳入年份月份,傳回對應的MonthlyCalendar物件,在這個物件內可以獲取整個月的MyDate物件,關於MyDate物件的詳細資料請參考JavaDoc.<br>
 		這個method對編制月曆很有用.
 	</li>
 </ol>	
