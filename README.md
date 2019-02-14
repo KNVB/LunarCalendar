@@ -45,7 +45,7 @@ Open Source 不代表放棄著作權，任何形式之引用或轉載前請來�
          
 ## Usage
 
-There are 2 methods  MyCalendarUtility class provided :
+There are 2 methods MyCalendarUtility class provided :
 <ol>
 	<li>
 		getLunarDate:<br> 
@@ -59,7 +59,7 @@ There are 2 methods  MyCalendarUtility class provided :
 		It is useful for Monthly Calendar generation.
 	</li>	
 </ol>	
-LunarDateObjectFactory 有兩個重要的method
+MyCalendarUtility 有兩個重要的method
 <ol>
 	<li>
 		getLunarCalendar:<br>
