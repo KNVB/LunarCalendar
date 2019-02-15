@@ -1,4 +1,4 @@
-# Calendar Utility
+# LunarCalendar Utility
 It is a tool for generate solar information , lunar information, festival and holiday information and related information for a given date.<br>
 The program is inspired by Sean Lin DHTML web page:
 
@@ -26,9 +26,8 @@ The latest version and update information is published at http://sean.o4u.com/ap
                             Contact: http://sean.o4u.com/contact/
                             Sean Lin (Lin Xunxian)
                             Respect for others creation‧ Do not delete or change this description
-
-Mr. Sean Lin (Lin Xunxian) email address is sean.tw+blog@gmail.com.
-
+                            Mr. Sean Lin (Lin Xunxian) email address is sean.tw+blog@gmail.com.
+                            
 
 如果想引用和修改本程式,請參考以下Sean Lin (林洵賢)先生的聲明:
 
@@ -42,14 +41,13 @@ Open Source 不代表放棄著作權，任何形式之引用或轉載前請來�
                             連絡方式：http://sean.o4u.com/contact/
                             Sean Lin (林洵賢)
                             尊重他人創作‧請勿刪除或變更此說明
-Sean Lin (林洵賢)先生的email address是sean.tw+blog@gmail.com.
+                             Sean Lin (林洵賢)先生的email address是sean.tw+blog@gmail.com.
 
 ## Usage
-
-There are 2 methods CalendarUtility class provided :
+There are 2 methods MyCalendarUtility class provided :
 <ol>
 	<li>
-		getLunarCalendar:<br> 
+		getLunarDate:<br> 
 		It return a corresponding LunarDate object when a LocalDateTime object is given.<br>
 		The detail information about LunarDate object are provided in JavaDoc. 
 	</li><br>
@@ -59,17 +57,23 @@ There are 2 methods CalendarUtility class provided :
 		The detail information about MonthlyCalendar and MyCalendar object are provided in JavaDoc.<br>
 		It is useful for Monthly Calendar generation.
 	</li>	
-</ol>	
-CalendarUtility 有兩個重要的method
+</ol>
+Users can extend MyCalendarUtility.prepareHolidayList method to customize the holiday handling.
+
+The Testing Class is for the holiday handling customization demonstration.
+<br><br><br><br>
+MyCalendarUtility 有兩個重要的method
 <ol>
 	<li>
-		getLunarCalendar:<br>
-		傳入單一西曆日子(即是 LocalDateTime),傳回LunarDate物件,有關LunarDate物件的詳細資料請參考JavaDoc.
+		getLunarDate:<br>
+		傳入單一西曆日子(即是 LocalDateTime),傳回LunarDate物件,有關LunarDate物件的詳細資料請參考JavaDoc。
 	</li><br>
 	<li>
 		getMonthlyCalendar:<br>
-		傳入年份月份,傳回對應的MonthlyCalendar物件,在這個物件內可以獲取整個月的MyCalendar物件,關於MyCalendar物件的詳細資料請參考JavaDoc.<br>
-		這個method對編制月曆很有用.
+		傳入年份月份,傳回對應的MonthlyCalendar物件,在這個物件內可以獲取整個月的MyCalendar物件,關於MyCalendar物件的詳細資料請參考JavaDoc。<br>
+		這個method對編制月曆很有用。
 	</li>
 </ol>	
-	
+用戶可以extend MyCalendarUtility.prepareHolidayList 的method來自訂假日處理。
+
+Testing 就用示範如何自訂假日處理。	

@@ -428,9 +428,10 @@ public class MyCalendarUtility {
 				else
 				{
 					if (festivalInfo.indexOf("*")>-1)
+					{	
 						myDate.setPublicHoliday(true);
-					
-					festivalInfo=festivalInfo.replaceAll("\\*","");
+						festivalInfo=festivalInfo.replaceAll("\\*","");
+					}
 					myDate.setFestivalInfo(festivalInfo);
 					solarMonthlyDateList.remove(festivalDate-1);
 					solarMonthlyDateList.add(festivalDate-1,myDate);
