@@ -133,7 +133,7 @@ public class Testing extends MyCalendarUtility
 		MyDate []myDateList=cu.getHolidayList(now.getYear());
 		for (MyDate myDate:myDateList)
 		{
-			System.out.println(myDate.getMonth()+"月"+myDate.getDayOfMonth()+"日\t"+myDate.getFestivalInfo());
+			System.out.printf("%d月%d日\t%s\n",myDate.getMonth(),myDate.getDayOfMonth(),myDate.getFestivalInfo());
 		}
 		/*
 		MonthlyCalendar mc=cu.getMonthlyCalendar(now.getYear(), now.getMonthValue());
