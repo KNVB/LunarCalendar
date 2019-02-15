@@ -230,6 +230,12 @@ public class MyCalendarUtility {
 		}
 		return s;
 	}
+	/**
+	 * 傳回該年的假期清單<br>
+	 * It returns a list of holiday for the given year.
+	 * @param year
+	 * @return
+	 */
 	public MyDate[] getHolidayList(int year)
 	{
 		 ArrayList<MyDate> result=new ArrayList<MyDate>();
