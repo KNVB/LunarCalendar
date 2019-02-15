@@ -41,11 +41,15 @@ Open Source 不代表放棄著作權，任何形式之引用或轉載前請來�
                             連絡方式：http://sean.o4u.com/contact/
                             Sean Lin (林洵賢)
                             尊重他人創作‧請勿刪除或變更此說明
-                             Sean Lin (林洵賢)先生的email address是sean.tw+blog@gmail.com.
+                            Sean Lin (林洵賢)先生的email address是sean.tw+blog@gmail.com.
 
 ## Usage
-There are 2 methods MyCalendarUtility class provided :
+There are 3 methods MyCalendarUtility class provided :
 <ol>
+	<li>
+		getHolidayList:<br>
+		It returns a list of holiday for the given year.
+	</li><br>	
 	<li>
 		getLunarDate:<br> 
 		It return a corresponding LunarDate object when a LocalDateTime object is given.<br>
@@ -62,8 +66,12 @@ Users can extend MyCalendarUtility.prepareHolidayList method to customize the ho
 
 The Testing Class is for the holiday handling customization demonstration.
 <br><br><br><br>
-MyCalendarUtility 有兩個重要的method
+MyCalendarUtility 有三個重要的method
 <ol>
+	<li>
+		getHolidayList:<br>
+		 傳回該年的假期清單。
+	</li><br>
 	<li>
 		getLunarDate:<br>
 		傳入單一西曆日子(即是 LocalDateTime),傳回LunarDate物件,有關LunarDate物件的詳細資料請參考JavaDoc。
