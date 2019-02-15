@@ -230,7 +230,24 @@ public class MyCalendarUtility {
 		}
 		return s;
 	}
-
+	public MyDate[] getHolidayList(int year)
+	{
+		 ArrayList<MyDate> result=new ArrayList<MyDate>();
+		 MyDate[] dateList;
+		 int month;
+		 MonthlyCalendar mc;
+		 for (month=1;month<13;month++)
+		 {
+			mc=getMonthlyCalendar(year,month);
+			dateList=mc.getDateList();
+			for(MyDate myDate:dateList)
+			{
+				if (myDate.isPublicHoliday())
+					result.add(myDate);
+			}
+		 }
+		 return result.toArray(new MyDate[0]);
+	 }
 	/**
 	 * 傳入LocalDate物件, 傳回LunarDate物件<br>
 	 * It returns a corresponding LunarDate object when a LocalDate object is given.

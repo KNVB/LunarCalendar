@@ -112,8 +112,8 @@ public class Testing extends MyCalendarUtility
 		//int year=2017,month=4;//
 		//int year=2017,month=1;
 		//int year=2015,month=4;//復活節清明節overlap
-		//int year=2016,month=12;//聖誕節補假
-		int year=2013,month=3;//復活節撗跨3,4月
+		int year=2016,month=12;//聖誕節補假
+		//int year=2013,month=3;//復活節撗跨3,4月
 		//int year=2014,month=1; //農曆,西曆都有
 		//int year=2018,month=2;//農曆新年補假
 		Testing cu=new Testing();
@@ -130,8 +130,13 @@ public class Testing extends MyCalendarUtility
 		System.out.println("AnimalOfYear="+lc.animalOfYear);
 		System.out.println("Easter Date for "+year+"/"+easterDate.getMonthValue()+"/"+easterDate.getDayOfMonth());
 		System.out.println("===================================================");
+		MyDate []myDateList=cu.getHolidayList(now.getYear());
+		for (MyDate myDate:myDateList)
+		{
+			System.out.println(myDate.getMonth()+"月"+myDate.getDayOfMonth()+"日\t"+myDate.getFestivalInfo());
+		}
+		/*
 		MonthlyCalendar mc=cu.getMonthlyCalendar(now.getYear(), now.getMonthValue());
-		
 		MyDate []myDateList=mc.getDateList();
 		MyDate myLocalDate;
 		for (int i=0;i<myDateList.length;i++)
@@ -146,5 +151,6 @@ public class Testing extends MyCalendarUtility
 			System.out.println("is Holiday="+myLocalDate.isPublicHoliday());
 			System.out.println("===================================================");
 		}
+		*/
 	}
 }
