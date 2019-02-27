@@ -84,4 +84,4 @@ MyCalendarUtility 有三個重要的method
 </ol>	
 用戶可以extend MyCalendarUtility.prepareHolidayList 的method來自訂假日處理。
 
-Testing 就是用示範如何自訂假日處理。	
+Testing 就是用來示範如何自訂假日處理。	
