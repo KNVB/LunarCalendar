@@ -14,9 +14,9 @@ The program is inspired by Sean Lin DHTML web page:
 
 Here is the disclaimer from Sean:
 
-If you think this program is good, you can freely forwarded to friends and family to share. The scope of free to use including: school, society, guild, company, program research, personal website.
+If you think this program is good, you can freely forward to friends and family to share. The scope of free to use including school, society, guild, company, program research, personal website.
 
-Open Source does not mean any abandon of copyright , a written notification should be provided before any form of reference or forwarded.
+Open Source does not mean any abandon of copyright, a written notification should be provided before any form of reference or forwarded.
 
 My written authorization is required before any coding or information used for business or profit purposes.
 
@@ -52,17 +52,17 @@ There are 3 methods MyCalendarUtility class provided :
 	</li><br>	
 	<li>
 		getLunarDate:<br> 
-		It return a corresponding LunarDate object when a LocalDateTime object is given.<br>
-		The detail information about LunarDate object are provided in JavaDoc. 
+		It returns a corresponding LunarDate object when a LocalDateTime object is given.<br>
+		The detail information about LunarDate object is provided in JavaDoc. 
 	</li><br>
 	<li> 
 		getMonthlyCalendar:<br>	
-		It return a MonthlyCalendar object when a year and month parameter is provided.<br>
+		It returns a MonthlyCalendar object when a year and month parameter is provided.<br>
 		The detail information about MonthlyCalendar and MyCalendar object are provided in JavaDoc.<br>
 		It is useful for Monthly Calendar generation.
 	</li>	
 </ol>
-Users can extend MyCalendarUtility.prepareHolidayList method to customize the holiday handling.
+Users can extend MyCalendarUtility.prepareHolidayList method to customize holiday handling.
 
 The Testing Class is for the holiday handling customization demonstration.
 <br><br><br><br>
@@ -84,4 +84,4 @@ MyCalendarUtility 有三個重要的method
 </ol>	
 用戶可以extend MyCalendarUtility.prepareHolidayList 的method來自訂假日處理。
 
-Testing 就用示範如何自訂假日處理。	
+Testing 就是用示範如何自訂假日處理。	
