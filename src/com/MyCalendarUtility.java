@@ -233,8 +233,8 @@ public class MyCalendarUtility {
 	/**
 	 * 傳回該年的假期清單<br>
 	 * It returns a list of holiday for the given year.
-	 * @param year
-	 * @return
+	 * @param year the give year
+	 * @return a list of holiday for the given year.
 	 */
 	public MyDate[] getHolidayList(int year)
 	{
