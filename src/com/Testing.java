@@ -2,9 +2,8 @@ package com;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
-import java.time.format.TextStyle;
+
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Map;
 
 import com.MyCalendarUtility;
