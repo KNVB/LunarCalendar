@@ -151,7 +151,7 @@ public class MyCalendarUtility {
 			return 29;	  
 	}
 	/**
-	 * 傳回西曆 y年某month+1月的天數
+	 * 傳回西曆 y年某month月的天數
 	 * @return 該月的天數
 	 */
 	private int getMonthLength(int year,int month) 
