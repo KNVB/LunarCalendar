@@ -1,4 +1,4 @@
-package com;
+package com.old;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
 
-import com.MyCalendarUtility;
+import com.old.MyCalendarUtility;
 /**
  * This is a testing class for the holiday handling customization demonstration.
 */

@@ -1,4 +1,4 @@
-package com;
+package com.old;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -292,7 +292,7 @@ public class MyCalendarUtility {
 		for(i=1; i<13 && offset>0; i++) 
 		{
 			//閏月
-			if(lunarLeapMonth>0 && i==(lunarLeapMonth) && result.isLeap==false)
+			if(lunarLeapMonth>0 && i==(lunarLeapMonth+1) && result.isLeap==false)
 			{ 
 				--i; 
 				result.isLeap = true; 
@@ -304,12 +304,12 @@ public class MyCalendarUtility {
 			}
 
 			//解除閏月
-			if(result.isLeap==true && i==(lunarLeapMonth)) 
+			if(result.isLeap==true && i==(lunarLeapMonth+1)) 
 				result.isLeap = false;
 
 			offset -= temp;
 		}
-		if(offset==0L && lunarLeapMonth>0 && i==lunarLeapMonth)
+		if(offset==0L && lunarLeapMonth>0 && i==(lunarLeapMonth+1))
 			if(result.isLeap)
 			{
 				result.isLeap = false; 

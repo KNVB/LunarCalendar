@@ -59,11 +59,6 @@ public class LunarDate
 	 */
 	public String animalOfYear=new String();
 	/**
-	 *當天節氣訊息<br>
-	 *Solar Term Info of the specified date
-	 */
-	public String solarTermInfo=new String();
-	/**
 	 * 農曆日曆物件<BR>
 	 * Lunar Calendar object
 	 */
