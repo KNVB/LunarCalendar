@@ -109,7 +109,7 @@ public class CalendarUtility {
 		Map<Integer,ArrayList<String>> publicHolidayList=new TreeMap<Integer,ArrayList<String>>();
 		for (int i=1;i<=getMonthLength(y,m);i++) {
 			solarDateObj=LocalDate.of(y, m, i);
-			lunarDateObj=getLunarDate(solarDateObj.atStartOfDay());
+			lunarDateObj=getPrivateLunarDate(solarDateObj.atStartOfDay());
 			ce =new CalendarElement(solarDateObj,lunarDateObj);
 			
 			solarDate=String.format("%02d", solarDateObj.getMonthValue())+String.format("%02d", solarDateObj.getDayOfMonth());
@@ -214,7 +214,7 @@ public class CalendarUtility {
 	public LocalDate getEasterDateByYear(int y) {
 		int lMlen,term2=sTerm(y,5); //取得春分日期
 		LocalDate dayTerm2=LocalDate.of(y,3, term2);//取得春分的國曆日期物件(春分一定出現在3月)
-		LunarDate lDayTerm2 = getLunarDate(dayTerm2.atStartOfDay()); //取得取得春分農曆
+		LunarDate lDayTerm2 = getPrivateLunarDate(dayTerm2.atStartOfDay()); //取得取得春分農曆
 		
 		if (lDayTerm2.date<15)//取得下個月圓的相差天數
 		{
@@ -244,14 +244,60 @@ public class CalendarUtility {
 		return dayTerm2;	 
 	}
 	/**
-	 * 傳入LocalDate物件, 傳回LunarDate物件<br>
-	 * It returns a corresponding LunarDate object when a LocalDate object is given.
+	 * 傳入LocalDate物件, 傳回LunarDate物件.這個LunarDate物件包含節氣資料.
+	 * It returns a corresponding LunarDate object when a LocalDate object is given.<br>
+	 * This LunarDate object includes solar term information if existed.
 	 * @param inLocalDateTimeObj LocalDate物件
 	 * @return LunarDate物件<br>
 	 * A corresponding LunarDate object when a LocalDate object is given.
 	 */
 	public LunarDate getLunarDate(LocalDateTime inLocalDateTimeObj)
 	{
+		LunarDate result=getPrivateLunarDate(inLocalDateTimeObj);
+		
+		//取得該月節氣
+		Map<Integer,String>solarTermInfoList=getSolarTermInfoList(inLocalDateTimeObj.getYear(),inLocalDateTimeObj.getMonthValue());
+		solarTermInfoList.forEach((index,solarTermInfo)->{
+			if (index==inLocalDateTimeObj.getDayOfMonth()) {
+				result.solarTermInfo=solarTermInfo;
+				return;
+			}
+		});
+		return result;
+	}
+	/**
+	 * 傳回農曆 y年閏哪個月 1-12 , 沒閏傳回 0 <br>
+	 * It returns the leap month of the given lunar year y.  If no leap month found, it returns 0.
+	 * @param y 年份
+	 * @return 傳回農曆 y年閏哪個月 1-12 , 沒閏傳回 0
+	 *
+	 */
+	private int getLunarLeapMonth(int y) 
+	{
+		int lm = lunarInfo[y-1900] & 0xf;
+		return(lm==0xf?0:lm);
+	}
+	/**
+	 * 傳回西曆 y年某month月的天數<br>
+	 * It returns the total no. of day of the given year y and month m.
+	 * @param y 年份
+	 * @param m 月份
+	 * @return 該月的天數
+	 */
+	private int getMonthLength(int year,int m) 
+	{
+		YearMonth yearMonthObject = YearMonth.of(year, m);
+		return yearMonthObject.lengthOfMonth(); 
+	}
+	/**
+	 * 傳入LocalDate物件, 傳回LunarDate物件,這個LunarDate物件不會包含節氣資料.
+	 * It returns a corresponding LunarDate object when a LocalDate object is given.
+	 * 	 This LunarDate object does not include solar term information.
+	 * @param inLocalDateTimeObj LocalDate物件
+	 * @return LunarDate物件<br>
+	 * A corresponding LunarDate object when a LocalDate object is given.
+	 */
+	private LunarDate getPrivateLunarDate(LocalDateTime inLocalDateTimeObj) {
 		int i, leap=0;
 		int inYear,inMonth,inDate;
 		long firstNode=0L,dayCyclical=0L,offset=0L,temp=0L;
@@ -339,32 +385,7 @@ public class CalendarUtility {
 		//時柱
 		result.chineseHourName=getChineseHourName(inLocalDateTimeObj.getHour());
 		
-		
-		return result;
-	}
-	/**
-	 * 傳回農曆 y年閏哪個月 1-12 , 沒閏傳回 0 <br>
-	 * It returns the leap month of the given lunar year y.  If no leap month found, it returns 0.
-	 * @param y 年份
-	 * @return 傳回農曆 y年閏哪個月 1-12 , 沒閏傳回 0
-	 *
-	 */
-	private int getLunarLeapMonth(int y) 
-	{
-		int lm = lunarInfo[y-1900] & 0xf;
-		return(lm==0xf?0:lm);
-	}
-	/**
-	 * 傳回西曆 y年某month月的天數<br>
-	 * It returns the total no. of day of the given year y and month m.
-	 * @param y 年份
-	 * @param m 月份
-	 * @return 該月的天數
-	 */
-	private int getMonthLength(int year,int m) 
-	{
-		YearMonth yearMonthObject = YearMonth.of(year, m);
-		return yearMonthObject.lengthOfMonth(); 
+		return result;		
 	}
 	/**
 	 * 傳回西曆 y年某month月的節氣<br>
@@ -527,20 +548,22 @@ public class CalendarUtility {
 		int date,month,year;
 		CalendarUtility cu=new CalendarUtility();
 		// year=2017;month=1;date=24;
-		year=2015;month=4;date=24;//復活節清明節overlap
+		//year=2015;month=4;date=5;//復活節清明節overlap
 		// year=2016;month=12;date=24;//聖誕節補假
 		// year=2013;month=3;date=24;//復活節撗跨3,4月
 		// year=2014;month=1;date=24;//農曆,西曆都有
 		// year=2018;month=2;date=24;//農曆新年補假
-		//year=2020;month=4;date=24;//佛誕問題
+		year=2020;month=3;date=15;//佛誕問題
 		//year=2020;month=5;date=24;
 		LocalDateTime now=LocalDateTime.of(year,month,date,2,0,0);
 		LunarDate lc=cu.getLunarDate(now);
 		System.out.println("Lunar Date="+lc.chineseYearName+"年"+cu.numToChineseNum(lc.month)+"月"+cu.numToChineseNum(lc.date)+"日");
 		System.out.println("Lunar Date in Chinese="+lc.chineseYearName+"年"+((lc.isLeap)?"(閏)":"")+lc.chineseMonthName+"月"+lc.chineseDayName+"日"+lc.chineseHourName+"時");
+		System.out.println("Solar Term Info="+lc.solarTermInfo);
 		System.out.println("AnimalOfYear="+lc.animalOfYear);
 		System.out.println("isLeapMonth="+lc.isLeap);
 		System.out.println("===================================================");
+		
 		ArrayList<CalendarElement> calendarElementList=cu.buildMonthlyCalendar( year,  month);
 		calendarElementList.forEach((calendar)-> {
 			System.out.println("Solar Date="+calendar.getYear()+"/"+calendar.getMonth()+"/"+calendar.getDayOfMonth()+" "+calendar.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.TRADITIONAL_CHINESE));

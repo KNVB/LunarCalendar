@@ -36,7 +36,6 @@ public class CalendarElement
 	private LunarDate lunarDate;
 	private LocalDate solarDate;
 	
-	
 	protected CalendarElement(LocalDate sc, LunarDate lc)
 	{
 		lunarDate=lc;
