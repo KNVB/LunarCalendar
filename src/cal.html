@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<META http-equiv=Content-Type content="text/html; charset=UTF-8">
+		<script src="CalendarUtility.js"></script>
+	</head>
+	<body>
+		<script>
+			//var year=2011,month=11;
+			//var year=2017,month=3;//
+			//var year=2012,month=9;//中秋節+國慶
+			//var year=2015,month=3;//復活節清明節overlap
+			//var year=2013,month=2;//復活節撗跨3,4月
+			//var year=2013,month=3;//復活節撗跨3,4月
+			//var year=2018,month=1;//農曆新年補假
+			//var year=2020,month=3;
+			//var year=2020,month=0;
+			var year=2020,month=4;
+			var cu=new CalendarUtility();
+			
+			//var solarDate=new Date();
+			var solarDate=new Date(2020,4,30,2);
+			var lunarDate=cu.getLunarDate(solarDate);
+			
+			console.log("Lunar Date="+lunarDate.chineseYearName+"年"+cu.numToChineseNum(lunarDate.month)+"月"+cu.numToChineseNum(lunarDate.date)+"日");
+			console.log("Lunar Date in Chinese="+lunarDate.chineseYearName+"年"+((lunarDate.isLeap)?"(閏)":"")+lunarDate.chineseMonthName+"月"+lunarDate.chineseDayName+"日"+lunarDate.chineseHourName+"時");
+			
+			/*
+			console.log(lunarDate);
+			console.log(cu.getEasterDate(solarDate.getFullYear()));
+			console.log(cu.getAnimalOfYear(solarDate.getFullYear()));
+			*/
+			
+			
+			var calendar=cu.buildMonthlyCalendar(year,month);
+			console.log(calendar);	
+					
+		</script>
+	</body>	
+</html>
