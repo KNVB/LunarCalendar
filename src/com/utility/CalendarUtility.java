@@ -1,4 +1,4 @@
-package com;
+package com.utility;
 
 import java.time.DayOfWeek;
 import java.time.Duration;
@@ -13,12 +13,13 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
-import com.LunarDate;
+import com.utility.LunarDate;
 
 /**
  * 
  * 日曆工具物件<br> 	
- *This is Calendar Utility for MonthlyCalendar,LunarDate generation.<br> 
+ *This is Calendar Utility for Monthly Calendar,LunarDate Object generation.<br>
+ * 
  * 本程式參考自Sean Lin (林洵賢)先生的農曆月曆與世界時間DHTML程式(AD1900至AD2100)<br>
  * http://sean.o4u.com/2008/04/dhtml.html<br><br>
  * 
@@ -51,19 +52,30 @@ public class CalendarUtility {
 			0xd520};
 	private String nStr1[] = {"日","一","二","三","四","五","六","七","八","九","十"};
 	private String nStr2[] = {"初","十","廿","卅","卌"};
+	private String Gan[]={"甲","乙","丙","丁","戊","己","庚","辛","壬","癸"};
 	private String Zhi[]={"子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"};
 	
 	private String solarTerm[] ={"小寒","大寒","立春","雨水","驚蟄","春分","清明","穀雨","立夏","小滿","芒種","夏至","小暑","大暑","立秋","處暑","白露","秋分","寒露","霜降","立冬","小雪","大雪","冬至"};
+	
+	/**
+	 * 它是用來儲存農曆假期日子和資訊.<br>
+	 * It stores the holiday information for the given lunar date. 
+	 */
 	public Hashtable <String,String>lunarHolidayList=new Hashtable<String,String>();
+	/**
+	 * 它是用來儲存西曆假期日子和資訊.<br>
+	 * It stores the holiday information for the given solar date. 
+	 */	
 	public Hashtable <String,String>solarHolidayList=new Hashtable<String,String>();
-	public Hashtable<DayOfWeek,String>weekDayNames=new Hashtable<DayOfWeek,String>();
+	
 	/**
 	 * 日曆工具物件<br>
 	 * 支援年份(由AD1900至AD2100)<br><br>
 	 * Calendar Utility<br>
-	 * It support from AD1900 to AD2100
+	 * It supports from AD1900 to AD2100
 	 */
 	public CalendarUtility() {
+		//起始農曆假期日子
 		lunarHolidayList.put("0101","大年初一");
 		lunarHolidayList.put("0102","年初二");
 		lunarHolidayList.put("0103","年初三");
@@ -72,31 +84,31 @@ public class CalendarUtility {
 		lunarHolidayList.put("0816","中秋節翌日");
 		lunarHolidayList.put("0909","重陽節");
 
+		//起始西曆假日子
 		solarHolidayList.put("0101","新曆新年");
 		solarHolidayList.put("0501","勞動節");
 		solarHolidayList.put("0701","香港特別行政區成立紀念日");
 		solarHolidayList.put("1001","國慶日");
 		solarHolidayList.put("1225","聖誕節");
 		solarHolidayList.put("1226","聖誕節翌日");
-		
-		weekDayNames.put(DayOfWeek.SUNDAY,"Su");
-		weekDayNames.put(DayOfWeek.MONDAY,"M");
-		weekDayNames.put(DayOfWeek.TUESDAY,"T");
-		weekDayNames.put(DayOfWeek.WEDNESDAY,"W");
-		weekDayNames.put(DayOfWeek.THURSDAY,"Th");
-		weekDayNames.put(DayOfWeek.FRIDAY,"F");
-		weekDayNames.put(DayOfWeek.SATURDAY,"S");
 	}
-	public ArrayList<CalendarElement> buildMonthlyCalendar(int year, int month) {
+	/**
+	 * 
+	 * 傳回西曆 y年某month月的CalendarElement ArrayList 物件<br>
+	 * It returns the array list of CalendarElement of the given year y and month m.
+	 * @param y 年份
+	 * @param m 月份
+	 * @return  An array list of CalendarElement of the given year y and month m.
+	 */
+	public ArrayList<CalendarElement> buildMonthlyCalendar(int y, int m) {
 		CalendarElement ce;
 		ArrayList<CalendarElement> result=new ArrayList<CalendarElement>();
-		int firstSolarTermDate,secondSolarTermDate;
 		LocalDate solarDateObj=null,tempDateObj;
 		LunarDate lunarDateObj=null;
 		String solarDate,lunarDate;
 		Map<Integer,ArrayList<String>> publicHolidayList=new TreeMap<Integer,ArrayList<String>>();
-		for (int i=1;i<=getMonthLength(year,month);i++) {
-			solarDateObj=LocalDate.of(year, month, i);
+		for (int i=1;i<=getMonthLength(y,m);i++) {
+			solarDateObj=LocalDate.of(y, m, i);
 			lunarDateObj=getLunarDate(solarDateObj.atStartOfDay());
 			ce =new CalendarElement(solarDateObj,lunarDateObj);
 			
@@ -116,50 +128,44 @@ public class CalendarUtility {
 		}
 		
 		//復活節只出現在3或4月
-		if ((month==3)||(month==4)) {
+		if ((m==3)||(m==4)) {
 			//Easter/復活節日期
-			LocalDate easterDate=getEasterDateByYear(year);
+			LocalDate easterDate=getEasterDateByYear(y);
 			
 			//Good Friday日期
 			tempDateObj=easterDate.minusDays(2);
-			if (tempDateObj.getMonthValue()==month) {
+			if (tempDateObj.getMonthValue()==m) {
 				recordFestivalInfo(publicHolidayList, tempDateObj.getDayOfMonth(),"耶穌受難節");
 			}
 			//Holy Saturday日期
 			tempDateObj=easterDate.minusDays(1);
-			if (tempDateObj.getMonthValue()==month) {
+			if (tempDateObj.getMonthValue()==m) {
 				recordFestivalInfo(publicHolidayList, tempDateObj.getDayOfMonth(),"耶穌受難節翌日");
 			}
 			//Easter Monday日期
 			tempDateObj=easterDate.plusDays(1);
-			if (tempDateObj.getMonthValue()==month) {
+			if (tempDateObj.getMonthValue()==m) {
 				recordFestivalInfo(publicHolidayList, tempDateObj.getDayOfMonth(),"復活節星期一");
 			}
 		}
-		//節氣
-		firstSolarTermDate=this.sTerm(year,(month-1)*2  );
-		secondSolarTermDate=this.sTerm(year,(month-1)*2+1);
 		
-		/*
-		System.out.println((month)+"月第一節氣日子:"+firstSolarTermDate);
-		System.out.println((month)+"月第二節氣日子:"+secondSolarTermDate);
-		System.out.println(result.size());
-		*/
-		ce=result.remove(firstSolarTermDate-1);
-		ce.setSolarTermInfo(this.solarTerm[(month-1)*2]);
-		result.add(firstSolarTermDate-1,ce);
-		if (ce.getSolarTermInfo().equals("清明")) {
-			recordFestivalInfo(publicHolidayList, firstSolarTermDate,ce.getSolarTermInfo()+"節");
-		}
-		ce=result.remove(secondSolarTermDate-1);
-		ce.setSolarTermInfo(this.solarTerm[(month-1)*2+1]);
-		result.add(secondSolarTermDate-1,ce);
+		//取得該月節氣
+		Map<Integer,String>solarTermInfoList=getSolarTermInfoList(y,m);
+		solarTermInfoList.forEach((index,solarTermInfo)->{
+			CalendarElement c=result.remove(index-1);
+			c.setSolarTermInfo(solarTermInfo);
+			result.add(index-1,c);
+			if (solarTermInfo.equals("清明")) {
+				recordFestivalInfo(publicHolidayList, index,solarTermInfo+"節");
+			}
+		});
 		//System.out.println(publicHolidayList.toString());
 		processHoliday(publicHolidayList,result);
 		return result;
 	}
 	/**
-	 * 傳回該年生肖
+	 * 傳回該年生肖<br>
+	 * It returns the animal of year for the given year
 	 * @param y 年份
 	 * @return 傳回該年生肖
 	 */
@@ -189,13 +195,13 @@ public class CalendarUtility {
 		return Zhi[i];
 	} 
 	/**
-	 * 傳回天干地支
+	 * 傳回天干地支<br>
+	 * It returns the cyclical for the given number.
 	 * @param num 傳入 offset
 	 * @return 傳回干支, 0=甲子
 	 */
 	private  String getCyclical(int num)
 	{
-		String Gan[]={"甲","乙","丙","丁","戊","己","庚","辛","壬","癸"};
 		return(Gan[num%10 ]+Zhi[num%12]);
 	}
 	
@@ -240,7 +246,7 @@ public class CalendarUtility {
 	/**
 	 * 傳入LocalDate物件, 傳回LunarDate物件<br>
 	 * It returns a corresponding LunarDate object when a LocalDate object is given.
-	 * @param inLocalDateObj LocalDate物件
+	 * @param inLocalDateTimeObj LocalDate物件
 	 * @return LunarDate物件<br>
 	 * A corresponding LunarDate object when a LocalDate object is given.
 	 */
@@ -337,8 +343,9 @@ public class CalendarUtility {
 		return result;
 	}
 	/**
-	 * 傳回農曆 y年閏哪個月 1-12 , 沒閏傳回 0
-	 * @param y
+	 * 傳回農曆 y年閏哪個月 1-12 , 沒閏傳回 0 <br>
+	 * It returns the leap month of the given lunar year y.  If no leap month found, it returns 0.
+	 * @param y 年份
 	 * @return 傳回農曆 y年閏哪個月 1-12 , 沒閏傳回 0
 	 *
 	 */
@@ -348,16 +355,40 @@ public class CalendarUtility {
 		return(lm==0xf?0:lm);
 	}
 	/**
-	 * 傳回西曆 y年某month月的天數
+	 * 傳回西曆 y年某month月的天數<br>
+	 * It returns the total no. of day of the given year y and month m.
+	 * @param y 年份
+	 * @param m 月份
 	 * @return 該月的天數
 	 */
-	private int getMonthLength(int year,int month) 
+	private int getMonthLength(int year,int m) 
 	{
-		YearMonth yearMonthObject = YearMonth.of(year, month);
+		YearMonth yearMonthObject = YearMonth.of(year, m);
 		return yearMonthObject.lengthOfMonth(); 
 	}
 	/**
+	 * 傳回西曆 y年某month月的節氣<br>
+	 * It  returns the solar term information for the given year y and month m.
+	 * @return 該月的節氣
+	 */
+	private Map<Integer,String>getSolarTermInfoList(int year,int month)
+	{
+		Map<Integer,String>result=new TreeMap<Integer,String>();
+		//節氣
+		int firstSolarTermDate=this.sTerm(year,(month-1)*2  );
+		int secondSolarTermDate=this.sTerm(year,(month-1)*2+1);
+		
+		/*
+		System.out.println(month+"月第一節氣是"+this.solarTerm[(month-1)*2]+",日子為:"+month+"月"+firstSolarTermDate+"日");
+		System.out.println(month+"月第二節氣是"+this.solarTerm[(month-1)*2+1]+",日子為:"+month+"月"+secondSolarTermDate+"日");
+		*/
+		result.put(firstSolarTermDate,this.solarTerm[(month-1)*2]);
+		result.put(secondSolarTermDate,this.solarTerm[(month-1)*2+1]);
+		return result;
+	}
+	/**
 	 * 傳回農曆 y年閏月的天數
+	 * It returns the total no. of day for the leap month of the given year.
 	 * @param y
 	 * @return 傳回農曆 y年閏月的天數
 	 *
@@ -372,7 +403,8 @@ public class CalendarUtility {
 			return(0);
 	}
 	/**
-	 * 傳回農曆 y年m月的總天數
+	 * 傳回農曆 y年m月的總天數<br>
+	 * It returns the total no. of day of the given lunar year y and lunar month m.
 	 * @param y 年份
 	 * @param m 月份
 	 * @return 傳回農曆 y年m月的總天數
@@ -386,7 +418,8 @@ public class CalendarUtility {
 			return 29;	  
 	}
 	/**
-	 *  傳回農曆 y年的總天數
+	 *  傳回農曆 y年的總天數<br>
+	 *  It returns the total no. of day of the specified lunar year
 	 *  @param y
 	 *  @return 傳回農曆 y年的總天數
 	 *
@@ -422,7 +455,12 @@ public class CalendarUtility {
 		}
 		return s;
 	}
-	
+	/**
+	 * 根據publicHolidayList的假期資料,處理補假, 更新 calendarElementList<br>
+	 *  According to the data in publicHolidayList, complete the holiday compensation process, and then update the calendarElementList accordingly. 
+	 * @param publicHolidayList It is the public holiday information list for the specified month.
+	 * @param calendarElementList It is the calendar list for the specified month.
+	 */
 	private void processHoliday(Map<Integer, ArrayList<String>> publicHolidayList, ArrayList<CalendarElement> calendarElementList) {
 		publicHolidayList.forEach((index,festivalInfoList)->{
 			 festivalInfoList.forEach(festivalInfo->{
@@ -489,13 +527,13 @@ public class CalendarUtility {
 		int date,month,year;
 		CalendarUtility cu=new CalendarUtility();
 		// year=2017;month=1;date=24;
-		// year=2015;month=4;date=24;//復活節清明節overlap
+		year=2015;month=4;date=24;//復活節清明節overlap
 		// year=2016;month=12;date=24;//聖誕節補假
 		// year=2013;month=3;date=24;//復活節撗跨3,4月
 		// year=2014;month=1;date=24;//農曆,西曆都有
 		// year=2018;month=2;date=24;//農曆新年補假
 		//year=2020;month=4;date=24;//佛誕問題
-		year=2020;month=5;date=24;
+		//year=2020;month=5;date=24;
 		LocalDateTime now=LocalDateTime.of(year,month,date,2,0,0);
 		LunarDate lc=cu.getLunarDate(now);
 		System.out.println("Lunar Date="+lc.chineseYearName+"年"+cu.numToChineseNum(lc.month)+"月"+cu.numToChineseNum(lc.date)+"日");
