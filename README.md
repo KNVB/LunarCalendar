@@ -44,6 +44,10 @@ Open Source 不代表放棄著作權，任何形式之引用或轉載前請來�
                             Sean Lin (林洵賢)先生的email address是sean.tw+blog@gmail.com.
 
 ## Usage
+Please refer the javadoc (i.e. doc folder)
+
+<!--
+## Usage
 There are 3 methods MyCalendarUtility class provided :
 <ol>
 	<li>
@@ -85,3 +89,4 @@ MyCalendarUtility 有三個重要的method
 用戶可以extend MyCalendarUtility.prepareHolidayList 的method來自訂假日處理。
 
 Testing 就是用來示範如何自訂假日處理。	
+-->
