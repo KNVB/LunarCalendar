@@ -244,7 +244,7 @@ public class CalendarUtility {
 		return dayTerm2;	 
 	}
 	/**
-	 * 傳入LocalDate物件, 傳回LunarDate物件.這個LunarDate物件包含節氣資料.
+	 * 傳入LocalDate物件, 傳回LunarDate物件.這個LunarDate物件包含節氣資料<br>
 	 * It returns a corresponding LunarDate object when a LocalDate object is given.<br>
 	 * This LunarDate object includes solar term information if existed.
 	 * @param inLocalDateTimeObj LocalDate物件
