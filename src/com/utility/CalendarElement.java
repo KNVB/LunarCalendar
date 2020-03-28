@@ -28,11 +28,6 @@ public class CalendarElement
 	 * The festival/holiday information the specified date
 	 */
 	private String festivalInfo=new String();
-	/**
-	 *當天節氣訊息<br>
-	 * Solar Term Info of the specified date 
-	 */  
-	private String solarTermInfo=new String();
 	private LunarDate lunarDate;
 	private LocalDate solarDate;
 	
@@ -113,11 +108,11 @@ public class CalendarElement
 	 */
 	public String getSolarTermInfo() 
 	{
-		return solarTermInfo;
+		return lunarDate.solarTermInfo;
 	}
-	public void setSolarTermInfo(String solarTermInfo) 
+	protected void setSolarTermInfo(String solarTermInfo) 
 	{
-		this.solarTermInfo=solarTermInfo;
+		lunarDate.solarTermInfo=solarTermInfo;
 	}
 	
 	/**

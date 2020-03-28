@@ -553,7 +553,7 @@ public class CalendarUtility {
 		// year=2013;month=3;date=24;//復活節撗跨3,4月
 		// year=2014;month=1;date=24;//農曆,西曆都有
 		// year=2018;month=2;date=24;//農曆新年補假
-		year=2020;month=3;date=15;//佛誕問題
+		year=2020;month=4;date=15;//佛誕問題
 		//year=2020;month=5;date=24;
 		LocalDateTime now=LocalDateTime.of(year,month,date,2,0,0);
 		LunarDate lc=cu.getLunarDate(now);
