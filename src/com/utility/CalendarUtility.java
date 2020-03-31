@@ -362,7 +362,7 @@ public class CalendarUtility {
 		result.date = (int) (offset + 1);
 		result.chineseYearName=getCyclical(result.year-1900+36);
 		
-		firstNode = this.sTerm(inYear,inMonth*2); //傳回當月「節」為幾日開始
+		firstNode = this.sTerm(inYear,(inMonth-1)*2); //傳回當月「節」為幾日開始
 		//System.out.println("firstNode="+offset);
 		
 		if(firstNode<inDate) {
@@ -553,8 +553,8 @@ public class CalendarUtility {
 		// year=2013;month=3;date=24;//復活節撗跨3,4月
 		// year=2014;month=1;date=24;//農曆,西曆都有
 		// year=2018;month=2;date=24;//農曆新年補假
-		year=2020;month=4;date=15;//佛誕問題
-		//year=2020;month=5;date=24;
+		//year=2020;month=4;date=15;//佛誕問題
+		year=2020;month=1;date=25;
 		LocalDateTime now=LocalDateTime.of(year,month,date,2,0,0);
 		LunarDate lc=cu.getLunarDate(now);
 		System.out.println("Lunar Date="+lc.chineseYearName+"年"+cu.numToChineseNum(lc.month)+"月"+cu.numToChineseNum(lc.date)+"日");
